@@ -2,4 +2,4 @@ build
 *.elf
 *.nacp
 *.nro
-source/other
+source/other/
