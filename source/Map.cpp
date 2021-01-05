@@ -7,11 +7,11 @@
 #include "MapKorok.h"
 #include "MapLocation.h"
 
-#include "SavefileIO.h"
+#include "SavefileIO.h" 
 
 Map::Map()
 {
-    m_Texture.Load("romfs:/BotW-Map.png");
+    m_Texture.Load("romfs:/BotW-Map-lowres.png");
 
     std::string vertexShaderSource = R"text(
         #version 330 core
@@ -109,7 +109,7 @@ Map::Map()
 
         // Check if the korok has been found (if the found vector contains it)
         if (std::find(SavefileIO::visitedLocations.begin(), SavefileIO::visitedLocations.end(), &Data::Locations[i]) != SavefileIO::visitedLocations.end()) {
-            //m_Locations[i].m_Found = true;
+            m_Locations[i].m_Found = true;
         }
     }
         
@@ -194,5 +194,6 @@ bool Map::IsInView(glm::vec2 position, float margin = 100.0f)
 
 Map::~Map()
 {
-
+    delete[] m_Koroks;
+    delete[] m_Locations;
 }

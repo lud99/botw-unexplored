@@ -59,6 +59,9 @@ int main()
         // Scan the gamepad. This should be done once for each frame
         padUpdate(&pad);
 
+        if (padGetButtons(&pad) & HidNpadButton_Plus)
+            break;
+
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
@@ -76,6 +79,9 @@ int main()
             printf("OpenGL error: %u\n", err);
         }
 	}
+
+    // Cleanup
+    delete map;
 
     romfsExit();
 

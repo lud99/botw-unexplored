@@ -94,7 +94,6 @@ void MapKorok::Render()
 
     glm::mat4 modelMatrix(1.0f);
     modelMatrix = glm::translate(modelMatrix, glm::vec3(m_Position, 1.0));
-    //modelMatrix = glm::scale(modelMatrix, glm::vec3(m_Scale, m_Scale, 1.0f));
 
     m_Shader.Bind();
 
@@ -110,7 +109,8 @@ void MapKorok::Render()
 
 MapKorok::~MapKorok()
 {
-
+    if (m_Texture)
+        delete m_Texture;
 }
 
 Texture2D* MapKorok::m_Texture;

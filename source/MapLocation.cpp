@@ -54,7 +54,7 @@ void MapLocation::SetFontMatrices()
 
 MapLocation::~MapLocation()
 {
-
+    
 }
 
 Font* MapLocation::m_Font;
