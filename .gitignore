@@ -1,4 +1,5 @@
 build
-FlappyBirdNX.elf
-FlappyBirdNX.nacp
-FlappyBirdNX.nro
+*.elf
+*.nacp
+*.nro
+source/other
