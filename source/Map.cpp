@@ -70,7 +70,7 @@ Map::Map()
 
     m_Mesh.Update();
 
-    m_ProjectionMatrix = glm::ortho(-640.0f, 640.0f, -360.0f, 360.0f, -1.0f, 1.0f);
+    m_ProjectionMatrix = glm::ortho(-m_CameraWidth / 2, m_CameraWidth / 2, -m_CameraHeight / 2, m_CameraHeight / 2, -1.0f, 1.0f);
 
     // Load font
     m_Font.Load("romfs:/arial.ttf");
@@ -171,6 +171,25 @@ void Map::Render()
 
     for (int i = 0; i < 187; i++)
         m_Locations[i].Render();
+}
+
+bool Map::IsInView(glm::vec2 position, float margin = 100.0f)
+{
+    // Calculate camera bounds
+    float viewLeft = m_CameraPosition.x - (m_CameraWidth / 2) / m_Zoom - margin;
+    float viewRight = m_CameraPosition.x + (m_CameraWidth / 2) / m_Zoom + margin;
+    float viewBottom = m_CameraPosition.y - (m_CameraHeight / 2) / m_Zoom - margin;
+    float viewTop = m_CameraPosition.y + (m_CameraHeight / 2) / m_Zoom + margin;
+
+    // Check if text would be outside of view (horizontal)
+    if (position.x < viewLeft || position.x > viewRight)
+        return false;
+
+    // Check if text would be outside of view (vertical)
+    if (position.y < viewBottom || position.y > viewTop)
+        return false;
+
+    return true;
 }
 
 Map::~Map()

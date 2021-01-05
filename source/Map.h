@@ -21,11 +21,14 @@ public:
     Shader m_Shader;
     Font m_Font;
 
-    glm::vec2 m_CameraPosition;
     float m_Zoom = 1.0f;
 
     glm::mat4 m_ProjectionMatrix = glm::mat4(1.0f);
     glm::mat4 m_ViewMatrix = glm::mat4(1.0f);
+
+    glm::vec2 m_CameraPosition;
+    const float m_CameraWidth = 1280.0f;
+    const float m_CameraHeight = 720.0f;
 
     PadState* m_Pad;
 
@@ -37,6 +40,8 @@ public:
 
     void Update();
     void Render();
+
+    bool IsInView(glm::vec2 position, float margin);
 
     ~Map();
 };

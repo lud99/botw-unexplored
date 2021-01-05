@@ -85,6 +85,13 @@ void MapKorok::Render()
 {
     if (m_Found) return;
 
+    // Culling 
+    float margin = 30.0f; // The width of the texture (korok size)
+
+    // Don't render if not in view
+    if (!m_Map->IsInView(m_Position, margin)) 
+        return;
+
     glm::mat4 modelMatrix(1.0f);
     modelMatrix = glm::translate(modelMatrix, glm::vec3(m_Position, 1.0));
     //modelMatrix = glm::scale(modelMatrix, glm::vec3(m_Scale, m_Scale, 1.0f));
