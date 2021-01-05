@@ -1,0 +1,37 @@
+{
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "Run (Yuzu)",
+            "command": "./yuzu.bat",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOn": [
+                "Build"
+            ]
+        },
+        {
+            "type": "shell",
+            "label": "Run (Switch)",
+            "command": "./nxlink.bat",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOn": [
+                "Build"
+            ]
+        },
+        {
+            "type": "process",
+            "label": "Build",
+            "command": "make",
+            "problemMatcher": []
+        }
+    ],
+    "version": "2.0.0"
+}
