@@ -267,8 +267,6 @@ Mesh<VertexT>::~Mesh()
 
 	glDeleteBuffers(1, &m_Vbo);
 	glDeleteBuffers(1, &m_Ebo);
-
-    printf("Mesh destructor");
 }
 
 #endif

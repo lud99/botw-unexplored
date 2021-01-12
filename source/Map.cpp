@@ -83,7 +83,7 @@ Map::Map()
     {
         m_Koroks[i].m_Map = this;
         // The data has down being positive and up being negative. This renderer uses the opposite, so reverse the koroks y-coordinate
-        m_Koroks[i].m_Position = glm::vec2(Data::Koroks[i].x, -Data::Koroks[i].y);
+        m_Koroks[i].m_Position = glm::vec2(Data::Koroks[i].x, -Data::Koroks[i].y) * 0.5f;
 
         m_Koroks[i].m_KorokData = &Data::Koroks[i];
 
@@ -101,7 +101,7 @@ Map::Map()
         m_Locations[i].m_Font = &m_Font;
         
         // The data has down being positive and up being negative. This renderer uses the opposite, so reverse the koroks y-coordinate
-        m_Locations[i].m_Position = glm::vec2(Data::Locations[i].x, -Data::Locations[i].y);
+        m_Locations[i].m_Position = glm::vec2(Data::Locations[i].x, -Data::Locations[i].y) * 0.5f;
 
         m_Locations[i].m_LocationData = &Data::Locations[i];
 
@@ -141,6 +141,41 @@ void Map::Update()
     if (keysDown & HidNpadButton_B)
         m_CameraPosition.y -= 10.0f / m_Zoom;
 
+    // Dragging
+    HidTouchScreenState state={0};
+    if (hidGetTouchScreenStates(&state, 1)) {
+        glm::vec2 touchPosition = glm::vec2(state.touches[0].x - m_CameraWidth / 2, state.touches[0].y - m_CameraHeight / 2); // Convert to more suitable coords
+
+        // A new touch
+        if (state.count != m_PrevTouchCount)
+        {   
+            m_PrevTouchCount = state.count;
+
+            // Check if the finger was pressed
+            if (state.count == 1)
+            {
+                m_IsDragging = true;
+                m_PrevTouchPosition = touchPosition; // The origin of the drag
+            }
+                
+            // Check if the finger was released
+            if (state.count == 0)
+                m_IsDragging = false;
+        }
+
+        // Handle the camera dragging
+        if (state.count >= 1 && m_IsDragging)
+        {
+            // Calculate how much the finger has moved this frame
+            glm::vec2 delta = m_PrevTouchPosition - touchPosition;
+
+            m_CameraPosition += delta * glm::vec2(1, -1); // Move the camera by the delta. Flip the direction of the y-coordinate 
+
+            // Set the touch pos to the most recent one, so we only check for the delta between each frame and not from when the drag started
+            m_PrevTouchPosition = touchPosition;
+        }
+    }
+
     m_ViewMatrix = glm::mat4(1.0f); // Reset (important)
     m_ViewMatrix = glm::scale(m_ViewMatrix, glm::vec3(m_Zoom, m_Zoom, 0.0f));
     m_ViewMatrix = glm::translate(m_ViewMatrix, glm::vec3(-m_CameraPosition, 1.0));
@@ -152,6 +187,8 @@ void Map::Update()
     // Update locations
     for (int i = 0; i < 187; i++)
         m_Locations[i].Update();
+
+    m_PrevCameraPosition = m_CameraPosition;
 }
 
 void Map::Render()
@@ -181,11 +218,11 @@ bool Map::IsInView(glm::vec2 position, float margin = 100.0f)
     float viewBottom = m_CameraPosition.y - (m_CameraHeight / 2) / m_Zoom - margin;
     float viewTop = m_CameraPosition.y + (m_CameraHeight / 2) / m_Zoom + margin;
 
-    // Check if text would be outside of view (horizontal)
+    // Check if the position would be outside of view (horizontal)
     if (position.x < viewLeft || position.x > viewRight)
         return false;
 
-    // Check if text would be outside of view (vertical)
+    // Check if the position would be outside of view (vertical)
     if (position.y < viewBottom || position.y > viewTop)
         return false;
 
