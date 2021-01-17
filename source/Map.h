@@ -26,7 +26,7 @@ public:
     glm::mat4 m_ProjectionMatrix = glm::mat4(1.0f);
     glm::mat4 m_ViewMatrix = glm::mat4(1.0f);
 
-    glm::vec2 m_CameraPosition;
+    glm::vec2 m_CameraPosition = glm::vec2(0.0f, 0.0f);
     glm::vec2 m_PrevCameraPosition;
     const float m_CameraWidth = 1280.0f;
     const float m_CameraHeight = 720.0f;

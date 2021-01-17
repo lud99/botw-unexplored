@@ -141,10 +141,12 @@ int Font::Load(const std::string& filepath)
 
     m_Initialized = true;
 
+    printf("Loaded font '%s'\n", filepath.c_str());
+
     return 1;
 }
 
-void Font::RenderText(const std::string& text, glm::vec2 position, float scale, glm::vec3 color)
+glm::vec2 Font::RenderText(const std::string& text, glm::vec2 position, float scale, glm::vec3 color)
 {
     m_Shader.Bind();
 
@@ -153,6 +155,9 @@ void Font::RenderText(const std::string& text, glm::vec2 position, float scale, 
     m_Shader.SetUniform("u_ViewMatrix", *m_ViewMatrix);
 
     glActiveTexture(GL_TEXTURE0);
+
+    float startX = position.x;
+    glm::vec2 textSize = glm::vec2(0.0f, 0.0f);
 
     // iterate through all characters
     std::string::const_iterator c;
@@ -165,6 +170,8 @@ void Font::RenderText(const std::string& text, glm::vec2 position, float scale, 
 
         float w = ch.Size.x * scale;
         float h = ch.Size.y * scale;
+
+        textSize.y = h;
 
         glm::mat4 modelMatrix(1.0f);
         modelMatrix = glm::translate(modelMatrix, glm::vec3(xpos, ypos, 0.0f));
@@ -181,9 +188,13 @@ void Font::RenderText(const std::string& text, glm::vec2 position, float scale, 
         position.x += (ch.Advance >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64)
     }
 
+    textSize.x = std::abs(position.x - startX);
+
     glBindTexture(GL_TEXTURE_2D, 0);
 
     m_Shader.Unbind();
+
+    return textSize;
 }
 
 

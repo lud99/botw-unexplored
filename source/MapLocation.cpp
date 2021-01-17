@@ -31,7 +31,7 @@ void MapLocation::Update()
 
 void MapLocation::Render()
 {
-    if (m_Found) return;
+    if (m_Found && !m_ShowAnyway) return;
 
     // Text culling
 

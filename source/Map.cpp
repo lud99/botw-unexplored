@@ -117,34 +117,61 @@ Map::Map()
 
 void Map::Update()
 {
-    u64 keysDown = padGetButtons(m_Pad);
+    if (m_Pad == nullptr) return;
+
+    u64 buttonsPressed = padGetButtonsDown(m_Pad);
+    u64 buttonsDown = padGetButtons(m_Pad);
+    u64 buttonsUp = padGetButtonsUp(m_Pad);
 
     float zoomAmount = 0.01f;
+    float dragAmont = 0.85f;
+    float minZoom = 0.1f;
 
-    if (keysDown & HidNpadButton_R)
+    if (buttonsDown & HidNpadButton_R)
         m_Zoom *= 1.0f + zoomAmount;
 
-    if (keysDown & HidNpadButton_L)
+    if (buttonsDown & HidNpadButton_L)
         m_Zoom *= 1.0f - zoomAmount;
 
-    if (m_Zoom < 0.05f) m_Zoom = 0.05f;
+    if (m_Zoom < minZoom) m_Zoom = minZoom;
 
-    if (keysDown & HidNpadButton_A)
+    // Show all koroks and locations
+    if (buttonsPressed & HidNpadButton_X)
+    {
+        for (int i = 0; i < 900; i++)
+            m_Koroks[i].m_ShowAnyway = true;
+
+        for (int i = 0; i < 187; i++)
+            m_Locations[i].m_ShowAnyway = true;
+    }
+
+    // Show only those that are found
+    if (buttonsUp & HidNpadButton_X)
+    {
+        for (int i = 0; i < 900; i++)
+            m_Koroks[i].m_ShowAnyway = false;
+
+        for (int i = 0; i < 187; i++)
+            m_Locations[i].m_ShowAnyway = false;
+    }
+
+    /*if (buttonsDown & HidNpadButton_A)
         m_CameraPosition.x += 10.0f / m_Zoom;
 
-    if (keysDown & HidNpadButton_Y)
+    if (buttonsDown & HidNpadButton_Y)
         m_CameraPosition.x -= 10.0f / m_Zoom;
 
-    if (keysDown & HidNpadButton_X)
+    if (buttonsDown & HidNpadButton_X)
         m_CameraPosition.y += 10.0f / m_Zoom;
 
-    if (keysDown & HidNpadButton_B)
-        m_CameraPosition.y -= 10.0f / m_Zoom;
+    if (buttonsDown & HidNpadButton_B)
+        m_CameraPosition.y -= 10.0f / m_Zoom;*/
 
     // Dragging
     HidTouchScreenState state={0};
     if (hidGetTouchScreenStates(&state, 1)) {
-        glm::vec2 touchPosition = glm::vec2(state.touches[0].x - m_CameraWidth / 2, state.touches[0].y - m_CameraHeight / 2); // Convert to more suitable coords
+        // Convert to more suitable coords
+        glm::vec2 touchPosition = glm::vec2(state.touches[0].x - m_CameraWidth / 2, state.touches[0].y - m_CameraHeight / 2); 
 
         // A new touch
         if (state.count != m_PrevTouchCount)
@@ -169,7 +196,9 @@ void Map::Update()
             // Calculate how much the finger has moved this frame
             glm::vec2 delta = m_PrevTouchPosition - touchPosition;
 
-            m_CameraPosition += delta * glm::vec2(1, -1); // Move the camera by the delta. Flip the direction of the y-coordinate 
+            // Move the camera by the delta. Flip the direction of the y-coordinate and 
+            // divide by the zoom to move the same amount irregardless of the zoom
+            m_CameraPosition += (delta * glm::vec2(1, -1) * dragAmont) / m_Zoom;
 
             // Set the touch pos to the most recent one, so we only check for the delta between each frame and not from when the drag started
             m_PrevTouchPosition = touchPosition;
@@ -205,9 +234,41 @@ void Map::Render()
 
     for (int i = 0; i < 900; i++)
         m_Koroks[i].Render();
+        
 
     for (int i = 0; i < 187; i++)
         m_Locations[i].Render();
+
+    // Render stats text
+    glm::mat4 emptyViewMatrix(1.0);
+    m_Font.m_ViewMatrix = &emptyViewMatrix; // Don't draw the text relative to the camera 
+
+    float textScale = 0.5f;
+    
+    // Koroks
+    std::string koroksText = std::to_string(SavefileIO::foundKoroks.size()) + " / 900 koroks found";
+
+    glm::vec2 koroksPadding(25.0f, 25.0f);
+    glm::vec2 koroksPosition = glm::vec2(-m_CameraWidth / 2, -m_CameraHeight / 2) + koroksPadding;
+
+    // Render the text and get the width, so the next text can be relative to that
+    glm::vec2 koroksTextSize = m_Font.RenderText(koroksText, koroksPosition, textScale, glm::vec3(1.0f) /* white */);
+
+    // Locations
+    std::string locationsText = std::to_string(SavefileIO::visitedLocations.size()) + " / 187 locations visited";
+
+    glm::vec2 locationsPadding(25.0f, 0.0f);
+    glm::vec2 locationsPosition = koroksPosition + glm::vec2(koroksTextSize.x, 0.0f) /* only use the text width, not height */ + locationsPadding;
+
+    // Render the text
+    m_Font.RenderText(locationsText, locationsPosition, textScale, glm::vec3(1.0f) /* white */);
+
+    glm::vec2 showAllPosition(-m_CameraWidth / 2 + koroksPadding.x, m_CameraHeight / 2 - (koroksTextSize.y + koroksPadding.y));
+
+    // Render the text
+    m_Font.RenderText("Hold X to show all koroks and locations", showAllPosition, textScale, glm::vec3(1.0f) /* white */);
+
+    m_Font.m_ViewMatrix = &m_ViewMatrix;
 }
 
 bool Map::IsInView(glm::vec2 position, float margin = 100.0f)

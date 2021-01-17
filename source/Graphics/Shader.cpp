@@ -78,7 +78,7 @@ void Shader::Delete()
 {
     glDeleteProgram(m_id);
 
-    printf("Shader delete");
+    m_id = 0;
 }
 
 Shader::~Shader()
@@ -118,6 +118,8 @@ Shader ShaderLoader::CreateShader(const std::string& vertexPath, const std::stri
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
 
+    printf("Created shader program with the id %u\n", program);
+
 	return Shader(program);
 }
 
@@ -135,6 +137,8 @@ Shader ShaderLoader::CreateShaderFromSource(const std::string& vertexSource, con
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
 
+    printf("Created shader program with the id %u\n", program);
+
 	return Shader(program);
 }
 
@@ -142,7 +146,6 @@ Shader ShaderLoader::CreateShader()
 {
 	return Shader(0);
 }
-
 
 unsigned int ShaderLoader::CompileShader(unsigned int type, const std::string& source)
 {

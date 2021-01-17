@@ -20,8 +20,6 @@ void Texture2D::Load(const std::string& filepath)
 	glGenTextures(1, &m_Texture);
 	glBindTexture(GL_TEXTURE_2D, m_Texture);
 
-    std::cout << "Loading texture " << filepath << std::endl;
-
 	// set the texture wrapping/filtering options (on the currently bound texture object)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);	// set texture wrapping to GL_REPEAT (default wrapping method)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
@@ -37,6 +35,8 @@ void Texture2D::Load(const std::string& filepath)
 	unsigned char* data = stbi_load(filepath.c_str(), &m_Width, &m_Height, &m_NrChannels, 0);
 	if (data)
 	{
+        std::cout << "Loaded texture " << filepath << "...\n";
+
         if (m_NrChannels == 3)
 		    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_Width, m_Height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
         if (m_NrChannels == 4)
@@ -64,6 +64,4 @@ void Texture2D::Unbind()
 Texture2D::~Texture2D()
 {
     glDeleteTextures(1, &m_Texture);
-
-    printf("Texture destructor");
 }

@@ -1,6 +1,7 @@
 #include "MapKorok.h"
 
 #include <switch.h>
+#include <iostream>
 
 #include "Map.h"
 #include "Graphics/BasicVertices.h"
@@ -83,7 +84,7 @@ void MapKorok::Update()
 
 void MapKorok::Render()
 {
-    if (m_Found) return;
+    if (m_Found && !m_ShowAnyway) return;
 
     // Culling 
     float margin = 30.0f; // The width of the texture (korok size)
@@ -109,8 +110,16 @@ void MapKorok::Render()
 
 MapKorok::~MapKorok()
 {
-    if (m_Texture)
+    // Delete the texture (only once)
+    if (m_Texture) {
         delete m_Texture;
+
+        m_Texture = nullptr;
+    }
+
+    // If the shader still exists
+    if (m_Shader.m_id != 0)
+        m_Shader.Delete();
 }
 
 Texture2D* MapKorok::m_Texture;

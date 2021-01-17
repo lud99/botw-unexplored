@@ -35,7 +35,7 @@ private:
 public:
     int Load(const std::string& filepath);
 
-    void RenderText(const std::string& text, glm::vec2 position, float scale, glm::vec3 color);
+    glm::vec2 RenderText(const std::string& text, glm::vec2 position, float scale, glm::vec3 color);
     void RenderText(Text& text, glm::vec2 position, float scale, glm::vec3 color);
 };
 

@@ -29,6 +29,7 @@ public:
 
     glm::vec2 m_Position;
     bool m_Found = false;
+    bool m_ShowAnyway = false;
 
     float m_Scale = 1.0f;
 

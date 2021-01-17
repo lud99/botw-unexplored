@@ -1,10 +1,16 @@
 #include "SavefileIO.h"
 
 #include <fstream>
+#include <dirent.h>
 
 #include <iostream>
 #include <iomanip>
 #include <stdio.h> 
+#include <unistd.h>
+
+#include <switch.h>
+
+#include "Accounts.h"
 
 uint32_t SavefileIO::ReadU32(unsigned char* buffer, int offset)
 {
@@ -15,10 +21,86 @@ uint32_t SavefileIO::ReadU32(unsigned char* buffer, int offset)
 			(buffer[offset + 3] << 24)) >> 0 /* Make it positive? */;
 }
 
-void SavefileIO::ParseFile(const char* filepath)
+bool SavefileIO::MountSavefile()
+{
+    Result rc=0;
+
+    AccountUid uid={0};
+    u64 application_id=0x01007ef00011e000; //ApplicationId of the save to mount, in this case BOTW.
+
+    //Get the userID for save mounting. To mount common savedata, use an all-zero userID.
+
+    // Display the profile picker so the user can choose the profile
+    uid = Accounts::RequestProfileSelection();
+
+    std::cout << "User uid: " << uid.uid[0] << ", " << uid.uid[1] << "\n";
+
+    // Check if the user canceled the dialog (if so, the uid is not valid)
+    if (!accountUidIsValid(&uid))
+    {
+        printf("The user canceled the profile picker (or an error occurred)\n");
+        return false;
+    }
+
+    //You can use any device-name. If you want multiple saves mounted at the same time, you must use different device-names for each one.
+    rc = fsdevMountSaveData("save", application_id, uid); //See also libnx fs.h/fs_dev.h
+    if (R_FAILED(rc)) {
+        printf("fsdevMountSaveData() failed: 0x%x\n", rc);
+        return false;
+    }
+
+    //At this point you can use the mounted device with standard stdio.
+    //After modifying savedata, in order for the changes to take affect you must use: rc = fsdevCommitDevice("save");
+    //See also libnx fs_dev.h for fsdevCommitDevice.
+
+    DIR* dir = opendir("save:/"); //Open the "save:/" directory.
+    struct dirent* ent;
+    if(dir==NULL)
+    {
+        printf("Failed to open save:/.\n");
+
+        return false;
+    }
+    else
+    {
+        printf("Dir-listing for 'save:/':\n");
+        while ((ent = readdir(dir)))
+        {
+            printf("%s\n", ent->d_name);
+        }
+        closedir(dir);
+    }
+
+    return true;
+}
+
+bool SavefileIO::UnmountSavefile()
+{
+    //When you are done with savedata, you can use the below.
+    //Any devices still mounted at app exit are automatically unmounted.
+    return R_SUCCEEDED(fsdevUnmountDevice("save"));
+}
+
+bool SavefileIO::ParseFile(const char* filepath)
 {
 	std::ifstream file;
 	file.open(filepath, std::ios::binary);
+
+    printf("Opening savefile '%s'...\n", filepath);
+
+    int res = access(filepath, R_OK);
+    if (res < 0) {
+        if (errno == ENOENT)
+            printf("Savefile '%s' could not be opened\n", filepath);
+        else if (errno == EACCES)
+            printf("Savefile '%s' could not be read for some reason\n", filepath);
+        else 
+            printf("Savefile '%s' failed\n", filepath);
+
+        return false;
+    }
+
+    printf("Parsing savefile '%s'...\n", filepath);
 
 	// Get length of file
 	file.seekg(0, file.end);
@@ -90,6 +172,10 @@ void SavefileIO::ParseFile(const char* filepath)
 			defeated ? defeatedMoldugas.push_back(molduga) : undefeatedMoldugas.push_back(molduga);
 		}
 	}
+
+    printf("Successfully parsed file '%s'\n", filepath);
+
+    return true;
 }
 
 std::vector<Data::Korok*> SavefileIO::foundKoroks;

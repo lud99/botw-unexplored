@@ -1,1 +1,1 @@
-start "" C:/Users/ludvi/AppData/Local/yuzu/yuzu-windows-msvc/yuzu.exe ./botw-unexplored.nro
+start "" yuzu.exe ./botw-unexplored.nro

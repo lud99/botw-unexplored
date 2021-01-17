@@ -24,5 +24,8 @@ namespace SavefileIO
 
     uint32_t ReadU32(unsigned char* buffer, int offset);
 
-    void ParseFile(const char* filepath);
+    bool MountSavefile();
+    bool UnmountSavefile();
+
+    bool ParseFile(const char* filepath);
 };
