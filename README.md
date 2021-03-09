@@ -3,6 +3,8 @@ Easily view what hasn't been discovered in your Breath of the Wild savefile, on 
 
 The korok seeds that haven't been collected and the locations that are left to visit are shown on a map, where it's easy to see koroks or locations you've missed. 
 
+<img src="https://github.com/lud99/botw-unexplored/blob/master/map1.jpeg?raw=true" width=600>
+
 ## Why?
 There are other websites and tools to display and even edit your BotW savefile, but none of them run on your Switch. You would have to backup your savefile and then transfer it to a computer, which is unnecessarily complicated. That's why I created this homebrew app.
 
