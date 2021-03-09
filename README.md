@@ -9,7 +9,7 @@ The korok seeds that haven't been collected and the locations that are left to v
 There are other websites and tools to display and even edit your BotW savefile, but none of them run on your Switch. You would have to backup your savefile and then transfer it to a computer, which is unnecessarily complicated. That's why I created this homebrew app.
 
 ## Usage
-* Download ```botw-unexplored.nro```, transfer it to your SD card and launch it.
+* Download ```botw-unexplored.nro``` from the [releases](https://github.com/lud99/botw-unexplored/releases/download/1.0.0/botw-unexplored.nro), transfer it to your SD card and launch it.
 * Choose the profile with your savefile
 * Done! Use the analog sticks to move the camera, or use the touch screen to move around
 
