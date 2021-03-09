@@ -21,7 +21,8 @@ public:
     Shader m_Shader;
     Font m_Font;
 
-    float m_Zoom = 1.0f;
+    const float m_DefaultZoom = 0.5f;
+    float m_Zoom = m_DefaultZoom;
 
     glm::mat4 m_ProjectionMatrix = glm::mat4(1.0f);
     glm::mat4 m_ViewMatrix = glm::mat4(1.0f);

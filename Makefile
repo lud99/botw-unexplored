@@ -38,7 +38,7 @@ include $(DEVKITPRO)/libnx/switch_rules
 #   NACP building is skipped as well.
 #---------------------------------------------------------------------------------
 
-APP_TITLE	:=	botw-unexplored
+APP_TITLE	:=	BotW Unexplored
 APP_AUTHOR	:=	BigBear
 
 TARGET		:=	$(notdir $(CURDIR))

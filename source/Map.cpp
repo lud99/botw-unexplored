@@ -125,13 +125,18 @@ void Map::Update()
 
     float zoomAmount = 0.01f;
     float dragAmont = 0.85f;
+    float analogStickMovementSpeed = 10.0f;
     float minZoom = 0.1f;
 
-    if (buttonsDown & HidNpadButton_R)
+    // Zoom
+    if (buttonsDown & HidNpadButton_R) // Zoom in
         m_Zoom *= 1.0f + zoomAmount;
 
-    if (buttonsDown & HidNpadButton_L)
+    if (buttonsDown & HidNpadButton_L) // Zoom out
         m_Zoom *= 1.0f - zoomAmount;
+
+    if (buttonsPressed & HidNpadButton_Minus)
+        m_Zoom = m_DefaultZoom;
 
     if (m_Zoom < minZoom) m_Zoom = minZoom;
 
@@ -155,17 +160,17 @@ void Map::Update()
             m_Locations[i].m_ShowAnyway = false;
     }
 
-    /*if (buttonsDown & HidNpadButton_A)
-        m_CameraPosition.x += 10.0f / m_Zoom;
+    // Analog stick camera movement
+    // Read the sticks' position
+    HidAnalogStickState analog_stick_l = padGetStickPos(m_Pad, 0);
 
-    if (buttonsDown & HidNpadButton_Y)
-        m_CameraPosition.x -= 10.0f / m_Zoom;
-
-    if (buttonsDown & HidNpadButton_X)
-        m_CameraPosition.y += 10.0f / m_Zoom;
-
-    if (buttonsDown & HidNpadButton_B)
-        m_CameraPosition.y -= 10.0f / m_Zoom;*/
+    // Get the stick position between -1.0f and 1.0f, instead of -32767 and 32767
+    glm::vec2 stickLPosition = glm::vec2((float)analog_stick_l.x / (float)JOYSTICK_MAX, (float)analog_stick_l.y / (float)JOYSTICK_MAX);
+   
+    float deadzone = 0.1f;
+    float distanceToCenter = glm::distance(stickLPosition, glm::vec2(0.0f, 0.0f));
+    if (distanceToCenter >= deadzone)
+        m_CameraPosition += stickLPosition * (analogStickMovementSpeed / m_Zoom);
 
     // Dragging
     HidTouchScreenState state={0};
@@ -266,7 +271,7 @@ void Map::Render()
     glm::vec2 showAllPosition(-m_CameraWidth / 2 + koroksPadding.x, m_CameraHeight / 2 - (koroksTextSize.y + koroksPadding.y));
 
     // Render the text
-    m_Font.RenderText("Hold X to show all koroks and locations", showAllPosition, textScale, glm::vec3(1.0f) /* white */);
+    m_Font.RenderText("Hold X to show all koroks and locations, L and R to zoom, - to reset zoom, + to exit", showAllPosition, textScale, glm::vec3(1.0f) /* white */);
 
     m_Font.m_ViewMatrix = &m_ViewMatrix;
 }
