@@ -11,7 +11,7 @@ MapKorok::MapKorok()
 {
     // Only load one texture for all the 900 koroks
     if (!m_Texture)
-        m_Texture = new Texture2D("romfs:/Korok-Seed.png");
+        m_Texture = new Texture2D("romfs:/korokseed.png");
 
     // Only create shader if it's the first 
     if (m_Shader.m_id == 0)

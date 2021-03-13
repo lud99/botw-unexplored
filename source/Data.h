@@ -79,24 +79,29 @@ namespace Data
 
     // Create koroks
 
-    extern Korok Koroks[900];
+    const int KoroksCount = 900;
+    extern Korok Koroks[KoroksCount];
 
     Korok* KorokExists(uint32_t hash);
 
     // Create locations (coordinates are rounded)
-    extern Location Locations[187];
+    const int LocationsCount = 187;
+    extern Location Locations[LocationsCount];
 
     Location* LocationExists(uint32_t hash);
 
-    extern Hinox Hinoxes[40];
+    const int HinoxesCount = 40;
+    extern Hinox Hinoxes[HinoxesCount];
 
     Hinox* HinoxExists(uint32_t hash);
 
-    extern Talus Taluses[40];
+    const int TalusesCount = 40;
+    extern Talus Taluses[TalusesCount];
 
     Talus* TalusExists(uint32_t hash);
 
-    extern Molduga Moldugas[4];
+    const int MoldugasCount = 4;
+    extern Molduga Moldugas[MoldugasCount];
 
     Molduga* MoldugaExists(uint32_t hash);
 };

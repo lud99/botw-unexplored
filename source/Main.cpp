@@ -29,6 +29,8 @@ void cleanUp();
 
 bool LoadGamesave()
 {
+    return SavefileIO::ParseFile("romfs:/game_data.sav");
+    
     // Try to mount the save directory
     if (SavefileIO::MountSavefile()) {
         bool success = SavefileIO::ParseFile("save:/0/game_data.sav");

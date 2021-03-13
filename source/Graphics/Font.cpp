@@ -146,7 +146,7 @@ int Font::Load(const std::string& filepath)
     return 1;
 }
 
-glm::vec2 Font::RenderText(const std::string& text, glm::vec2 position, float scale, glm::vec3 color)
+glm::vec2 Font::RenderText(const std::string& text, glm::vec2 position, float scale, glm::vec3 color, int align)
 {
     m_Shader.Bind();
 
@@ -156,25 +156,44 @@ glm::vec2 Font::RenderText(const std::string& text, glm::vec2 position, float sc
 
     glActiveTexture(GL_TEXTURE0);
 
-    float startX = position.x;
+    glm::vec2 startPos(position.x, position.y);
     glm::vec2 textSize = glm::vec2(0.0f, 0.0f);
 
-    // iterate through all characters
-    std::string::const_iterator c;
-    for (c = text.begin(); c != text.end(); c++)
-    {
-        Character ch = m_Characters[*c];
+    glm::vec2* characterPositions = new glm::vec2[text.length()](); 
 
-        float xpos = position.x + ch.Bearing.x * scale;
-        float ypos = position.y - (ch.Size.y - ch.Bearing.y) * scale;
+    for (unsigned int i = 0; i < text.length(); i++)
+    {
+        Character ch = m_Characters[text[i]];
+
+        characterPositions[i] = glm::vec2(position.x + ch.Bearing.x * scale, position.y - (ch.Size.y - ch.Bearing.y) * scale);
+
+        // now advance cursors for next glyph (note that advance is number of 1/64 pixels)
+        position.x += (ch.Advance >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64)
+    }
+
+    glm::vec2 endPosition(position.x, position.y);
+    textSize.x = endPosition.x - startPos.x;
+
+    // iterate through all characters
+    for (unsigned int i = 0; i < text.length(); i++)
+    {
+        Character ch = m_Characters[text[i]];
+
+        glm::vec2 pos = characterPositions[i];
+
+        if (align == ALIGN_CENTER)
+            pos.x -= textSize.x / 2;
+        else if (align == ALIGN_RIGHT)
+            pos.x -= textSize.x;
 
         float w = ch.Size.x * scale;
         float h = ch.Size.y * scale;
 
-        textSize.y = h;
+        if (h > textSize.y)
+            textSize.y = h;
 
         glm::mat4 modelMatrix(1.0f);
-        modelMatrix = glm::translate(modelMatrix, glm::vec3(xpos, ypos, 0.0f));
+        modelMatrix = glm::translate(modelMatrix, glm::vec3(pos, 0.0f));
 
         m_Shader.SetUniform("u_ModelMatrix", modelMatrix);
         m_Shader.SetUniform("u_Size", glm::vec2(w, h));
@@ -183,16 +202,13 @@ glm::vec2 Font::RenderText(const std::string& text, glm::vec2 position, float sc
         glBindTexture(GL_TEXTURE_2D, ch.TextureID);
 
         m_Mesh.Render();
-
-        // now advance cursors for next glyph (note that advance is number of 1/64 pixels)
-        position.x += (ch.Advance >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64)
     }
-
-    textSize.x = std::abs(position.x - startX);
 
     glBindTexture(GL_TEXTURE_2D, 0);
 
     m_Shader.Unbind();
+
+    delete[] characterPositions;
 
     return textSize;
 }

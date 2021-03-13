@@ -23,6 +23,7 @@ public:
 	void SetUniform(const std::string& name, glm::ivec2 vector);
 	void SetUniform(const std::string& name, glm::vec3 vector);
 	void SetUniform(const std::string& name, glm::ivec3 vector);
+    void SetUniform(const std::string& name, glm::vec4 vector);
 	void SetUniform(const std::string& name, glm::mat4 matrix);
 	void SetUniform(const std::string& name, float value);
 	void SetUniform(const std::string& name, int value);

@@ -7,6 +7,10 @@
 #include "Shader.h"
 #include "Mesh.hpp"
 
+#define ALIGN_LEFT 0
+#define ALIGN_CENTER 1
+#define ALIGN_RIGHT 2
+
 class Text;
 
 struct Character {
@@ -35,7 +39,7 @@ private:
 public:
     int Load(const std::string& filepath);
 
-    glm::vec2 RenderText(const std::string& text, glm::vec2 position, float scale, glm::vec3 color);
+    glm::vec2 RenderText(const std::string& text, glm::vec2 position, float scale, glm::vec3 color, int align = ALIGN_LEFT);
     void RenderText(Text& text, glm::vec2 position, float scale, glm::vec3 color);
 };
 

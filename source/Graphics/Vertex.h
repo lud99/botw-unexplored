@@ -17,6 +17,9 @@ struct PackedVertex
 
 struct BasicVertex
 {
+    BasicVertex(glm::vec3 pos) : position(pos) {};
+    BasicVertex(glm::vec2 pos) : position(glm::vec3(pos, 0.0f)) {};
+
 	glm::vec3 position = glm::vec3(0);
 };
 
@@ -28,6 +31,9 @@ struct ColorVertex
 
 struct TextureVertex
 {
+    TextureVertex() {};
+    TextureVertex(glm::vec2 pos, glm::vec2 texCoord) : position(glm::vec3(pos, 0.0f)), textureCoord(texCoord) {};
+
     glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
     glm::vec4 color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
     glm::vec2 textureCoord = glm::vec2(0.0f, 0.0f);

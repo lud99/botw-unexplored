@@ -12,7 +12,7 @@
 
 class MapKorok;
 class MapLocation;
-
+class Legend;
 class Map
 {
 public:
@@ -36,11 +36,14 @@ public:
     glm::vec2 m_PrevTouchPosition;
     glm::vec2 m_StartDragPos;
     bool m_IsDragging = false;
+    bool m_IsLegendOpen = true;
 
     PadState* m_Pad;
 
     MapKorok* m_Koroks;
     MapLocation* m_Locations;
+
+    Legend* m_Legend;
 
 public:
     Map();
@@ -51,10 +54,4 @@ public:
     bool IsInView(glm::vec2 position, float margin);
 
     ~Map();
-};
-
-class MapChunk
-{
-public:
-    glm::vec2 m_Position;
 };

@@ -6,6 +6,7 @@
 #include "Graphics/BasicVertices.h"
 #include "MapKorok.h"
 #include "MapLocation.h"
+#include "Legend.h"
 
 #include "SavefileIO.h" 
 
@@ -77,6 +78,9 @@ Map::Map()
     m_Font.m_ProjectionMatrix = &m_ProjectionMatrix;
     m_Font.m_ViewMatrix = &m_ViewMatrix;
 
+    // Create ui
+    m_Legend = new Legend(this);
+
     // Create koroks
     m_Koroks = new MapKorok[900];
     for (int i = 0; i < 900; i++)
@@ -143,11 +147,12 @@ void Map::Update()
     // Show all koroks and locations
     if (buttonsPressed & HidNpadButton_X)
     {
-        for (int i = 0; i < 900; i++)
-            m_Koroks[i].m_ShowAnyway = true;
+        m_IsLegendOpen = !m_IsLegendOpen;
+        // for (int i = 0; i < 900; i++)
+        //     m_Koroks[i].m_ShowAnyway = true;
 
-        for (int i = 0; i < 187; i++)
-            m_Locations[i].m_ShowAnyway = true;
+        // for (int i = 0; i < 187; i++)
+        //     m_Locations[i].m_ShowAnyway = true;
     }
 
     // Show only those that are found
@@ -223,6 +228,9 @@ void Map::Update()
         m_Locations[i].Update();
 
     m_PrevCameraPosition = m_CameraPosition;
+
+    if (m_IsLegendOpen) 
+        m_Legend->Update();
 }
 
 void Map::Render()
@@ -237,41 +245,47 @@ void Map::Render()
 
     m_Shader.Unbind();
 
-    for (int i = 0; i < 900; i++)
-        m_Koroks[i].Render();
+    //for (int i = 0; i < 900; i++)
+      //  m_Koroks[i].Render();
+
+    if (m_IsLegendOpen) 
+        m_Legend->Render();
+    
         
 
-    for (int i = 0; i < 187; i++)
-        m_Locations[i].Render();
-
-    // Render stats text
-    glm::mat4 emptyViewMatrix(1.0);
-    m_Font.m_ViewMatrix = &emptyViewMatrix; // Don't draw the text relative to the camera 
+    //for (int i = 0; i < 187; i++)
+        //m_Locations[i].Render();
 
     float textScale = 0.5f;
+
+    //m_Font.RenderText("Press Y to open Legend", glm::vec2(0, 0), textScale, glm::vec3(1.0f) /* white */);
+
+    // Render stats text
+    // glm::mat4 emptyViewMatrix(1.0);
+    // m_Font.m_ViewMatrix = &emptyViewMatrix; // Don't draw the text relative to the camera 
     
-    // Koroks
-    std::string koroksText = std::to_string(SavefileIO::foundKoroks.size()) + " / 900 koroks found";
+    // // Koroks
+    // std::string koroksText = std::to_string(SavefileIO::foundKoroks.size()) + " / 900 koroks found";
 
-    glm::vec2 koroksPadding(25.0f, 25.0f);
-    glm::vec2 koroksPosition = glm::vec2(-m_CameraWidth / 2, -m_CameraHeight / 2) + koroksPadding;
+    // glm::vec2 koroksPadding(25.0f, 25.0f);
+    // glm::vec2 koroksPosition = glm::vec2(-m_CameraWidth / 2, -m_CameraHeight / 2) + koroksPadding;
 
-    // Render the text and get the width, so the next text can be relative to that
-    glm::vec2 koroksTextSize = m_Font.RenderText(koroksText, koroksPosition, textScale, glm::vec3(1.0f) /* white */);
+    // // Render the text and get the width, so the next text can be relative to that
+    // glm::vec2 koroksTextSize = m_Font.RenderText(koroksText, koroksPosition, textScale, glm::vec3(1.0f) /* white */);
 
-    // Locations
-    std::string locationsText = std::to_string(SavefileIO::visitedLocations.size()) + " / 187 locations visited";
+    // // Locations
+    // std::string locationsText = std::to_string(SavefileIO::visitedLocations.size()) + " / 187 locations visited";
 
-    glm::vec2 locationsPadding(25.0f, 0.0f);
-    glm::vec2 locationsPosition = koroksPosition + glm::vec2(koroksTextSize.x, 0.0f) /* only use the text width, not height */ + locationsPadding;
+    // glm::vec2 locationsPadding(25.0f, 0.0f);
+    // glm::vec2 locationsPosition = koroksPosition + glm::vec2(koroksTextSize.x, 0.0f) /* only use the text width, not height */ + locationsPadding;
 
-    // Render the text
-    m_Font.RenderText(locationsText, locationsPosition, textScale, glm::vec3(1.0f) /* white */);
+    // // Render the text
+    // m_Font.RenderText(locationsText, locationsPosition, textScale, glm::vec3(1.0f) /* white */);
 
-    glm::vec2 showAllPosition(-m_CameraWidth / 2 + koroksPadding.x, m_CameraHeight / 2 - (koroksTextSize.y + koroksPadding.y));
+    // glm::vec2 showAllPosition(-m_CameraWidth / 2 + koroksPadding.x, m_CameraHeight / 2 - (koroksTextSize.y + koroksPadding.y));
 
-    // Render the text
-    m_Font.RenderText("Hold X to show all koroks and locations, L and R to zoom, - to reset zoom, + to exit", showAllPosition, textScale, glm::vec3(1.0f) /* white */);
+    // // Render the text
+    // m_Font.RenderText("Hold X to show all koroks and locations, L and R to zoom, - to reset zoom, + to exit", showAllPosition, textScale, glm::vec3(1.0f) /* white */);
 
     m_Font.m_ViewMatrix = &m_ViewMatrix;
 }
