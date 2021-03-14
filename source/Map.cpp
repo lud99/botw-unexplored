@@ -94,7 +94,10 @@ void Map::Init()
         if (std::find(SavefileIO::foundKoroks.begin(), SavefileIO::foundKoroks.end(), &Data::Koroks[i]) != SavefileIO::foundKoroks.end()) {
             m_Koroks[i].m_Found = true;
         }
+
+        m_Koroks[i].AddToMesh();
     }
+    m_Koroks->m_Mesh.Update();
 
     // Create locations
     m_Locations = new MapLocation[187];
@@ -245,10 +248,13 @@ void Map::Render()
 
     m_Shader.Unbind();
 
-    for (int i = 0; i < 900; i++) {
-        if (m_Legend->m_Show[IconButton::ButtonTypes::Koroks])
-             m_Koroks[i].Render();
-    }
+    if (m_Legend->m_Show[IconButton::ButtonTypes::Koroks])
+        m_Koroks[0].Render();
+
+    // for (int i = 0; i < 900; i++) {
+    //     if (m_Legend->m_Show[IconButton::ButtonTypes::Koroks])
+    //          m_Koroks[i].Render();
+    // }
       //  m_Koroks[i].Render();
 
     if (m_IsLegendOpen) 

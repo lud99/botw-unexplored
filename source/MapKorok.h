@@ -17,13 +17,13 @@ namespace Data
 class MapKorok
 {
 public:
-    Mesh<TextureVertex> m_Mesh;
+    static Mesh<TextureVertex> m_Mesh;
     static Texture2D* m_Texture;
     static Shader m_Shader;
 
     Data::Korok* m_KorokData;
 
-    glm::vec2 m_Position;
+    glm::vec2 m_Position = glm::vec2(0.0f, 0.0f);
     bool m_Found = false;
     bool m_ShowAnyway = false;
 
@@ -31,6 +31,8 @@ public:
 
 public:
     MapKorok();
+
+    void AddToMesh();
 
     void Update();
     void Render();
