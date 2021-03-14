@@ -2,6 +2,11 @@
 
 #include <fstream>
 #include <dirent.h>
+#include <iostream>
+#include <fcntl.h>   // open
+#include <unistd.h>  // read, write, close
+#include <cstdio>    // BUFSIZ
+#include <thread>
 
 #include <iostream>
 #include <iomanip>
@@ -23,7 +28,7 @@ uint32_t SavefileIO::ReadU32(unsigned char* buffer, int offset)
 
 bool SavefileIO::MountSavefile()
 {
-    Result rc=0;
+    Result rc=0; 
 
     AccountUid uid={0};
     u64 application_id=0x01007ef00011e000; //ApplicationId of the save to mount, in this case BOTW.
@@ -49,27 +54,8 @@ bool SavefileIO::MountSavefile()
         return false;
     }
 
-    //At this point you can use the mounted device with standard stdio.
-    //After modifying savedata, in order for the changes to take affect you must use: rc = fsdevCommitDevice("save");
-    //See also libnx fs_dev.h for fsdevCommitDevice.
-
-    DIR* dir = opendir("save:/"); //Open the "save:/" directory.
-    struct dirent* ent;
-    if(dir==NULL)
-    {
-        printf("Failed to open save:/.\n");
-
-        return false;
-    }
-    else
-    {
-        printf("Dir-listing for 'save:/':\n");
-        while ((ent = readdir(dir)))
-        {
-            printf("%s\n", ent->d_name);
-        }
-        closedir(dir);
-    }
+    AccountUid1 = uid.uid[0];
+    AccountUid2 = uid.uid[1];
 
     return true;
 }
@@ -81,9 +67,107 @@ bool SavefileIO::UnmountSavefile()
     return R_SUCCEEDED(fsdevUnmountDevice("save"));
 }
 
+void SavefileIO::CopySavefiles(u64 uid1, u64 uid2, bool* doneFlag)
+{
+    printf("Started copy thread\n");
+
+    std::vector<std::string> savefileFolders;
+
+    DIR* dir = opendir("save:/");
+    if(dir==NULL)
+    {
+        printf("Couldn't copy savefiles. Failed to open 'save:/'\n");
+
+        *doneFlag = true;
+
+        return;
+    }
+    else
+    {
+        // Normal mode file
+        if (DirectoryExists("save:/0"))
+            savefileFolders.push_back("0");
+        // Master mode file
+        if (DirectoryExists("save:/7"))
+            savefileFolders.push_back("7");
+        // Prioritize file 7, but copy file 6 if 7 doesn't exist
+        else if (DirectoryExists("save:/6"))
+            savefileFolders.push_back("6");
+
+        closedir(dir);
+    }
+
+    std::string profileIdStr = std::to_string(uid1) + " - " + std::to_string(uid2);
+    std::string savesFolder = "sdmc:/switch/botw-unexplored/saves/" + profileIdStr;
+
+    if (!DirectoryExists("sdmc:/switch/botw-unexplored"))
+        mkdir("sdmc:/switch/botw-unexplored", 0777);
+    if (!DirectoryExists("sdmc:/switch/botw-unexplored/saves"))
+        mkdir("sdmc:/switch/botw-unexplored/saves", 0777);
+    if (!DirectoryExists(savesFolder))
+        mkdir(savesFolder.c_str(), 0777);
+
+    for (unsigned int i = 0; i < savefileFolders.size(); i++)
+    {
+        // Create the destination folder if it doesn't exist
+        if (!DirectoryExists(savesFolder + "/" + savefileFolders[i]))
+            mkdir(std::string(savesFolder + "/" + savefileFolders[i]).c_str(), 0777);
+
+        // Copy the savefiles
+        std::string target = savesFolder + "/" + savefileFolders[i] + "/game_data.sav";
+
+        CopyFile("save:/" + savefileFolders[i] + "/game_data.sav", target);
+
+        std::cout << "Copied savefile " << savefileFolders[i] << " to " << target << "\n";
+    }
+
+    SavefileIO::UnmountSavefile();
+
+    *doneFlag = true;
+
+    printf("Finished copying savefiles\n");
+}
+
+bool SavefileIO::CopyFile(const std::string& file, const std::string& destination)
+{
+    size_t BUFFER_SIZE = 4096;
+
+    char buf[BUFFER_SIZE];
+    size_t size;
+
+    int source = open(file.c_str(), O_RDONLY, 0);
+    int dest = open(destination.c_str(), O_WRONLY | O_CREAT /*| O_TRUNC*/, 0644);
+
+    while ((size = read(source, buf, BUFSIZ)) > 0) {
+        write(dest, buf, size);
+    }
+
+    close(source);
+    close(dest);
+
+    return true;
+}
+
+bool SavefileIO::DirectoryExists(const std::string& filepath)
+{
+    DIR* dir = opendir(filepath.c_str());
+    if (dir) {
+        closedir(dir);
+
+        return true;
+    } else if (ENOENT == errno)
+        return false;
+    else {
+        std::cout << "DirectoryExists() " << filepath << "\n";
+        return false;
+    }
+
+    return false;
+}
+
 bool SavefileIO::ParseFile(const char* filepath)
 {
-    printf("Opening savefile '%s'...\n", filepath);
+    printf("Opening savefile '%s'\n", filepath);
 
     int res = access(filepath, R_OK);
     if (res < 0) {
@@ -99,8 +183,6 @@ bool SavefileIO::ParseFile(const char* filepath)
 
     std::ifstream file;
 	file.open(filepath, std::ios::binary);
-
-    printf("Parsing savefile '%s'...\n", filepath);
 
 	// Get length of file
 	file.seekg(0, file.end);
@@ -192,3 +274,6 @@ std::vector<Data::Talus*> SavefileIO::undefeatedTaluses;
 
 std::vector<Data::Molduga*> SavefileIO::defeatedMoldugas;
 std::vector<Data::Molduga*> SavefileIO::undefeatedMoldugas;
+
+u64 SavefileIO::AccountUid1;
+u64 SavefileIO::AccountUid2;

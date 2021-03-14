@@ -123,7 +123,7 @@ Shader ShaderLoader::CreateShader(const std::string& vertexPath, const std::stri
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
 
-    printf("Created shader program with the id %u\n", program);
+    //printf("Created shader program with the id %u\n", program);
 
 	return Shader(program);
 }
@@ -142,7 +142,7 @@ Shader ShaderLoader::CreateShaderFromSource(const std::string& vertexSource, con
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
 
-    printf("Created shader program with the id %u\n", program);
+    //printf("Created shader program with the id %u\n", program);
 
 	return Shader(program);
 }

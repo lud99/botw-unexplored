@@ -2,6 +2,8 @@
 
 #include <vector>
 #include <cstdint>
+#include <switch.h>
+#include <thread>
 
 #include "Data.h"
 
@@ -27,5 +29,13 @@ namespace SavefileIO
     bool MountSavefile();
     bool UnmountSavefile();
 
+    void CopySavefiles(u64 uid1, u64 uid2, bool* doneFlag);
+    bool CopyFile(const std::string& file, const std::string& destination);
+
     bool ParseFile(const char* filepath);
+
+    bool DirectoryExists(const std::string& filepath);
+
+    extern u64 AccountUid1;
+    extern u64 AccountUid2;
 };

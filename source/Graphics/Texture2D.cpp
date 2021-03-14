@@ -35,7 +35,7 @@ void Texture2D::Load(const std::string& filepath)
 	unsigned char* data = stbi_load(filepath.c_str(), &m_Width, &m_Height, &m_NrChannels, 0);
 	if (data)
 	{
-        std::cout << "Loaded texture " << filepath << "...\n";
+        //std::cout << "Loaded texture " << filepath << "...\n";
 
         if (m_NrChannels == 3)
 		    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_Width, m_Height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);

@@ -15,14 +15,10 @@
 #include "Map.h"
 #include "Accounts.h"
 
-/*printf("%u korok seeds have been found, %u are missing\n", foundKoroks.size(), missingKoroks.size());
-printf("%u locations have been visited, %u are missing\n", visitedLocations.size(), unexploredLocations.size());
-printf("%u hinoxes have been defeated, %u remains\n", defeatedHinoxes.size(), undefeatedHinoxes.size());
-printf("%u taluses have been defeated, %u remains\n", defeatedTaluses.size(), undefeatedTaluses.size());
-printf("%u moldugas have been defeated, %u remains\n", defeatedMoldugas.size(), undefeatedMoldugas.size());*/
-
 bool openGLInitialized = false;
 bool nxLinkInitialized = false;
+
+bool copyThreadDone = false;
 
 void cleanUp();
 
@@ -34,8 +30,6 @@ bool LoadGamesave()
     if (SavefileIO::MountSavefile()) {
         bool success = SavefileIO::ParseFile("save:/0/game_data.sav");
 
-        SavefileIO::UnmountSavefile();
-
         if (!success) return false;
 
         return true;
@@ -43,8 +37,6 @@ bool LoadGamesave()
     // Failed to mount it. Can happen if no profile was choosen, or some other account thing went wrong 
     else {
         printf("Failed to mount save directory\n");
-
-        SavefileIO::UnmountSavefile();
 
         return false;
     }
@@ -71,6 +63,7 @@ int main()
 
     // Load gamesave and exit if it fails to do so
     bool loadedSavefile = LoadGamesave();
+
     // {
         // printf("Failed to open the savefile from that user. Make sure the user has a save file\n");
 
@@ -105,6 +98,9 @@ int main()
 
     //     return EXIT_SUCCESS;
     // }
+
+    // copy the savefiles
+    std::thread copyThread(SavefileIO::CopySavefiles, SavefileIO::AccountUid1, SavefileIO::AccountUid2, &copyThreadDone);
 
 	while (appletMainLoop())
 	{
@@ -142,6 +138,15 @@ int main()
 void cleanUp()
 {
     printf("Exiting, cleaning up...");
+
+    if (!copyThreadDone)
+    {
+        printf("Waiting for thread...");
+        while (!copyThreadDone)
+        {
+
+        };
+    }
         
     // Cleanup
     if (Map::m_IsInitialized) Map::Destory();
