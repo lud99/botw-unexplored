@@ -28,21 +28,23 @@ void cleanUp();
 
 bool LoadGamesave()
 {
-    return SavefileIO::ParseFile("romfs:/game_data.sav");
+    //return SavefileIO::ParseFile("romfs:/game_data.sav");
     
     // Try to mount the save directory
     if (SavefileIO::MountSavefile()) {
         bool success = SavefileIO::ParseFile("save:/0/game_data.sav");
 
-        if (!success) return false;
-
         SavefileIO::UnmountSavefile();
+
+        if (!success) return false;
 
         return true;
     } 
     // Failed to mount it. Can happen if no profile was choosen, or some other account thing went wrong 
     else {
         printf("Failed to mount save directory\n");
+
+        SavefileIO::UnmountSavefile();
 
         return false;
     }
@@ -68,16 +70,16 @@ int main()
     padInitializeDefault(&pad);
 
     // Load gamesave and exit if it fails to do so
-    if (!LoadGamesave())
-    {
-        printf("Failed to open the savefile from that user. Make sure the user has a save file\n");
+    bool loadedSavefile = LoadGamesave();
+    // {
+        // printf("Failed to open the savefile from that user. Make sure the user has a save file\n");
 
-        cleanUp();
+        // //cleanUp();
 
-        return EXIT_SUCCESS;
-    } else {
-        printf("Loaded savefile\n");
-    }
+        // return EXIT_SUCCESS;
+    // } else {
+    //     printf("Loaded savefile\n");
+    // }
 
     // OpenGL
     // Initialize EGL on the default window
@@ -94,6 +96,15 @@ int main()
     
     Map::Init();
     Map::m_Pad = &pad;
+
+    if (!loadedSavefile) LoadGamesave();
+    // {
+    //     printf("Failed to open the savefile from that user. Make sure the user has a save file\n");
+
+    //     cleanUp();
+
+    //     return EXIT_SUCCESS;
+    // }
 
 	while (appletMainLoop())
 	{
@@ -133,7 +144,7 @@ void cleanUp()
     printf("Exiting, cleaning up...");
         
     // Cleanup
-    Map::Destory();
+    if (Map::m_IsInitialized) Map::Destory();
 
     romfsExit();
 

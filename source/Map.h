@@ -10,7 +10,10 @@
 
 #include <switch.h>
 
-class MapKorok;
+#include "Data.h"
+
+template <typename T> class MapObject;
+
 class MapLocation;
 class Legend;
 namespace Map
@@ -46,10 +49,16 @@ namespace Map
     extern glm::vec2 m_StartDragPos;
     extern bool m_IsDragging;
     extern bool m_IsLegendOpen;
+    extern bool m_IsInitialized;
 
     extern PadState* m_Pad;
 
-    extern MapKorok* m_Koroks;
+    extern MapObject<Data::Korok>* m_Koroks;
+    //extern MapObject<Data::Korok>* m_Shrines;
+    extern MapObject<Data::Hinox>* m_Hinoxes;
+    extern MapObject<Data::Talus>* m_Taluses;
+    extern MapObject<Data::Molduga>* m_Moldugas;
+
     extern MapLocation* m_Locations;
 
     extern Legend* m_Legend;

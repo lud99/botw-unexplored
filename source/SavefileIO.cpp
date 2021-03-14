@@ -83,9 +83,6 @@ bool SavefileIO::UnmountSavefile()
 
 bool SavefileIO::ParseFile(const char* filepath)
 {
-	std::ifstream file;
-	file.open(filepath, std::ios::binary);
-
     printf("Opening savefile '%s'...\n", filepath);
 
     int res = access(filepath, R_OK);
@@ -99,6 +96,9 @@ bool SavefileIO::ParseFile(const char* filepath)
 
         return false;
     }
+
+    std::ifstream file;
+	file.open(filepath, std::ios::binary);
 
     printf("Parsing savefile '%s'...\n", filepath);
 

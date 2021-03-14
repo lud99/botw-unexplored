@@ -52,6 +52,9 @@ public:
 public:
 	Texture2D* m_Texture = nullptr;
 
+    bool m_UseDynamicBuffer = false;
+    unsigned int m_DynamicBufferSize = 0;
+
 protected:
 	std::vector<VertexT> m_Vertices;
 	std::vector<uint16_t> m_Indices;
@@ -95,7 +98,17 @@ void Mesh<VertexT>::UpdateVertices(const std::vector<VertexT>& vertices)
 {
 	// Don't update the vertices if there are none
 	if (vertices.empty())
-		return;
+    {
+        // Allocate buffer
+        if (m_UseDynamicBuffer)
+        {
+            if (m_Vbo == 0)
+		        glGenBuffers(1, &m_Vbo);
+
+            glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
+            glBufferData(GL_ARRAY_BUFFER, m_DynamicBufferSize, nullptr, GL_DYNAMIC_DRAW);
+        }
+    }
 
 	m_Vertices = vertices;
 
@@ -114,7 +127,10 @@ void Mesh<VertexT>::UpdateVertices(const std::vector<VertexT>& vertices)
 		glGenBuffers(1, &m_Ebo);
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
-	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(VertexT), &vertices[0], GL_STATIC_DRAW);
+    if (m_UseDynamicBuffer)
+	    glBufferSubData(GL_ARRAY_BUFFER, 0, vertices.size() * sizeof(VertexT), &vertices[0]);
+    else
+        glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(VertexT), &vertices[0], GL_STATIC_DRAW);
 
 	if (!m_Indices.empty())
 	{

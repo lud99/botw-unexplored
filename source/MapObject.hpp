@@ -1,17 +1,58 @@
-#include "MapKorok.h"
+#pragma once
 
-#include <switch.h>
-#include <iostream>
+#include "Graphics/Mesh.hpp"
+#include "Graphics/Shader.h" 
+#include "Graphics/Texture2D.h"
+#include "Graphics/BasicVertices.h"
 
 #include "Map.h"
-#include "Graphics/BasicVertices.h"
-#include "SavefileIO.h"
 
-MapKorok::MapKorok()
+#include <glm/vec2.hpp>
+
+class Texture2D;
+
+template <typename T>
+class MapObject
 {
-    // Only load one texture for all the 900 koroks
+public:
+    static Texture2D* m_Texture;
+    static Shader m_Shader;
+    static Mesh<TextureVertex> m_Mesh;
+
+    T* m_ObjectData;
+
+    glm::vec2 m_Position = glm::vec2(0.0f, 0.0f);
+    bool m_Found = false;
+    
+    static bool m_ShowAnyway;
+
+    static float m_Scale;
+
+public:
+    MapObject();
+
+    void Init(const std::string& path, int count);
+
+    void AddToMesh();
+
+    void Update();
+    void Render();
+
+    ~MapObject();
+};
+
+template <typename T>
+MapObject<T>::MapObject()
+{
+    
+}
+
+template <typename T>
+void MapObject<T>::Init(const std::string& path, int count)
+{
+    // Only load one texture
     if (!m_Texture)
-        m_Texture = new Texture2D("romfs:/korokseed.png");
+        m_Texture = new Texture2D(path);
 
     // Only create shader if it's the first 
     if (m_Shader.m_id == 0)
@@ -27,12 +68,10 @@ MapKorok::MapKorok()
 
             uniform mat4 u_ProjectionMatrix = mat4(1.0);
             uniform mat4 u_ViewMatrix = mat4(1.0);
-            uniform mat4 u_ModelMatrix = mat4(1.0);
-            uniform float u_Scale;
 
             void main()
             {
-                gl_Position = u_ProjectionMatrix * u_ViewMatrix * vec4(position * u_Scale, 1.0);
+                gl_Position = u_ProjectionMatrix * u_ViewMatrix * vec4(position, 1.0);
 
                 passTextureCoord = texCoord;
             }
@@ -58,13 +97,18 @@ MapKorok::MapKorok()
         m_Shader = ShaderLoader::CreateShaderFromSource(vertexShaderSource, fragmentShaderSource);
 
         m_Mesh.m_Texture = m_Texture;
+        m_Mesh.m_UseDynamicBuffer = true;
+        m_Mesh.m_DynamicBufferSize = sizeof(TextureVertex) * 4 * count;
+
+        m_Mesh.Update();
     }
 }
 
-void MapKorok::AddToMesh()
+template <typename T>
+void MapObject<T>::AddToMesh()
 {   
     glm::vec3 vertexPositions[4];
-    BasicVertices::Quad::Construct(vertexPositions, m_Position, m_Texture->m_Width, m_Texture->m_Height);
+    BasicVertices::Quad::Construct(vertexPositions, m_Position, m_Texture->m_Width * m_Scale, m_Texture->m_Height * m_Scale);
 
     for (int i = 0; i < 4; i++)
     {
@@ -79,37 +123,44 @@ void MapKorok::AddToMesh()
         m_Mesh.AddIndex(BasicVertices::Quad::Indices[i] + m_Mesh.GetVertices().size() - 4);
 }
 
-void MapKorok::Update()
+template <typename T>
+void MapObject<T>::Update()
 {
-    m_Scale = 1.0f / Map::m_Zoom;
+    // Set dynamic mesh
+    
+    // Culling 
+    float margin = m_Texture->m_Width + 10.0f;
+    if (!Map::IsInView(m_Position, margin)) 
+        return;
+
+    AddToMesh();
 }
 
-void MapKorok::Render()
+template <typename T>
+void MapObject<T>::Render()
 {
     if (m_Found && !m_ShowAnyway) return;
 
-    // Culling 
-    // float margin = 30.0f; // The width of the texture (korok size)
+    m_Scale = 1.0f / Map::m_Zoom;
 
-    // Don't render if not in view
-    //if (!Map::IsInView(m_Position, margin)) 
-        //return;
-
-    // glm::mat4 modelMatrix(1.0f);
-    // modelMatrix = glm::translate(modelMatrix, glm::vec3(m_Position, 1.0));
+    m_Mesh.Update();
 
     m_Shader.Bind();
 
     m_Shader.SetUniform("u_ProjectionMatrix", Map::m_ProjectionMatrix);
     m_Shader.SetUniform("u_ViewMatrix", Map::m_ViewMatrix);
-    m_Shader.SetUniform("u_Scale", m_Scale);
 
     m_Mesh.Render();
 
     m_Shader.Unbind();
+
+    // Clear the mesh
+    m_Mesh.GetVertices().clear();
+    m_Mesh.GetIndices().clear();
 }
 
-MapKorok::~MapKorok()
+template <typename T>
+MapObject<T>::~MapObject()
 {
     // Delete the texture (only once)
     if (m_Texture) {
@@ -123,6 +174,14 @@ MapKorok::~MapKorok()
         m_Shader.Delete();
 }
 
-Texture2D* MapKorok::m_Texture;
-Shader MapKorok::m_Shader;
-Mesh<TextureVertex> MapKorok::m_Mesh;
+template <typename T>
+Texture2D* MapObject<T>::m_Texture;
+template <typename T>
+Shader MapObject<T>::m_Shader;
+template <typename T>
+Mesh<TextureVertex> MapObject<T>::m_Mesh;
+
+template <typename T>
+bool MapObject<T>::m_ShowAnyway;
+template <typename T>
+float MapObject<T>::m_Scale;

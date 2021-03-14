@@ -4,9 +4,9 @@
 #include <switch.h>
 
 #include "Graphics/BasicVertices.h"
-#include "MapKorok.h"
 #include "MapLocation.h"
 #include "Legend.h"
+#include "MapObject.hpp"
 
 #include "SavefileIO.h" 
 
@@ -78,26 +78,72 @@ void Map::Init()
     m_Font.m_ProjectionMatrix = &m_ProjectionMatrix;
     m_Font.m_ViewMatrix = &m_ViewMatrix;
 
-    // Create ui
+    // Create UI
     m_Legend = new Legend();
 
     // Create koroks
-    m_Koroks = new MapKorok[900];
-    for (int i = 0; i < 900; i++)
+    m_Koroks = new MapObject<Data::Korok>[Data::KoroksCount];
+    m_Koroks[0].Init("romfs:/korokseed.png", Data::KoroksCount);
+    for (int i = 0; i < Data::KoroksCount; i++)
     {
         // The data has down being positive and up being negative. This renderer uses the opposite, so reverse the koroks y-coordinate
         m_Koroks[i].m_Position = glm::vec2(Data::Koroks[i].x, -Data::Koroks[i].y) * 0.5f;
 
-        m_Koroks[i].m_KorokData = &Data::Koroks[i];
+        m_Koroks[i].m_ObjectData = &Data::Koroks[i];
 
         // Check if the korok has been found (if the found vector contains it)
         if (std::find(SavefileIO::foundKoroks.begin(), SavefileIO::foundKoroks.end(), &Data::Koroks[i]) != SavefileIO::foundKoroks.end()) {
             m_Koroks[i].m_Found = true;
         }
-
-        m_Koroks[i].AddToMesh();
     }
-    m_Koroks->m_Mesh.Update();
+
+    // Create hinoxes
+    m_Hinoxes = new MapObject<Data::Hinox>[Data::HinoxesCount];
+    m_Hinoxes[0].Init("romfs:/hinox.png", Data::HinoxesCount);
+    for (int i = 0; i < Data::HinoxesCount; i++)
+    {
+        // The data has down being positive and up being negative. This renderer uses the opposite, so reverse the koroks y-coordinate
+        m_Hinoxes[i].m_Position = glm::vec2(Data::Hinoxes[i].x, -Data::Hinoxes[i].y) * 0.5f;
+
+        m_Hinoxes[i].m_ObjectData = &Data::Hinoxes[i];
+
+        // Check if the korok has been found (if the found vector contains it)
+        if (std::find(SavefileIO::defeatedHinoxes.begin(), SavefileIO::defeatedHinoxes.end(), &Data::Hinoxes[i]) != SavefileIO::defeatedHinoxes.end()) {
+            m_Hinoxes[i].m_Found = true;
+        }
+    }
+
+    // Create taluses
+    m_Taluses = new MapObject<Data::Talus>[Data::TalusesCount];
+    m_Taluses[0].Init("romfs:/talus.png", Data::TalusesCount);
+    for (int i = 0; i < Data::TalusesCount; i++)
+    {
+        // The data has down being positive and up being negative. This renderer uses the opposite, so reverse the koroks y-coordinate
+        m_Taluses[i].m_Position = glm::vec2(Data::Taluses[i].x, -Data::Taluses[i].y) * 0.5f;
+
+        m_Taluses[i].m_ObjectData = &Data::Taluses[i];
+
+        // Check if the korok has been found (if the found vector contains it)
+        if (std::find(SavefileIO::defeatedTaluses.begin(), SavefileIO::defeatedTaluses.end(), &Data::Taluses[i]) != SavefileIO::defeatedTaluses.end()) {
+            m_Taluses[i].m_Found = true;
+        }
+    }
+
+    // Create moldugas
+    m_Moldugas = new MapObject<Data::Molduga>[Data::MoldugasCount];
+    m_Moldugas[0].Init("romfs:/molduga.png", Data::MoldugasCount);
+    for (int i = 0; i < Data::MoldugasCount; i++)
+    {
+        // The data has down being positive and up being negative. This renderer uses the opposite, so reverse the koroks y-coordinate
+        m_Moldugas[i].m_Position = glm::vec2(Data::Moldugas[i].x, -Data::Moldugas[i].y) * 0.5f;
+
+        m_Moldugas[i].m_ObjectData = &Data::Moldugas[i];
+
+        // Check if the korok has been found (if the found vector contains it)
+        if (std::find(SavefileIO::defeatedMoldugas.begin(), SavefileIO::defeatedMoldugas.end(), &Data::Moldugas[i]) != SavefileIO::defeatedMoldugas.end()) {
+            m_Moldugas[i].m_Found = true;
+        }
+    }
 
     // Create locations
     m_Locations = new MapLocation[187];
@@ -115,7 +161,8 @@ void Map::Init()
             m_Locations[i].m_Found = true;
         }
     }
-        
+
+    m_IsInitialized = true;
 }
 
 void Map::Update()
@@ -147,11 +194,6 @@ void Map::Update()
     if (buttonsPressed & HidNpadButton_X)
     {
         m_IsLegendOpen = !m_IsLegendOpen;
-        // for (int i = 0; i < 900; i++)
-        //     m_Koroks[i].m_ShowAnyway = true;
-
-        // for (int i = 0; i < 187; i++)
-        //     m_Locations[i].m_ShowAnyway = true;
     }
 
     // Show only those that are found
@@ -223,8 +265,14 @@ void Map::Update()
     m_ViewMatrix = glm::translate(m_ViewMatrix, glm::vec3(-m_CameraPosition, 1.0));
 
     // Update koroks
-    for (int i = 0; i < 900; i++)
+    for (int i = 0; i < Data::KoroksCount; i++)
         m_Koroks[i].Update();
+    for (int i = 0; i < Data::HinoxesCount; i++)
+        m_Hinoxes[i].Update();
+    for (int i = 0; i < Data::TalusesCount; i++)
+        m_Taluses[i].Update();
+    for (int i = 0; i < Data::MoldugasCount; i++)
+        m_Moldugas[i].Update();
 
     // Update locations
     for (int i = 0; i < 187; i++)
@@ -250,22 +298,20 @@ void Map::Render()
 
     if (m_Legend->m_Show[IconButton::ButtonTypes::Koroks])
         m_Koroks[0].Render();
-
-    // for (int i = 0; i < 900; i++) {
-    //     if (m_Legend->m_Show[IconButton::ButtonTypes::Koroks])
-    //          m_Koroks[i].Render();
-    // }
-      //  m_Koroks[i].Render();
+    if (m_Legend->m_Show[IconButton::ButtonTypes::Hinoxes])
+        m_Hinoxes[0].Render();
+    if (m_Legend->m_Show[IconButton::ButtonTypes::Taluses])
+        m_Taluses[0].Render();
+    if (m_Legend->m_Show[IconButton::ButtonTypes::Moldugas])
+        m_Moldugas[0].Render();
 
     if (m_IsLegendOpen) 
         m_Legend->Render();
-    
-        
 
     //for (int i = 0; i < 187; i++)
         //m_Locations[i].Render();
 
-    float textScale = 0.5f;
+    //float textScale = 0.5f;
 
     //m_Font.RenderText("Press Y to open Legend", glm::vec2(0, 0), textScale, glm::vec3(1.0f) /* white */);
 
@@ -320,7 +366,12 @@ bool Map::IsInView(glm::vec2 position, float margin = 100.0f)
 
 void Map::Destory()
 {
+    if (!m_IsInitialized) return;
+    
     delete[] m_Koroks;
+    delete[] m_Hinoxes;
+    delete[] m_Taluses;
+    delete[] m_Moldugas;
     delete[] m_Locations;
 }
 
@@ -342,9 +393,13 @@ glm::vec2 Map::m_PrevTouchPosition;
 glm::vec2 Map::m_StartDragPos;
 bool Map::m_IsDragging = false;
 bool Map::m_IsLegendOpen = true;
+bool Map::m_IsInitialized = false;
 
 PadState* Map::m_Pad;
-MapKorok* Map::m_Koroks;
+MapObject<Data::Korok>* Map::m_Koroks;
+MapObject<Data::Hinox>* Map::m_Hinoxes;
+MapObject<Data::Talus>* Map::m_Taluses;
+MapObject<Data::Molduga>* Map::m_Moldugas;
 MapLocation* Map::m_Locations;
 
 Legend* Map::m_Legend;
