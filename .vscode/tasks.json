@@ -27,9 +27,9 @@
             ]
         },
         {
-            "type": "process",
+            "type": "shell",
             "label": "Build",
-            "command": "make",
+            "command": "make -j 4",
             "problemMatcher": []
         }
     ],

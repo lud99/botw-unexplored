@@ -184,11 +184,15 @@ void Map::Update()
         {   
             m_PrevTouchCount = state.count;
 
-            // Check if the finger was pressed
-            if (state.count == 1)
+            // Dont drag if finger is on the legend
+            if (!(m_IsLegendOpen && m_Legend->IsPositionOnLegend(touchPosition)))
             {
-                m_IsDragging = true;
-                m_PrevTouchPosition = touchPosition; // The origin of the drag
+                // Check if the finger was pressed
+                if (state.count == 1)
+                {
+                    m_IsDragging = true;
+                    m_PrevTouchPosition = touchPosition; // The origin of the drag
+                }
             }
                 
             // Check if the finger was released
@@ -241,7 +245,10 @@ void Map::Render()
 
     m_Shader.Unbind();
 
-    //for (int i = 0; i < 900; i++)
+    for (int i = 0; i < 900; i++) {
+        if (m_Legend->m_Show[IconButton::ButtonTypes::Koroks])
+             m_Koroks[i].Render();
+    }
       //  m_Koroks[i].Render();
 
     if (m_IsLegendOpen) 

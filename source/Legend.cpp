@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include <glm/gtc/matrix_inverse.hpp>
+
 #include "Map.h"
 #include "SavefileIO.h"
 
@@ -11,36 +13,37 @@ Legend::Legend()
     float top = Map::m_CameraHeight / 2.0f;
     float bottom = -Map::m_CameraHeight / 2.0f;
 
-    float width = 400.0f;
-
     m_Background.Create(
         glm::vec2(left, bottom),
-        glm::vec2(left + width, bottom),
-        glm::vec2(left + width, top),
+        glm::vec2(left + m_Width, bottom),
+        glm::vec2(left + m_Width, top),
         glm::vec2(left, top)
     );
 
     m_Background.m_ProjectionMatrix = &Map::m_ProjectionMatrix;
 
-    m_Background.m_Color = glm::vec4(0.0f, 0.0f, 0.0f, 0.4f);
+    m_Background.m_Color = glm::vec4(0.0f, 0.0f, 0.0f, 0.5f);
 
     float buttonPadding = 25.0f;
     float buttonVerticalPadding = 25.0f;
 
-    float topOffset = 150.0f;
+    float topOffset = 80.0f;
     float buttonHeight = 65.0f;
     for (int y = 0; y < IconButton::ButtonTypes::Count; y++)
     {
         float topY = top - (buttonHeight * y) - (topOffset + buttonVerticalPadding * y);
 
         float posLeft = left + buttonPadding;
-        float buttonWidth = width - (buttonPadding * 2);
+        float buttonWidth = m_Width - (buttonPadding * 2);
 
         IconButton* button = new IconButton((IconButton::ButtonTypes)y, glm::vec2(posLeft, topY), buttonWidth, buttonHeight, 1.25f);
-        button->m_Button.m_Color = glm::vec4(0.0f, 0.0f, 0.0f, 0.7f);
+        button->m_Button.m_Color = IconButton::DefaultColor;
 
         m_Buttons.push_back(button);
     }
+
+    // Set first highlighted button
+    UpdateSelectedButton();
 }
 
 void Legend::Update()
@@ -71,13 +74,58 @@ void Legend::Update()
                     {
                         if (touchPosition.y > bottom && touchPosition.y < top)
                         {
-                            std::cout << "Clicked button!\n";
+                            button->Click(this);
+
+                            m_HighlightedButton = i;
+                            UpdateSelectedButton();
+                            
+                            break;
                         }
                     }
                 }
             }
         }
     }
+
+    u64 buttonsPressed = padGetButtonsDown(Map::m_Pad);
+    if (buttonsPressed & HidNpadButton_Down)
+    {
+        if (m_HighlightedButton < (int)m_Buttons.size() - 1)
+        {
+            m_HighlightedButton++;
+
+            UpdateSelectedButton();
+        }
+    }
+    if (buttonsPressed & HidNpadButton_Up)
+    {
+        if (m_HighlightedButton > 0)
+        {
+            m_HighlightedButton--;
+
+            UpdateSelectedButton();
+        }
+    }
+    if (buttonsPressed & HidNpadButton_A)
+    {
+        // Bounds check
+        if (m_HighlightedButton >= 0 && m_HighlightedButton < (int)m_Buttons.size())
+        {
+            m_Buttons[m_HighlightedButton]->Click(this);
+        }
+    }
+}
+
+void Legend::UpdateSelectedButton()
+{
+    for (unsigned int i = 0; i < m_Buttons.size(); i++) {
+        if (m_Buttons[i]->m_Button.m_Color == IconButton::SelectedColor)
+            m_Buttons[i]->m_Button.m_Color = IconButton::DefaultColor;
+
+        m_Buttons[i]->m_IsSelected = false;
+    }
+
+    m_Buttons[m_HighlightedButton]->m_IsSelected = true;
 }
 
 void Legend::Render()
@@ -98,6 +146,18 @@ void Legend::Render()
     }
 
     Map::m_Font.m_ViewMatrix = &Map::m_ViewMatrix;
+}
+
+bool Legend::IsPositionOnLegend(glm::vec2 position)
+{
+    float left = -Map::m_CameraWidth / 2;
+    if (position.x > left && position.x < left + m_Width) {
+        if (position.y > -Map::m_CameraHeight / 2 && position.y < Map::m_CameraWidth / 2) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 Legend::~Legend()
@@ -157,19 +217,28 @@ IconButton::IconButton(ButtonTypes type, glm::vec2 position, float width, float 
     }
 
     m_Button.Create(
-        glm::vec2(position.x, position.y + height),
-        glm::vec2(position.x + width, position.y + height),
+        glm::vec2(position.x, position.y - height),
+        glm::vec2(position.x + width, position.y - height),
         glm::vec2(position.x + width, position.y),
         glm::vec2(position.x, position.y)
     );
 
     m_Button.m_ProjectionMatrix = &Map::m_ProjectionMatrix;
 
+    m_Border.Create(
+        "romfs:/buttonborder.png",
+        glm::vec2(position.x, position.y - height),
+        glm::vec2(position.x + width, position.y - height),
+        glm::vec2(position.x + width, position.y),
+        glm::vec2(position.x, position.y)
+    );
+    m_Border.m_ProjectionMatrix = &Map::m_ProjectionMatrix;
+
     m_Icon.Create(iconPath);
     m_Icon.m_Scale = iconScale;
 
     float iconLeftMargin = 35.0f;
-    m_Icon.m_Position = glm::vec2(position.x + iconLeftMargin, position.y + height / 2.0f);
+    m_Icon.m_Position = glm::vec2(position.x + iconLeftMargin, position.y - height / 2.0f);
 
     m_Icon.m_ProjectionMatrix = &Map::m_ProjectionMatrix;
 }
@@ -177,6 +246,8 @@ IconButton::IconButton(ButtonTypes type, glm::vec2 position, float width, float 
 void IconButton::Render()
 {
     m_Button.Render();
+    if (m_IsSelected) m_Border.Render();
+
     m_Icon.Render();
 
     float mainTextMargin = 35.0f;
@@ -220,3 +291,23 @@ void IconButton::Render()
     Map::m_Font.RenderText(m_Text, mainTextPosition, 0.5f, glm::vec3(1.0));
     Map::m_Font.RenderText(countString, countTextPosition, 0.5f, glm::vec3(1.0), ALIGN_RIGHT);
 }
+
+bool IconButton::Click(Legend* legend)
+{
+    bool enabled = m_Button.m_Color == IconButton::HighlightedColor;
+
+    if (enabled)
+        m_Button.m_Color = IconButton::DefaultColor;
+    else
+        m_Button.m_Color = IconButton::HighlightedColor;
+
+    bool newState = !enabled;
+
+    legend->m_Show[m_Type] = newState;
+
+    return newState;
+}
+
+constexpr glm::vec4 IconButton::HighlightedColor;
+constexpr glm::vec4 IconButton::DefaultColor;
+constexpr glm::vec4 IconButton::SelectedColor;

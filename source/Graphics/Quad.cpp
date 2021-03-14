@@ -71,7 +71,11 @@ void Quad::Render()
     glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0), glm::vec3(m_Position, 0.0f));
 
     m_Shader.SetUniform("u_ModelMatrix", modelMatrix);
-    m_Shader.SetUniform("u_Color", m_Color);
+
+    glm::vec4 color = m_Color;
+    if (color.r > 1.0f) color = color / glm::vec4(255.0f, 255.0f, 255.0f, 1.0f);
+
+    m_Shader.SetUniform("u_Color", color);
 
     m_Mesh.Render();
 
