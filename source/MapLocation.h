@@ -10,8 +10,6 @@
 
 #include <switch.h>
 
-class Map;
-
 namespace Data
 {
     struct Location;
@@ -20,11 +18,6 @@ namespace Data
 class MapLocation
 {
 public:
-    static Font* m_Font;
-    Text m_Text;
-
-    static Map* m_Map;
-
     Data::Location* m_LocationData;
 
     glm::vec2 m_Position;

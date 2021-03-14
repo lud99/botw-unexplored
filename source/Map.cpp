@@ -10,7 +10,7 @@
 
 #include "SavefileIO.h" 
 
-Map::Map()
+void Map::Init()
 {
     m_Texture.Load("romfs:/BotW-Map-lowres.png");
 
@@ -79,13 +79,12 @@ Map::Map()
     m_Font.m_ViewMatrix = &m_ViewMatrix;
 
     // Create ui
-    m_Legend = new Legend(this);
+    m_Legend = new Legend();
 
     // Create koroks
     m_Koroks = new MapKorok[900];
     for (int i = 0; i < 900; i++)
     {
-        m_Koroks[i].m_Map = this;
         // The data has down being positive and up being negative. This renderer uses the opposite, so reverse the koroks y-coordinate
         m_Koroks[i].m_Position = glm::vec2(Data::Koroks[i].x, -Data::Koroks[i].y) * 0.5f;
 
@@ -101,9 +100,6 @@ Map::Map()
     m_Locations = new MapLocation[187];
     for (int i = 0; i < 187; i++)
     {
-        m_Locations[i].m_Map = this;
-        m_Locations[i].m_Font = &m_Font;
-        
         // The data has down being positive and up being negative. This renderer uses the opposite, so reverse the koroks y-coordinate
         m_Locations[i].m_Position = glm::vec2(Data::Locations[i].x, -Data::Locations[i].y) * 0.5f;
 
@@ -309,8 +305,33 @@ bool Map::IsInView(glm::vec2 position, float margin = 100.0f)
     return true;
 }
 
-Map::~Map()
+void Map::Destory()
 {
     delete[] m_Koroks;
     delete[] m_Locations;
 }
+
+Mesh<TextureVertex> Map::m_Mesh;
+Texture2D Map::m_Texture;
+Shader Map::m_Shader;
+Font Map::m_Font;
+
+float Map::m_Zoom = Map::m_DefaultZoom;
+
+glm::mat4 Map::m_ProjectionMatrix = glm::mat4(1.0f);
+glm::mat4 Map::m_ViewMatrix = glm::mat4(1.0f);
+
+glm::vec2 Map::m_CameraPosition = glm::vec2(0.0f, 0.0f);
+glm::vec2 Map::m_PrevCameraPosition;
+
+int Map::m_PrevTouchCount = 0;
+glm::vec2 Map::m_PrevTouchPosition;
+glm::vec2 Map::m_StartDragPos;
+bool Map::m_IsDragging = false;
+bool Map::m_IsLegendOpen = true;
+
+PadState* Map::m_Pad;
+MapKorok* Map::m_Koroks;
+MapLocation* Map::m_Locations;
+
+Legend* Map::m_Legend;

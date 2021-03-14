@@ -2,13 +2,12 @@
 
 #include "Graphics/Quad.h"
 
-class Map;
 class IconButton;
 
 class Legend
 {
 public:
-    Legend(Map* map);
+    Legend();
 
     void Update();
     void Render();
@@ -17,7 +16,6 @@ public:
 
 public:
     Quad m_Background;
-    Map* m_Map;
 
     TexturedQuad m_ShrineIcon;
 
@@ -43,7 +41,7 @@ public:
     IconButton();
 
     // Position is top-left corner
-    IconButton(Map* map, ButtonTypes type, glm::vec2 position, float width, float height, float iconScale = 1.0f);
+    IconButton(ButtonTypes type, glm::vec2 position, float width, float height, float iconScale = 1.0f);
 
     void Render();
 
@@ -53,7 +51,6 @@ public:
     Quad m_Button;
     TexturedQuad m_Icon;
     std::string m_Text;
-    Map* m_Map;
 
     ButtonTypes m_Type = ButtonTypes::Koroks;
 

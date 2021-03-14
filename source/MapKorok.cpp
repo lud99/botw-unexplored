@@ -79,7 +79,7 @@ MapKorok::MapKorok()
 
 void MapKorok::Update()
 {
-    m_Scale = 1.0f / m_Map->m_Zoom;
+    m_Scale = 1.0f / Map::m_Zoom;
 }
 
 void MapKorok::Render()
@@ -90,7 +90,7 @@ void MapKorok::Render()
     float margin = 30.0f; // The width of the texture (korok size)
 
     // Don't render if not in view
-    if (!m_Map->IsInView(m_Position, margin)) 
+    if (!Map::IsInView(m_Position, margin)) 
         return;
 
     glm::mat4 modelMatrix(1.0f);
@@ -98,8 +98,8 @@ void MapKorok::Render()
 
     m_Shader.Bind();
 
-    m_Shader.SetUniform("u_ProjectionMatrix", m_Map->m_ProjectionMatrix);
-    m_Shader.SetUniform("u_ViewMatrix", m_Map->m_ViewMatrix);
+    m_Shader.SetUniform("u_ProjectionMatrix", Map::m_ProjectionMatrix);
+    m_Shader.SetUniform("u_ViewMatrix", Map::m_ViewMatrix);
     m_Shader.SetUniform("u_ModelMatrix", modelMatrix);
     m_Shader.SetUniform("u_Scale", m_Scale);
 
@@ -124,4 +124,3 @@ MapKorok::~MapKorok()
 
 Texture2D* MapKorok::m_Texture;
 Shader MapKorok::m_Shader;
-Map* MapKorok::m_Map;

@@ -9,8 +9,6 @@
 
 #include <switch.h>
 
-class Map;
-
 namespace Data
 {
     struct Korok;
@@ -22,8 +20,6 @@ public:
     Mesh<TextureVertex> m_Mesh;
     static Texture2D* m_Texture;
     static Shader m_Shader;
-
-    static Map* m_Map;
 
     Data::Korok* m_KorokData;
 

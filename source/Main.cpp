@@ -21,7 +21,6 @@ printf("%u hinoxes have been defeated, %u remains\n", defeatedHinoxes.size(), un
 printf("%u taluses have been defeated, %u remains\n", defeatedTaluses.size(), undefeatedTaluses.size());
 printf("%u moldugas have been defeated, %u remains\n", defeatedMoldugas.size(), undefeatedMoldugas.size());*/
 
-Map* map;
 bool openGLInitialized = false;
 bool nxLinkInitialized = false;
 
@@ -93,8 +92,8 @@ int main()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);  
     
-    map = new Map();
-    map->m_Pad = &pad;
+    Map::Init();
+    Map::m_Pad = &pad;
 
 	while (appletMainLoop())
 	{
@@ -110,10 +109,10 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
 
         // Update
-        map->Update();
+        Map::Update();
 
         // Render
-        map->Render();
+        Map::Render();
 
         eglSwapBuffers(s_display, s_surface);
 
@@ -134,7 +133,7 @@ void cleanUp()
     printf("Exiting, cleaning up...");
         
     // Cleanup
-    delete map;
+    Map::Destory();
 
     romfsExit();
 

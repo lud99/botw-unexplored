@@ -5,13 +5,11 @@
 #include "Map.h"
 #include "SavefileIO.h"
 
-Legend::Legend(Map* map)
+Legend::Legend()
 {
-    m_Map = map;
-
-    float left = -m_Map->m_CameraWidth / 2.0f;
-    float top = m_Map->m_CameraHeight / 2.0f;
-    float bottom = -m_Map->m_CameraHeight / 2.0f;
+    float left = -Map::m_CameraWidth / 2.0f;
+    float top = Map::m_CameraHeight / 2.0f;
+    float bottom = -Map::m_CameraHeight / 2.0f;
 
     float width = 400.0f;
 
@@ -22,7 +20,7 @@ Legend::Legend(Map* map)
         glm::vec2(left, top)
     );
 
-    m_Background.m_ProjectionMatrix = &m_Map->m_ProjectionMatrix;
+    m_Background.m_ProjectionMatrix = &Map::m_ProjectionMatrix;
 
     m_Background.m_Color = glm::vec4(0.0f, 0.0f, 0.0f, 0.4f);
 
@@ -38,7 +36,7 @@ Legend::Legend(Map* map)
         float posLeft = left + buttonPadding;
         float buttonWidth = width - (buttonPadding * 2);
 
-        IconButton* button = new IconButton(m_Map, (IconButton::ButtonTypes)y, glm::vec2(posLeft, topY), buttonWidth, buttonHeight, 1.25f);
+        IconButton* button = new IconButton((IconButton::ButtonTypes)y, glm::vec2(posLeft, topY), buttonWidth, buttonHeight, 1.25f);
         button->m_Button.m_Color = glm::vec4(0.0f, 0.0f, 0.0f, 0.7f);
 
         m_Buttons.push_back(button);
@@ -58,7 +56,7 @@ void Legend::Update()
             if (state.count == 1)
             {
                 // Convert to more suitable coords
-                glm::vec2 touchPosition = glm::vec2(state.touches[0].x - m_Map->m_CameraWidth / 2, -(state.touches[0].y - m_Map->m_CameraHeight / 2)); 
+                glm::vec2 touchPosition = glm::vec2(state.touches[0].x - Map::m_CameraWidth / 2, -(state.touches[0].y - Map::m_CameraHeight / 2)); 
 
                 for (unsigned int i = 0; i < m_Buttons.size(); i++)
                 {
@@ -87,19 +85,19 @@ void Legend::Render()
     m_Background.Render();
 
     glm::mat4 empty(1.0);
-    m_Map->m_Font.m_ViewMatrix = &empty;
+    Map::m_Font.m_ViewMatrix = &empty;
 
-    float viewLeft = -m_Map->m_CameraWidth / 2;
-    float viewTop = m_Map->m_CameraHeight / 2;
-    m_Map->m_Font.RenderText("Map Legend", glm::vec2(viewLeft + 25.0f, viewTop - 55.0f), 0.75f, glm::vec3(1.0));
-    m_Map->m_Font.RenderText("X to close", glm::vec2(viewLeft + 400.0f - 25.0f, viewTop - 55.0f), 0.5f, glm::vec3(1.0), ALIGN_RIGHT);
+    float viewLeft = -Map::m_CameraWidth / 2;
+    float viewTop = Map::m_CameraHeight / 2;
+    Map::m_Font.RenderText("Map Legend", glm::vec2(viewLeft + 25.0f, viewTop - 55.0f), 0.75f, glm::vec3(1.0));
+    Map::m_Font.RenderText("X to close", glm::vec2(viewLeft + 400.0f - 25.0f, viewTop - 55.0f), 0.5f, glm::vec3(1.0), ALIGN_RIGHT);
 
     for (unsigned int i = 0; i < m_Buttons.size(); i++)
     {
         m_Buttons[i]->Render();
     }
 
-    m_Map->m_Font.m_ViewMatrix = &m_Map->m_ViewMatrix;
+    Map::m_Font.m_ViewMatrix = &Map::m_ViewMatrix;
 }
 
 Legend::~Legend()
@@ -113,9 +111,8 @@ IconButton::IconButton()
 
 }
 
-IconButton::IconButton(Map* map, ButtonTypes type, glm::vec2 position, float width, float height, float iconScale)
+IconButton::IconButton(ButtonTypes type, glm::vec2 position, float width, float height, float iconScale)
 {
-    m_Map = map;
     m_Width = width;
     m_Height = height;
     m_Position = position;
@@ -166,7 +163,7 @@ IconButton::IconButton(Map* map, ButtonTypes type, glm::vec2 position, float wid
         glm::vec2(position.x, position.y)
     );
 
-    m_Button.m_ProjectionMatrix = &m_Map->m_ProjectionMatrix;
+    m_Button.m_ProjectionMatrix = &Map::m_ProjectionMatrix;
 
     m_Icon.Create(iconPath);
     m_Icon.m_Scale = iconScale;
@@ -174,7 +171,7 @@ IconButton::IconButton(Map* map, ButtonTypes type, glm::vec2 position, float wid
     float iconLeftMargin = 35.0f;
     m_Icon.m_Position = glm::vec2(position.x + iconLeftMargin, position.y + height / 2.0f);
 
-    m_Icon.m_ProjectionMatrix = &m_Map->m_ProjectionMatrix;
+    m_Icon.m_ProjectionMatrix = &Map::m_ProjectionMatrix;
 }
 
 void IconButton::Render()
@@ -220,6 +217,6 @@ void IconButton::Render()
         break;
     }
 
-    m_Map->m_Font.RenderText(m_Text, mainTextPosition, 0.5f, glm::vec3(1.0));
-    m_Map->m_Font.RenderText(countString, countTextPosition, 0.5f, glm::vec3(1.0), ALIGN_RIGHT);
+    Map::m_Font.RenderText(m_Text, mainTextPosition, 0.5f, glm::vec3(1.0));
+    Map::m_Font.RenderText(countString, countTextPosition, 0.5f, glm::vec3(1.0), ALIGN_RIGHT);
 }

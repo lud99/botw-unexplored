@@ -13,12 +13,12 @@ MapLocation::MapLocation()
 
 void MapLocation::Init()
 {
-    // Set the fonts matrices
-    m_Font->m_ProjectionMatrix = &m_Map->m_ProjectionMatrix;
-    m_Font->m_ViewMatrix = &m_Map->m_ViewMatrix;
+    // // Set the fonts matrices
+    // m_Font->m_ProjectionMatrix = &m_Map->m_ProjectionMatrix;
+    // m_Font->m_ViewMatrix = &m_Map->m_ViewMatrix;
 
-    // Set text font
-    m_Text.m_Font = m_Font;
+    // // Set text font
+    // m_Text.m_Font = m_Font;
 
     // Create text mesh
     //m_Text.Create(m_LocationData->displayName);
@@ -26,7 +26,7 @@ void MapLocation::Init()
 
 void MapLocation::Update()
 {
-    m_Scale = 0.25f / m_Map->m_Zoom;
+    m_Scale = 0.25f / Map::m_Zoom;
 }
 
 void MapLocation::Render()
@@ -40,22 +40,19 @@ void MapLocation::Render()
     margin += margin * m_Scale;
 
     // Don't render the text if it isn't in view
-    if (!m_Map->IsInView(m_Position, margin))
+    if (!Map::IsInView(m_Position, margin))
         return;
 
-    m_Font->RenderText(m_LocationData->displayName, m_Position, m_Scale, m_Color);
+    Map::m_Font.RenderText(m_LocationData->displayName, m_Position, m_Scale, m_Color);
 }
 
 void MapLocation::SetFontMatrices()
 {
-    m_Font->m_ProjectionMatrix = &m_Map->m_ProjectionMatrix;
-    m_Font->m_ViewMatrix = &m_Map->m_ViewMatrix;
+    Map::m_Font.m_ProjectionMatrix = &Map::m_ProjectionMatrix;
+    Map::m_Font.m_ViewMatrix = &Map::m_ViewMatrix;
 }
 
 MapLocation::~MapLocation()
 {
     
 }
-
-Font* MapLocation::m_Font;
-Map* MapLocation::m_Map;
