@@ -14,6 +14,7 @@
 #include "Graphics/Font.h"
 #include "Map.h"
 #include "Accounts.h"
+#include "Dialog.h"
 
 bool openGLInitialized = false;
 bool nxLinkInitialized = false;
@@ -25,48 +26,60 @@ bool LoadGamesave()
     // Try to mount the save directory
     int mountStatus = SavefileIO::MountSavefile();
 
+    glm::mat4 empty(1.0f);
+    Map::m_Font.m_ViewMatrix = &empty; 
+
     if (mountStatus == 1) { // Good
         // Draw loading text
-        //Map::m_Font.RenderText("Loading savefile...", glm::vec2(0.0f, 0.0f), 1.5f, glm::vec3(1.0f), ALIGN_CENTER);
-        //eglSwapBuffers(s_display, s_surface);
+        Map::m_Font.RenderText("Loading savefile...", glm::vec2(0.0f, 0.0f), 1.0f, glm::vec3(1.0f), ALIGN_CENTER);
+        eglSwapBuffers(s_display, s_surface);
 
         bool success = SavefileIO::ParseFile("save:/0/game_data.sav");
         if (!success) 
         {
             SavefileIO::UnmountSavefile();
+            Map::m_Dialog->SetOpen(true);
             return false;
         }
 
         SavefileIO::CopySavefiles(SavefileIO::AccountUid1, SavefileIO::AccountUid2);
         SavefileIO::UnmountSavefile();
 
-        return true;
+        Map::m_Dialog->SetOpen(false);
+        Map::m_IsLegendOpen = true;
     } 
     // Failed to mount it. Can happen if no profile was choosen, or some other account thing went wrong 
     else if (mountStatus == 0) {  // No save for profile
-        printf("No save exists for that profile\n");
+        printf("Canceled profile picker\n");
 
         return false;
     } else if (mountStatus == -1) { // Game is running
         printf("Game is running. Loading backup...\n");
 
         // Draw loading text
-        // Map::m_Font.RenderText("Loading savefile...", glm::vec2(0.0f, 0.0f), 1.5f, glm::vec3(1.0f), ALIGN_CENTER);
-        // eglSwapBuffers(s_display, s_surface);
+        Map::m_Font.RenderText("Loading savefile...", glm::vec2(0.0f, 0.0f), 1.0f, glm::vec3(1.0f), ALIGN_CENTER);
+        eglSwapBuffers(s_display, s_surface);
         
-        // bool loadedBackupSuccess = SavefileIO::LoadBackup("0");
+        bool loadedBackupSuccess = SavefileIO::LoadBackup("0");
 
-        // if (!loadedBackupSuccess) 
-        // {
-        //     SavefileIO::LoadedSavefile = false;
-        // }
+        if (!loadedBackupSuccess) 
+        {
+            SavefileIO::LoadedSavefile = false;
+            Map::m_Dialog->SetOpen(true);
 
-        // return loadedBackupSuccess;
+            return false;
+        }
+
+        Map::m_Dialog->SetOpen(false);
+        Map::m_IsLegendOpen = true;
     } else if (mountStatus == -2) { // User has no save data
         printf("The selected user has no save data\n");
+
+        Map::m_Dialog->SetOpen(true);
+        return false;
     }
 
-    return false;
+    return true;
 }
 
 int main()
@@ -115,10 +128,6 @@ int main()
     bool firstDraw = true;
     bool hasDoneDirstDraw = false;
 
-    LoadGamesave();
-
-    Map::UpdateMapObjects();
-
 	while (appletMainLoop())
 	{
         // Scan the gamepad. This should be done once for each frame
@@ -127,6 +136,9 @@ int main()
         u64 buttonsDown = padGetButtonsDown(&pad);
 
         if (buttonsDown & HidNpadButton_Plus)
+            break;
+
+        if (Map::m_ShouldExit)
             break;
 
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -138,11 +150,24 @@ int main()
         // Render
         Map::Render();
 
+        if (Map::m_ShouldChooseProfile)
+        {
+            Map::m_ShouldChooseProfile = false;
+
+            LoadGamesave();
+
+            Map::m_Font.m_ViewMatrix = &Map::m_ViewMatrix;
+
+            Map::UpdateMapObjects();
+        }
+
         if (firstDraw && hasDoneDirstDraw)
         {
-            // LoadGamesave();
+            LoadGamesave();
 
-            // Map::UpdateMapObjects();
+            Map::m_Font.m_ViewMatrix = &Map::m_ViewMatrix;
+
+            Map::UpdateMapObjects();
             firstDraw = false;
         }
 

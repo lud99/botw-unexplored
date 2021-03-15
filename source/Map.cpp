@@ -6,6 +6,7 @@
 #include "Graphics/BasicVertices.h"
 #include "MapLocation.h"
 #include "Legend.h"
+#include "Dialog.h"
 #include "MapObject.hpp"
 
 #include "SavefileIO.h" 
@@ -80,6 +81,7 @@ void Map::Init()
 
     // Create UI
     m_Legend = new Legend();
+    m_Dialog = new Dialog(glm::vec2(0.0f, 0.0f), 700.0f, 400.0f);
 
     // Create koroks
     m_Koroks = new MapObject<Data::Korok>[Data::KoroksCount];
@@ -202,7 +204,8 @@ void Map::Update()
     // Show all koroks and locations
     if (buttonsPressed & HidNpadButton_X)
     {
-        m_IsLegendOpen = !m_IsLegendOpen;
+        if (!m_Dialog->m_IsOpen)
+            m_IsLegendOpen = !m_IsLegendOpen;
     }
 
     // Show only those that are found
@@ -239,7 +242,8 @@ void Map::Update()
             m_PrevTouchCount = state.count;
 
             // Dont drag if finger is on the legend
-            if (!(m_IsLegendOpen && m_Legend->IsPositionOnLegend(touchPosition)))
+            if (!(m_IsLegendOpen && m_Legend->IsPositionOnLegend(touchPosition)) && 
+                !(m_Dialog->m_IsOpen && m_Dialog->IsPositionOn(touchPosition)))
             {
                 // Check if the finger was pressed
                 if (state.count == 1)
@@ -294,6 +298,9 @@ void Map::Update()
 
     if (m_IsLegendOpen) 
         m_Legend->Update();
+
+    if (m_Dialog->m_IsOpen) 
+        m_Dialog->Update();
 }
 
 void Map::Render()
@@ -322,6 +329,9 @@ void Map::Render()
 
     if (m_IsLegendOpen) 
         m_Legend->Render();
+
+    if (m_Dialog->m_IsOpen) 
+        m_Dialog->Render();
 
     glm::mat4 emptyViewMatrix(1.0);
     m_Font.m_ViewMatrix = &emptyViewMatrix; // Don't draw the text relative to the camera 
@@ -419,6 +429,8 @@ glm::vec2 Map::m_StartDragPos;
 bool Map::m_IsDragging = false;
 bool Map::m_IsLegendOpen = true;
 bool Map::m_IsInitialized = false;
+bool Map::m_ShouldExit = false;
+bool Map::m_ShouldChooseProfile = false;
 
 PadState* Map::m_Pad;
 MapObject<Data::Korok>* Map::m_Koroks;
@@ -428,3 +440,4 @@ MapObject<Data::Molduga>* Map::m_Moldugas;
 MapLocation* Map::m_Locations;
 
 Legend* Map::m_Legend;
+Dialog* Map::m_Dialog;

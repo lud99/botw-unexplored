@@ -41,7 +41,7 @@ namespace SavefileIO
     extern u64 AccountUid1;
     extern u64 AccountUid2;
 
-    extern bool FinishedCopying;
     extern bool LoadedSavefile;
     extern bool GameIsRunning;
+    extern bool NoSavefileForUser;
 };

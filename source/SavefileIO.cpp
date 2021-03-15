@@ -85,7 +85,10 @@ int SavefileIO::MountSavefile()
     fsSaveDataInfoReaderClose(&reader);
 
     if (!hasBotwSavedata)
+    {
+        NoSavefileForUser = true;
         return -2;
+    }
 
     rc = fsdevMountSaveData("save", botwId, uid);
     if (R_FAILED(rc))
@@ -148,8 +151,6 @@ void SavefileIO::CopySavefiles(u64 uid1, u64 uid2)
     {
         printf("Couldn't copy savefiles. Failed to open 'save:/'\n");
 
-        FinishedCopying = true;
-
         return;
     }
     else
@@ -192,8 +193,6 @@ void SavefileIO::CopySavefiles(u64 uid1, u64 uid2)
     }
 
     SavefileIO::UnmountSavefile();
-
-    FinishedCopying = true;
 }
 
 s32 SavefileIO::CopyFile(const std::string &srcPath, const std::string &dstPath)
@@ -260,8 +259,26 @@ bool SavefileIO::ParseFile(const char *filepath)
         else
             printf("Savefile '%s' failed\n", filepath);
 
+        NoSavefileForUser = true;
+
         return false;
     }
+
+    // Clear the current file data
+    foundKoroks.clear();
+    missingKoroks.clear();
+
+    visitedLocations.clear();
+    unexploredLocations.clear();
+
+    defeatedHinoxes.clear();
+    undefeatedHinoxes.clear();
+
+    defeatedTaluses.clear();
+    undefeatedTaluses.clear();
+
+    defeatedMoldugas.clear();
+    undefeatedMoldugas.clear();
 
     std::ifstream file;
     file.open(filepath, std::ios::binary);
@@ -361,6 +378,6 @@ std::vector<Data::Molduga *> SavefileIO::undefeatedMoldugas;
 
 u64 SavefileIO::AccountUid1;
 u64 SavefileIO::AccountUid2;
-bool SavefileIO::FinishedCopying = false;
 bool SavefileIO::LoadedSavefile = false;
 bool SavefileIO::GameIsRunning = false;
+bool SavefileIO::NoSavefileForUser = false;

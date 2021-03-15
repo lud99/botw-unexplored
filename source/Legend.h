@@ -68,8 +68,6 @@ public:
 public:
     Quad m_Background;
 
-    TexturedQuad m_ShrineIcon;
-
     std::vector<IconButton*> m_Buttons;
 
     float m_Width = 400.0f;

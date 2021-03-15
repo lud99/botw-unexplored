@@ -16,6 +16,8 @@ template <typename T> class MapObject;
 
 class MapLocation;
 class Legend;
+class Dialog;
+
 namespace Map
 {
     void Init();
@@ -56,6 +58,8 @@ namespace Map
     extern bool m_IsDragging;
     extern bool m_IsLegendOpen;
     extern bool m_IsInitialized;
+    extern bool m_ShouldExit;
+    extern bool m_ShouldChooseProfile;
 
     extern PadState* m_Pad;
 
@@ -68,4 +72,5 @@ namespace Map
     extern MapLocation* m_Locations;
 
     extern Legend* m_Legend;
+    extern Dialog* m_Dialog;
 };

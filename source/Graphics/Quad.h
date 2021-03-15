@@ -15,6 +15,7 @@ class Quad
 public:
     Quad();
 
+    void Create(glm::vec2 position, float width, float height);
     void Create(glm::vec2 bottomLeft, glm::vec2 bottomRight, glm::vec2 topRight, glm::vec2 topLeft);
 
     void Render();

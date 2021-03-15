@@ -8,6 +8,16 @@ Quad::Quad()
 
 }
 
+void Quad::Create(glm::vec2 position, float width, float height)
+{
+    glm::vec3 positions[4];
+    BasicVertices::Quad::Construct(positions, width, height);
+
+    m_Position = position;
+
+    Create(positions[0], positions[1], positions[2], positions[3]);
+}
+
 void Quad::Create(glm::vec2 bottomLeft, glm::vec2 bottomRight, glm::vec2 topRight, glm::vec2 topLeft)
 {
     if (m_Shader.m_id == 0) {
