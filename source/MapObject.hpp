@@ -100,7 +100,7 @@ void MapObject<T>::Init(const std::string& path, int count)
         m_Mesh.m_UseDynamicBuffer = true;
         m_Mesh.m_DynamicBufferSize = sizeof(TextureVertex) * 4 * count;
 
-        m_Mesh.Update();
+        m_Mesh.CreateEmptyBuffer();
     }
 }
 
@@ -126,23 +126,25 @@ void MapObject<T>::AddToMesh()
 template <typename T>
 void MapObject<T>::Update()
 {
-    // Set dynamic mesh
-
     if (m_Found && !m_ShowAnyway) 
         return;
+
+    m_Scale = 1.0f / Map::m_Zoom;
     
     // Culling 
     float margin = m_Texture->m_Width + 10.0f;
     if (!Map::IsInView(m_Position, margin)) 
         return;
 
+    // Set dynamic mesh
     AddToMesh();
 }
 
 template <typename T>
 void MapObject<T>::Render()
 {
-    m_Scale = 1.0f / Map::m_Zoom;
+    if (m_Mesh.GetVertices().empty())
+        return;
 
     m_Mesh.Update();
 

@@ -22,6 +22,8 @@ public:
 
 	void CreateVao();
 
+    void CreateEmptyBuffer();
+
 	void Update();
 	void UpdateVertices(const std::vector<VertexT>&);
 	void SetVertexAttributes();
@@ -88,6 +90,20 @@ void Mesh<VertexT>::CreateVao()
 }
 
 template <typename VertexT>
+void Mesh<VertexT>::CreateEmptyBuffer()
+{
+    // Allocate buffer
+    if (!m_UseDynamicBuffer)
+        return;
+
+    if (m_Vbo == 0)
+        glGenBuffers(1, &m_Vbo);
+
+    glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
+    glBufferData(GL_ARRAY_BUFFER, m_DynamicBufferSize, nullptr, GL_DYNAMIC_DRAW);
+}
+
+template <typename VertexT>
 void Mesh<VertexT>::Update()
 {
 	UpdateVertices(m_Vertices);
@@ -98,17 +114,7 @@ void Mesh<VertexT>::UpdateVertices(const std::vector<VertexT>& vertices)
 {
 	// Don't update the vertices if there are none
 	if (vertices.empty())
-    {
-        // Allocate buffer
-        if (m_UseDynamicBuffer)
-        {
-            if (m_Vbo == 0)
-		        glGenBuffers(1, &m_Vbo);
-
-            glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
-            glBufferData(GL_ARRAY_BUFFER, m_DynamicBufferSize, nullptr, GL_DYNAMIC_DRAW);
-        }
-    }
+        return;
 
 	m_Vertices = vertices;
 
