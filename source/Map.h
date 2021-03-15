@@ -20,6 +20,8 @@ namespace Map
 {
     void Init();
 
+    void UpdateMapObjects();
+
     void Update();
     void Render();
 

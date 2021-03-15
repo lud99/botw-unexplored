@@ -26,6 +26,7 @@ public:
     void Render();
 
     bool Click(Legend* legend);
+    bool Click(Legend* legend, bool toggled);
 
     ~IconButton();
 
@@ -36,6 +37,7 @@ public:
     std::string m_Text;
 
     bool m_IsSelected = false;
+    bool m_IsToggled = false;
 
     ButtonTypes m_Type = ButtonTypes::Koroks;
 

@@ -83,67 +83,19 @@ void Map::Init()
 
     // Create koroks
     m_Koroks = new MapObject<Data::Korok>[Data::KoroksCount];
-    m_Koroks[0].Init("romfs:/korokseed.png", Data::KoroksCount);
-    for (int i = 0; i < Data::KoroksCount; i++)
-    {
-        // The data has down being positive and up being negative. This renderer uses the opposite, so reverse the koroks y-coordinate
-        m_Koroks[i].m_Position = glm::vec2(Data::Koroks[i].x, -Data::Koroks[i].y) * 0.5f;
-
-        m_Koroks[i].m_ObjectData = &Data::Koroks[i];
-
-        // Check if the korok has been found (if the found vector contains it)
-        if (std::find(SavefileIO::foundKoroks.begin(), SavefileIO::foundKoroks.end(), &Data::Koroks[i]) != SavefileIO::foundKoroks.end()) {
-            m_Koroks[i].m_Found = true;
-        }
-    }
+    MapObject<Data::Korok>::Init("romfs:/korokseed.png", Data::KoroksCount);
 
     // Create hinoxes
     m_Hinoxes = new MapObject<Data::Hinox>[Data::HinoxesCount];
-    m_Hinoxes[0].Init("romfs:/hinox.png", Data::HinoxesCount);
-    for (int i = 0; i < Data::HinoxesCount; i++)
-    {
-        // The data has down being positive and up being negative. This renderer uses the opposite, so reverse the koroks y-coordinate
-        m_Hinoxes[i].m_Position = glm::vec2(Data::Hinoxes[i].x, -Data::Hinoxes[i].y) * 0.5f;
-
-        m_Hinoxes[i].m_ObjectData = &Data::Hinoxes[i];
-
-        // Check if the korok has been found (if the found vector contains it)
-        if (std::find(SavefileIO::defeatedHinoxes.begin(), SavefileIO::defeatedHinoxes.end(), &Data::Hinoxes[i]) != SavefileIO::defeatedHinoxes.end()) {
-            m_Hinoxes[i].m_Found = true;
-        }
-    }
-
+    MapObject<Data::Hinox>::Init("romfs:/hinox.png", Data::HinoxesCount);
+    
     // Create taluses
     m_Taluses = new MapObject<Data::Talus>[Data::TalusesCount];
-    m_Taluses[0].Init("romfs:/talus.png", Data::TalusesCount);
-    for (int i = 0; i < Data::TalusesCount; i++)
-    {
-        // The data has down being positive and up being negative. This renderer uses the opposite, so reverse the koroks y-coordinate
-        m_Taluses[i].m_Position = glm::vec2(Data::Taluses[i].x, -Data::Taluses[i].y) * 0.5f;
-
-        m_Taluses[i].m_ObjectData = &Data::Taluses[i];
-
-        // Check if the korok has been found (if the found vector contains it)
-        if (std::find(SavefileIO::defeatedTaluses.begin(), SavefileIO::defeatedTaluses.end(), &Data::Taluses[i]) != SavefileIO::defeatedTaluses.end()) {
-            m_Taluses[i].m_Found = true;
-        }
-    }
+    MapObject<Data::Talus>::Init("romfs:/talus.png", Data::TalusesCount);
 
     // Create moldugas
     m_Moldugas = new MapObject<Data::Molduga>[Data::MoldugasCount];
-    m_Moldugas[0].Init("romfs:/molduga.png", Data::MoldugasCount);
-    for (int i = 0; i < Data::MoldugasCount; i++)
-    {
-        // The data has down being positive and up being negative. This renderer uses the opposite, so reverse the koroks y-coordinate
-        m_Moldugas[i].m_Position = glm::vec2(Data::Moldugas[i].x, -Data::Moldugas[i].y) * 0.5f;
-
-        m_Moldugas[i].m_ObjectData = &Data::Moldugas[i];
-
-        // Check if the korok has been found (if the found vector contains it)
-        if (std::find(SavefileIO::defeatedMoldugas.begin(), SavefileIO::defeatedMoldugas.end(), &Data::Moldugas[i]) != SavefileIO::defeatedMoldugas.end()) {
-            m_Moldugas[i].m_Found = true;
-        }
-    }
+    MapObject<Data::Molduga>::Init("romfs:/molduga.png", Data::MoldugasCount);
 
     // Create locations
     m_Locations = new MapLocation[187];
@@ -162,7 +114,61 @@ void Map::Init()
         }
     }
 
+    UpdateMapObjects();
+
     m_IsInitialized = true;
+}
+
+void Map::UpdateMapObjects()
+{
+    for (int i = 0; i < Data::KoroksCount; i++) // Korok
+    {
+        m_Koroks[i].m_Position = glm::vec2(Data::Koroks[i].x, -Data::Koroks[i].y) * 0.5f;
+
+        m_Koroks[i].m_ObjectData = &Data::Koroks[i];
+
+        // Check if the korok has been found (if the found vector contains it)
+        if (std::find(SavefileIO::foundKoroks.begin(), SavefileIO::foundKoroks.end(), &Data::Koroks[i]) != SavefileIO::foundKoroks.end()) {
+            m_Koroks[i].m_Found = true;
+        }
+    }
+
+    for (int i = 0; i < Data::HinoxesCount; i++) // Hinox
+    {
+        m_Hinoxes[i].m_Position = glm::vec2(Data::Hinoxes[i].x, -Data::Hinoxes[i].y) * 0.5f;
+
+        m_Hinoxes[i].m_ObjectData = &Data::Hinoxes[i];
+
+        // Check if the korok has been found (if the found vector contains it)
+        if (std::find(SavefileIO::defeatedHinoxes.begin(), SavefileIO::defeatedHinoxes.end(), &Data::Hinoxes[i]) != SavefileIO::defeatedHinoxes.end()) {
+            m_Hinoxes[i].m_Found = true;
+        }
+    }
+
+    for (int i = 0; i < Data::TalusesCount; i++) // Talus
+    {
+        m_Taluses[i].m_Position = glm::vec2(Data::Taluses[i].x, -Data::Taluses[i].y) * 0.5f;
+
+        m_Taluses[i].m_ObjectData = &Data::Taluses[i];
+
+        // Check if the korok has been found (if the found vector contains it)
+        if (std::find(SavefileIO::defeatedTaluses.begin(), SavefileIO::defeatedTaluses.end(), &Data::Taluses[i]) != SavefileIO::defeatedTaluses.end()) {
+            m_Taluses[i].m_Found = true;
+        }
+    }
+
+    for (int i = 0; i < Data::MoldugasCount; i++) // Molduga
+    {
+        // The data has down being positive and up being negative. This renderer uses the opposite, so reverse the koroks y-coordinate
+        m_Moldugas[i].m_Position = glm::vec2(Data::Moldugas[i].x, -Data::Moldugas[i].y) * 0.5f;
+
+        m_Moldugas[i].m_ObjectData = &Data::Moldugas[i];
+
+        // Check if the korok has been found (if the found vector contains it)
+        if (std::find(SavefileIO::defeatedMoldugas.begin(), SavefileIO::defeatedMoldugas.end(), &Data::Moldugas[i]) != SavefileIO::defeatedMoldugas.end()) {
+            m_Moldugas[i].m_Found = true;
+        }
+    }
 }
 
 void Map::Update()
@@ -264,7 +270,7 @@ void Map::Update()
     m_ViewMatrix = glm::scale(m_ViewMatrix, glm::vec3(m_Zoom, m_Zoom, 0.0f));
     m_ViewMatrix = glm::translate(m_ViewMatrix, glm::vec3(-m_CameraPosition, 1.0));
 
-    // Update koroks
+    // Update objects
     for (int i = 0; i < Data::KoroksCount; i++)
         m_Koroks[i].Update();
     for (int i = 0; i < Data::HinoxesCount; i++)
@@ -296,14 +302,18 @@ void Map::Render()
 
     m_Shader.Unbind();
 
-    if (m_Legend->m_Show[IconButton::ButtonTypes::Koroks])
-        m_Koroks[0].Render();
-    if (m_Legend->m_Show[IconButton::ButtonTypes::Hinoxes])
-        m_Hinoxes[0].Render();
-    if (m_Legend->m_Show[IconButton::ButtonTypes::Taluses])
-        m_Taluses[0].Render();
-    if (m_Legend->m_Show[IconButton::ButtonTypes::Moldugas])
-        m_Moldugas[0].Render();
+    if (SavefileIO::LoadedSavefile)
+    {
+        if (m_Legend->m_Show[IconButton::ButtonTypes::Koroks])
+            MapObject<Data::Korok>::Render();
+        if (m_Legend->m_Show[IconButton::ButtonTypes::Hinoxes])
+            MapObject<Data::Hinox>::Render();
+        if (m_Legend->m_Show[IconButton::ButtonTypes::Taluses])
+            MapObject<Data::Talus>::Render();
+        if (m_Legend->m_Show[IconButton::ButtonTypes::Moldugas])
+           MapObject<Data::Molduga>::Render();
+    }
+
 
     if (m_IsLegendOpen) 
         m_Legend->Render();

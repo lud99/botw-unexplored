@@ -26,11 +26,13 @@ namespace SavefileIO
 
     uint32_t ReadU32(unsigned char* buffer, int offset);
 
-    bool MountSavefile();
+    int MountSavefile();
     bool UnmountSavefile();
 
-    void CopySavefiles(u64 uid1, u64 uid2, bool* doneFlag);
-    bool CopyFile(const std::string& file, const std::string& destination);
+    bool LoadBackup(const std::string& saveSlot);
+
+    void CopySavefiles(u64 uid1, u64 uid2);
+    s32 CopyFile(const std::string &srcPath, const std::string &dstPath);
 
     bool ParseFile(const char* filepath);
 
@@ -38,4 +40,7 @@ namespace SavefileIO
 
     extern u64 AccountUid1;
     extern u64 AccountUid2;
+
+    extern bool FinishedCopying;
+    extern bool LoadedSavefile;
 };

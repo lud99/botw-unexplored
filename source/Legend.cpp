@@ -29,18 +29,26 @@ Legend::Legend()
 
     float topOffset = 80.0f;
     float buttonHeight = 65.0f;
-    for (int y = 0; y < IconButton::ButtonTypes::Count; y++)
+    for (int i = 0; i < IconButton::ButtonTypes::Count; i++)
     {
-        float topY = top - (buttonHeight * y) - (topOffset + buttonVerticalPadding * y);
+        float topY = top - (buttonHeight * i) - (topOffset + buttonVerticalPadding * i);
 
         float posLeft = left + buttonPadding;
         float buttonWidth = m_Width - (buttonPadding * 2);
 
-        IconButton* button = new IconButton((IconButton::ButtonTypes)y, glm::vec2(posLeft, topY), buttonWidth, buttonHeight, 1.25f);
+        IconButton* button = new IconButton((IconButton::ButtonTypes)i, glm::vec2(posLeft, topY), buttonWidth, buttonHeight, 1.25f);
         button->m_Button.m_Color = IconButton::DefaultColor;
 
         m_Buttons.push_back(button);
+
+        m_Show[i] = false;
     }
+
+    // Show koroks and shrines by default
+    m_Buttons[0]->Click(this, true);
+    m_Show[0] = true;
+    m_Buttons[1]->Click(this, true);
+    m_Show[1] = true;
 
     // Set first highlighted button
     UpdateSelectedButton();
@@ -110,9 +118,7 @@ void Legend::Update()
     {
         // Bounds check
         if (m_HighlightedButton >= 0 && m_HighlightedButton < (int)m_Buttons.size())
-        {
             m_Buttons[m_HighlightedButton]->Click(this);
-        }
     }
 }
 
@@ -294,18 +300,30 @@ void IconButton::Render()
 
 bool IconButton::Click(Legend* legend)
 {
-    bool enabled = m_Button.m_Color == IconButton::HighlightedColor;
+    m_IsToggled = !m_IsToggled;
 
-    if (enabled)
-        m_Button.m_Color = IconButton::DefaultColor;
-    else
+    if (m_IsToggled)
         m_Button.m_Color = IconButton::HighlightedColor;
+    else
+        m_Button.m_Color = IconButton::DefaultColor;
 
-    bool newState = !enabled;
+    legend->m_Show[m_Type] = m_IsToggled;
 
-    legend->m_Show[m_Type] = newState;
+    return m_IsToggled;
+}
 
-    return newState;
+bool IconButton::Click(Legend* legend, bool toggled)
+{
+    m_IsToggled = toggled;
+
+    if (m_IsToggled)
+        m_Button.m_Color = IconButton::HighlightedColor;
+    else
+        m_Button.m_Color = IconButton::DefaultColor;
+
+    legend->m_Show[m_Type] = m_IsToggled;
+
+    return m_IsToggled;
 }
 
 constexpr glm::vec4 IconButton::HighlightedColor;

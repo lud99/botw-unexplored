@@ -31,12 +31,12 @@ public:
 public:
     MapObject();
 
-    void Init(const std::string& path, int count);
+    static void Init(const std::string& path, int count);
 
     void AddToMesh();
 
     void Update();
-    void Render();
+    static void Render();
 
     ~MapObject();
 };
@@ -127,6 +127,9 @@ template <typename T>
 void MapObject<T>::Update()
 {
     // Set dynamic mesh
+
+    if (m_Found && !m_ShowAnyway) 
+        return;
     
     // Culling 
     float margin = m_Texture->m_Width + 10.0f;
@@ -139,8 +142,6 @@ void MapObject<T>::Update()
 template <typename T>
 void MapObject<T>::Render()
 {
-    if (m_Found && !m_ShowAnyway) return;
-
     m_Scale = 1.0f / Map::m_Zoom;
 
     m_Mesh.Update();
@@ -182,6 +183,6 @@ template <typename T>
 Mesh<TextureVertex> MapObject<T>::m_Mesh;
 
 template <typename T>
-bool MapObject<T>::m_ShowAnyway;
+bool MapObject<T>::m_ShowAnyway = false;
 template <typename T>
 float MapObject<T>::m_Scale;
