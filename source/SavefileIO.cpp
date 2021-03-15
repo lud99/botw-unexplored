@@ -7,6 +7,8 @@
 #include <unistd.h> // read, write, close
 #include <cstdio>   // BUFSIZ
 #include <thread>
+#include <memory.h>
+#include <map>
 
 #include <iostream>
 #include <iomanip>
@@ -32,7 +34,7 @@ int SavefileIO::MountSavefile()
     Result rc = 0;
 
     AccountUid uid = {0};
-    u64 application_id = 0x01007ef00011e000; //ApplicationId of the save to mount, in this case BOTW.
+    u64 botwId = 0x01007ef00011e000; //ApplicationId of the save to mount, in this case BOTW.
 
     //Get the userID for save mounting. To mount common savedata, use an all-zero userID.
 
@@ -42,18 +44,55 @@ int SavefileIO::MountSavefile()
     AccountUid1 = uid.uid[0];
     AccountUid2 = uid.uid[1];
 
+    std::cout << "Choosen user uid: " << uid.uid[0] << ", " << uid.uid[1] << "\n";
+
     // Check if the user canceled the dialog (if so, the uid is not valid)
     if (!accountUidIsValid(&uid))
     {
-        printf("The user canceled the profile picker (or an error occurred)\n");
+        printf("The user canceled the profile picker\n");
         return 0;
     }
 
-    //You can use any device-name. If you want multiple saves mounted at the same time, you must use different device-names for each one.
-    rc = fsdevMountSaveData("save", application_id, uid); //See also libnx fs.h/fs_dev.h
+    FsSaveDataInfoReader reader;
+    FsSaveDataInfo info;
+    s64 total_entries = 0;
+
+    bool hasBotwSavedata = false;
+
+    Result res = fsOpenSaveDataInfoReader(&reader, FsSaveDataSpaceId_User);
+    if (R_FAILED(res)) {
+        printf("fsOpenSaveDataInfoReader() failed\n");
+        return -2;
+    }
+
+    while (true) {
+        res = fsSaveDataInfoReaderRead(&reader, &info, 1, &total_entries);
+        if (R_FAILED(res) || total_entries == 0) {
+            break;
+        }
+
+        if (info.save_data_type == FsSaveDataType_Account) {
+            // Check if the save is botw and belongs to the selected user
+            if (info.application_id == botwId && info.uid.uid[0] == uid.uid[0] && info.uid.uid[1] == uid.uid[1])
+            {
+                hasBotwSavedata = true;
+                printf("User has botw savedata\n");
+                break;
+            }
+        }
+    }
+
+    fsSaveDataInfoReaderClose(&reader);
+
+    if (!hasBotwSavedata)
+        return -2;
+
+    rc = fsdevMountSaveData("save", botwId, uid);
     if (R_FAILED(rc))
     {
-        printf("fsdevMountSaveData() failed: 0x%x\n", rc);
+        printf("Botw is running. Failed to mount save\n");
+        GameIsRunning = true;
+
         return -1;
     }
 
@@ -69,8 +108,6 @@ bool SavefileIO::UnmountSavefile()
 
 bool SavefileIO::LoadBackup(const std::string& saveSlot)
 {
-    std::cout << "Loading backup save " << saveSlot << "\n";
-
     std::string profileIdStr = std::to_string(AccountUid1) + " - " + std::to_string(AccountUid2);
     std::string savesFolder = "sdmc:/switch/botw-unexplored/saves/" + profileIdStr;
 
@@ -79,7 +116,10 @@ bool SavefileIO::LoadBackup(const std::string& saveSlot)
     if (!DirectoryExists("sdmc:/switch/botw-unexplored/saves"))
         return false;
     if (!DirectoryExists(savesFolder))
+    {
+        printf("No backups exist for this user\n");
         return false;
+    }
 
     std::string saveFilePath = savesFolder + "/" + saveSlot + "/game_data.sav";
     int res = access(saveFilePath.c_str(), R_OK);
@@ -323,3 +363,4 @@ u64 SavefileIO::AccountUid1;
 u64 SavefileIO::AccountUid2;
 bool SavefileIO::FinishedCopying = false;
 bool SavefileIO::LoadedSavefile = false;
+bool SavefileIO::GameIsRunning = false;

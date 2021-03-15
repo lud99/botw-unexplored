@@ -43,4 +43,5 @@ namespace SavefileIO
 
     extern bool FinishedCopying;
     extern bool LoadedSavefile;
+    extern bool GameIsRunning;
 };

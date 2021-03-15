@@ -11,14 +11,11 @@ namespace Data
     {
         uint32_t hash;
 
-        std::string internalName;
-        std::string displayName = "Korok";
-
         float x = 0;
         float y = 0;
 
-        Korok(uint32_t hash, const std::string& internalName, float x, float y) :
-            hash(hash), internalName(internalName), x(x), y(y) {};
+        Korok(uint32_t hash, float x, float y) :
+            hash(hash), x(x), y(y) {};
     };
 
     // For location names and their positions, https://github.com/MrCheeze/botw-waypoint-map/blob/gh-pages/map_locations.js
@@ -28,14 +25,13 @@ namespace Data
     {
         uint32_t hash;
 
-        std::string internalName;
         std::string displayName;
 
         float x = 0;
         float y = 0;
 
-        Location(uint32_t hash, const std::string& internalName, const std::string& displayName, float x, float y) :
-            hash(hash), internalName(internalName), displayName(displayName), x(x), y(y) {};
+        Location(uint32_t hash, const std::string& displayName, float x, float y) :
+            hash(hash), displayName(displayName), x(x), y(y) {};
     };
 
     // Hash and positions from https://github.com/marcrobledo/savegame-editors/blob/master/zelda-botw/zelda-botw.data.js  BOTW_DATA.COORDS[BOTW_Data.DEFEATED_HINOX[i]]

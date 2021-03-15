@@ -32,6 +32,10 @@ namespace Map
     const float m_DefaultZoom = 0.5f;
     const float m_CameraWidth = 1280.0f;
     const float m_CameraHeight = 720.0f;
+    const float m_ScreenLeft = -m_CameraWidth / 2.0f;
+    const float m_ScreenRight = m_CameraWidth / 2.0f;
+    const float m_ScreenTop = m_CameraHeight / 2.0f;
+    const float m_ScreenBottom = -m_CameraHeight / 2.0f;
 
     extern Mesh<TextureVertex> m_Mesh;
     extern Texture2D m_Texture;

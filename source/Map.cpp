@@ -99,20 +99,20 @@ void Map::Init()
 
     // Create locations
     m_Locations = new MapLocation[187];
-    for (int i = 0; i < 187; i++)
-    {
-        // The data has down being positive and up being negative. This renderer uses the opposite, so reverse the koroks y-coordinate
-        m_Locations[i].m_Position = glm::vec2(Data::Locations[i].x, -Data::Locations[i].y) * 0.5f;
+    // for (int i = 0; i < 187; i++)
+    // {
+    //     // The data has down being positive and up being negative. This renderer uses the opposite, so reverse the koroks y-coordinate
+    //     m_Locations[i].m_Position = glm::vec2(Data::Locations[i].x, -Data::Locations[i].y) * 0.5f;
 
-        m_Locations[i].m_LocationData = &Data::Locations[i];
+    //     m_Locations[i].m_LocationData = &Data::Locations[i];
 
-        m_Locations[i].Init();
+    //     m_Locations[i].Init();
 
-        // Check if the korok has been found (if the found vector contains it)
-        if (std::find(SavefileIO::visitedLocations.begin(), SavefileIO::visitedLocations.end(), &Data::Locations[i]) != SavefileIO::visitedLocations.end()) {
-            m_Locations[i].m_Found = true;
-        }
-    }
+    //     // Check if the korok has been found (if the found vector contains it)
+    //     if (std::find(SavefileIO::visitedLocations.begin(), SavefileIO::visitedLocations.end(), &Data::Locations[i]) != SavefileIO::visitedLocations.end()) {
+    //         m_Locations[i].m_Found = true;
+    //     }
+    // }
 
     UpdateMapObjects();
 
@@ -121,11 +121,14 @@ void Map::Init()
 
 void Map::UpdateMapObjects()
 {
+    if (!SavefileIO::LoadedSavefile)
+        return;
+
     for (int i = 0; i < Data::KoroksCount; i++) // Korok
     {
         m_Koroks[i].m_Position = glm::vec2(Data::Koroks[i].x, -Data::Koroks[i].y) * 0.5f;
 
-        m_Koroks[i].m_ObjectData = &Data::Koroks[i];
+        //m_Koroks[i].m_ObjectData = &Data::Koroks[i];
 
         // Check if the korok has been found (if the found vector contains it)
         if (std::find(SavefileIO::foundKoroks.begin(), SavefileIO::foundKoroks.end(), &Data::Koroks[i]) != SavefileIO::foundKoroks.end()) {
@@ -137,7 +140,7 @@ void Map::UpdateMapObjects()
     {
         m_Hinoxes[i].m_Position = glm::vec2(Data::Hinoxes[i].x, -Data::Hinoxes[i].y) * 0.5f;
 
-        m_Hinoxes[i].m_ObjectData = &Data::Hinoxes[i];
+        //m_Hinoxes[i].m_ObjectData = &Data::Hinoxes[i];
 
         // Check if the korok has been found (if the found vector contains it)
         if (std::find(SavefileIO::defeatedHinoxes.begin(), SavefileIO::defeatedHinoxes.end(), &Data::Hinoxes[i]) != SavefileIO::defeatedHinoxes.end()) {
@@ -149,7 +152,7 @@ void Map::UpdateMapObjects()
     {
         m_Taluses[i].m_Position = glm::vec2(Data::Taluses[i].x, -Data::Taluses[i].y) * 0.5f;
 
-        m_Taluses[i].m_ObjectData = &Data::Taluses[i];
+        //m_Taluses[i].m_ObjectData = &Data::Taluses[i];
 
         // Check if the korok has been found (if the found vector contains it)
         if (std::find(SavefileIO::defeatedTaluses.begin(), SavefileIO::defeatedTaluses.end(), &Data::Taluses[i]) != SavefileIO::defeatedTaluses.end()) {
@@ -162,7 +165,7 @@ void Map::UpdateMapObjects()
         // The data has down being positive and up being negative. This renderer uses the opposite, so reverse the koroks y-coordinate
         m_Moldugas[i].m_Position = glm::vec2(Data::Moldugas[i].x, -Data::Moldugas[i].y) * 0.5f;
 
-        m_Moldugas[i].m_ObjectData = &Data::Moldugas[i];
+        //m_Moldugas[i].m_ObjectData = &Data::Moldugas[i];
 
         // Check if the korok has been found (if the found vector contains it)
         if (std::find(SavefileIO::defeatedMoldugas.begin(), SavefileIO::defeatedMoldugas.end(), &Data::Moldugas[i]) != SavefileIO::defeatedMoldugas.end()) {
@@ -203,14 +206,14 @@ void Map::Update()
     }
 
     // Show only those that are found
-    if (buttonsUp & HidNpadButton_X)
-    {
-        for (int i = 0; i < 900; i++)
-            m_Koroks[i].m_ShowAnyway = false;
+    // if (buttonsUp & HidNpadButton_X)
+    // {
+    //     for (int i = 0; i < 900; i++)
+    //         m_Koroks[i].m_ShowAnyway = false;
 
-        for (int i = 0; i < 187; i++)
-            m_Locations[i].m_ShowAnyway = false;
-    }
+    //     for (int i = 0; i < 187; i++)
+    //         m_Locations[i].m_ShowAnyway = false;
+    // }
 
     // Analog stick camera movement
     // Read the sticks' position
@@ -271,18 +274,21 @@ void Map::Update()
     m_ViewMatrix = glm::translate(m_ViewMatrix, glm::vec3(-m_CameraPosition, 1.0));
 
     // Update objects
-    for (int i = 0; i < Data::KoroksCount; i++)
-        m_Koroks[i].Update();
-    for (int i = 0; i < Data::HinoxesCount; i++)
-        m_Hinoxes[i].Update();
-    for (int i = 0; i < Data::TalusesCount; i++)
-        m_Taluses[i].Update();
-    for (int i = 0; i < Data::MoldugasCount; i++)
-        m_Moldugas[i].Update();
+    if (SavefileIO::LoadedSavefile)
+    {
+        for (int i = 0; i < Data::KoroksCount; i++)
+            m_Koroks[i].Update();
+        for (int i = 0; i < Data::HinoxesCount; i++)
+            m_Hinoxes[i].Update();
+        for (int i = 0; i < Data::TalusesCount; i++)
+            m_Taluses[i].Update();
+        for (int i = 0; i < Data::MoldugasCount; i++)
+            m_Moldugas[i].Update();
 
-    // Update locations
-    for (int i = 0; i < 187; i++)
-        m_Locations[i].Update();
+        // Update locations
+        // for (int i = 0; i < 187; i++)
+        //     m_Locations[i].Update();
+    }
 
     m_PrevCameraPosition = m_CameraPosition;
 
@@ -314,9 +320,18 @@ void Map::Render()
            MapObject<Data::Molduga>::Render();
     }
 
-
     if (m_IsLegendOpen) 
         m_Legend->Render();
+
+    glm::mat4 emptyViewMatrix(1.0);
+    m_Font.m_ViewMatrix = &emptyViewMatrix; // Don't draw the text relative to the camera 
+
+    if (SavefileIO::GameIsRunning && SavefileIO::LoadedSavefile)
+    {
+        m_Font.RenderText("BotW is running.", glm::vec2(m_ScreenRight - 20, m_ScreenTop - 30), 0.5f, glm::vec3(1.0f), ALIGN_RIGHT);
+        m_Font.RenderText("Loaded older save", glm::vec2(m_ScreenRight - 20, m_ScreenTop - 60), 0.5f, glm::vec3(1.0f), ALIGN_RIGHT);
+    }
+        
 
     //for (int i = 0; i < 187; i++)
         //m_Locations[i].Render();

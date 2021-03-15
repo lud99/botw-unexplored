@@ -26,12 +26,19 @@ bool LoadGamesave()
     int mountStatus = SavefileIO::MountSavefile();
 
     if (mountStatus == 1) { // Good
+        // Draw loading text
+        //Map::m_Font.RenderText("Loading savefile...", glm::vec2(0.0f, 0.0f), 1.5f, glm::vec3(1.0f), ALIGN_CENTER);
+        //eglSwapBuffers(s_display, s_surface);
+
         bool success = SavefileIO::ParseFile("save:/0/game_data.sav");
+        if (!success) 
+        {
+            SavefileIO::UnmountSavefile();
+            return false;
+        }
 
         SavefileIO::CopySavefiles(SavefileIO::AccountUid1, SavefileIO::AccountUid2);
         SavefileIO::UnmountSavefile();
-
-        if (!success) return false;
 
         return true;
     } 
@@ -42,8 +49,21 @@ bool LoadGamesave()
         return false;
     } else if (mountStatus == -1) { // Game is running
         printf("Game is running. Loading backup...\n");
+
+        // Draw loading text
+        // Map::m_Font.RenderText("Loading savefile...", glm::vec2(0.0f, 0.0f), 1.5f, glm::vec3(1.0f), ALIGN_CENTER);
+        // eglSwapBuffers(s_display, s_surface);
         
-        return SavefileIO::LoadBackup("0");
+        // bool loadedBackupSuccess = SavefileIO::LoadBackup("0");
+
+        // if (!loadedBackupSuccess) 
+        // {
+        //     SavefileIO::LoadedSavefile = false;
+        // }
+
+        // return loadedBackupSuccess;
+    } else if (mountStatus == -2) { // User has no save data
+        printf("The selected user has no save data\n");
     }
 
     return false;
@@ -95,6 +115,10 @@ int main()
     bool firstDraw = true;
     bool hasDoneDirstDraw = false;
 
+    LoadGamesave();
+
+    Map::UpdateMapObjects();
+
 	while (appletMainLoop())
 	{
         // Scan the gamepad. This should be done once for each frame
@@ -116,11 +140,9 @@ int main()
 
         if (firstDraw && hasDoneDirstDraw)
         {
-            Map::m_Font.RenderText("Loading savefile...", glm::vec2(0.0f, 0.0f), 1.5f, glm::vec3(1.0f), ALIGN_CENTER);
-            eglSwapBuffers(s_display, s_surface);
+            // LoadGamesave();
 
-            LoadGamesave();
-            Map::UpdateMapObjects();
+            // Map::UpdateMapObjects();
             firstDraw = false;
         }
 
