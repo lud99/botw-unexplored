@@ -60,6 +60,7 @@ namespace Map
     extern bool m_IsInitialized;
     extern bool m_ShouldExit;
     extern bool m_ShouldChooseProfile;
+    extern bool m_ShouldLoadMastermodeFile;
 
     extern PadState* m_Pad;
 
@@ -72,6 +73,7 @@ namespace Map
     extern MapLocation* m_Locations;
 
     extern Legend* m_Legend;
-    extern Dialog* m_Dialog;
+    extern Dialog* m_NoSavefileDialog;
     extern Dialog* m_GameRunningDialog;
+    extern Dialog* m_MasterModeDialog;
 };

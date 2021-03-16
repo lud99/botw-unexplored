@@ -29,14 +29,35 @@ uint32_t SavefileIO::ReadU32(unsigned char *buffer, int offset)
            0 /* Make it positive? */;
 }
 
-int SavefileIO::MountSavefile()
+int SavefileIO::MountSavefile(bool chooseProfile)
 {
     Result rc = 0;
 
-    AccountUid uid = {0};
     u64 botwId = 0x01007ef00011e000; //ApplicationId of the save to mount, in this case BOTW.
 
+    // Use cached values
+    if (!chooseProfile) 
+    {
+        AccountUid uid;
+        uid.uid[0] = AccountUid1;
+        uid.uid[1] = AccountUid2;
+
+        Result rc = fsdevMountSaveData("save", botwId, uid);
+        if (R_FAILED(rc))
+        {
+            printf("Failed to mount save (master mode)\n");
+            GameIsRunning = true;
+
+            return -1;
+        }
+
+        return 1;
+    }
+
+    MasterModeFileExists = false;
+
     //Get the userID for save mounting. To mount common savedata, use an all-zero userID.
+    AccountUid uid = {0};
 
     // Display the profile picker so the user can choose the profile
     uid = Accounts::RequestProfileSelection();
@@ -99,6 +120,18 @@ int SavefileIO::MountSavefile()
         return -1;
     }
 
+    // Check for master mode file
+    // TODO: Read the latest file
+    if (FileExists("save:/7/game_data.sav")) // Manual save slot (probably the most recent?)
+    {
+        MasterModeFileExists = true;
+        MasterModeSlot = 7;
+    } else if (FileExists("save:/6/game_data.sav")) // Load auto save if manual doesn't exist
+    {
+        MasterModeFileExists = true;
+        MasterModeSlot = 6;
+    }
+
     return 1;
 }
 
@@ -125,17 +158,17 @@ bool SavefileIO::LoadBackup(const std::string& saveSlot)
     }
 
     std::string saveFilePath = savesFolder + "/" + saveSlot + "/game_data.sav";
-    int res = access(saveFilePath.c_str(), R_OK);
-    if (res < 0)
-    {
-        if (errno == ENOENT)
-            printf("Backup savefile '%s' doesn't exist\n", saveFilePath.c_str());
-        else if (errno == EACCES)
-            printf("Backup savefile '%s' could not be read for some reason\n", saveFilePath.c_str());
-        else
-            printf("Backup savefile '%s' failed\n", saveFilePath.c_str());
-
+    if (!FileExists(saveFilePath))
         return false;
+
+    if (FileExists(savesFolder + "/7/game_data.sav"))
+    {
+        MasterModeFileExists = true;
+        MasterModeSlot = 7;
+    } else if (FileExists(savesFolder + "/6/game_data.sav"))
+    {
+        MasterModeFileExists = true;
+        MasterModeSlot = 6;
     }
 
     // Parse it
@@ -238,31 +271,34 @@ bool SavefileIO::DirectoryExists(const std::string &filepath)
         return false;
     else
     {
-        std::cout << "DirectoryExists() " << filepath << "\n";
+        std::cout << "DirectoryExists() error " << filepath << "\n";
         return false;
     }
 
     return false;
 }
 
-bool SavefileIO::ParseFile(const char *filepath)
+bool SavefileIO::FileExists(const std::string& filepath)
 {
-    printf("Opening savefile '%s'\n", filepath);
-
-    int res = access(filepath, R_OK);
+    int res = access(filepath.c_str(), R_OK);
     if (res < 0)
     {
         if (errno == ENOENT)
-            printf("Savefile '%s' could not be opened\n", filepath);
+            printf("File '%s' doesn't exist\n", filepath.c_str());
         else if (errno == EACCES)
-            printf("Savefile '%s' could not be read for some reason\n", filepath);
+            printf("File '%s' could not be read for some reason\n", filepath.c_str());
         else
-            printf("Savefile '%s' failed\n", filepath);
-
-        NoSavefileForUser = true;
+            printf("File access('%s') failed\n", filepath.c_str());
 
         return false;
     }
+
+    return true;
+}
+
+bool SavefileIO::ParseFile(const char *filepath)
+{
+    printf("Opening savefile '%s'\n", filepath);
 
     // Clear the current file data
     foundKoroks.clear();
@@ -279,6 +315,9 @@ bool SavefileIO::ParseFile(const char *filepath)
 
     defeatedMoldugas.clear();
     undefeatedMoldugas.clear();
+
+    if (!FileExists(filepath))
+        return false;
 
     std::ifstream file;
     file.open(filepath, std::ios::binary);
@@ -354,6 +393,8 @@ bool SavefileIO::ParseFile(const char *filepath)
         }
     }
 
+    delete buffer;
+
     printf("Successfully parsed file '%s'\n", filepath);
 
     LoadedSavefile = true;
@@ -381,3 +422,6 @@ u64 SavefileIO::AccountUid2;
 bool SavefileIO::LoadedSavefile = false;
 bool SavefileIO::GameIsRunning = false;
 bool SavefileIO::NoSavefileForUser = false;
+bool SavefileIO::MasterModeFileExists = false;
+
+int SavefileIO::MasterModeSlot;

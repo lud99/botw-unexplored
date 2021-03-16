@@ -81,8 +81,9 @@ void Map::Init()
 
     // Create UI
     m_Legend = new Legend();
-    m_Dialog = new Dialog(glm::vec2(0.0f, 0.0f), 700.0f, 400.0f, Dialog::InvalidSavefile);
+    m_NoSavefileDialog = new Dialog(glm::vec2(0.0f, 0.0f), 700.0f, 400.0f, Dialog::InvalidSavefile);
     m_GameRunningDialog = new Dialog(glm::vec2(0.0f, 0.0f), 700.0f, 400.0f, Dialog::GameIsRunning);
+    m_MasterModeDialog = new Dialog(glm::vec2(0.0f, 0.0f), 700.0f, 400.0f, Dialog::MasterModeChoose);
 
     // Create koroks
     m_Koroks = new MapObject<Data::Korok>[Data::KoroksCount];
@@ -132,9 +133,10 @@ void Map::UpdateMapObjects()
         m_Koroks[i].m_Position = glm::vec2(Data::Koroks[i].x, -Data::Koroks[i].y) * 0.5f;
 
         // Check if the korok has been found (if the found vector contains it)
-        if (std::find(SavefileIO::foundKoroks.begin(), SavefileIO::foundKoroks.end(), &Data::Koroks[i]) != SavefileIO::foundKoroks.end()) {
-            m_Koroks[i].m_Found = true;
-        }
+        m_Koroks[i].m_Found = std::find(
+            SavefileIO::foundKoroks.begin(), 
+            SavefileIO::foundKoroks.end(), 
+            &Data::Koroks[i]) != SavefileIO::foundKoroks.end();
     }
 
     for (int i = 0; i < Data::HinoxesCount; i++) // Hinox
@@ -142,9 +144,10 @@ void Map::UpdateMapObjects()
         m_Hinoxes[i].m_Position = glm::vec2(Data::Hinoxes[i].x, -Data::Hinoxes[i].y) * 0.5f;
 
         // Check if the korok has been found (if the found vector contains it)
-        if (std::find(SavefileIO::defeatedHinoxes.begin(), SavefileIO::defeatedHinoxes.end(), &Data::Hinoxes[i]) != SavefileIO::defeatedHinoxes.end()) {
-            m_Hinoxes[i].m_Found = true;
-        }
+        m_Hinoxes[i].m_Found = std::find(
+            SavefileIO::defeatedHinoxes.begin(), 
+            SavefileIO::defeatedHinoxes.end(), 
+            &Data::Hinoxes[i]) != SavefileIO::defeatedHinoxes.end();
     }
 
     for (int i = 0; i < Data::TalusesCount; i++) // Talus
@@ -152,20 +155,21 @@ void Map::UpdateMapObjects()
         m_Taluses[i].m_Position = glm::vec2(Data::Taluses[i].x, -Data::Taluses[i].y) * 0.5f;
 
         // Check if the korok has been found (if the found vector contains it)
-        if (std::find(SavefileIO::defeatedTaluses.begin(), SavefileIO::defeatedTaluses.end(), &Data::Taluses[i]) != SavefileIO::defeatedTaluses.end()) {
-            m_Taluses[i].m_Found = true;
-        }
+        m_Taluses[i].m_Found = std::find(
+            SavefileIO::defeatedTaluses.begin(), 
+            SavefileIO::defeatedTaluses.end(), 
+            &Data::Taluses[i]) != SavefileIO::defeatedTaluses.end();
     }
 
     for (int i = 0; i < Data::MoldugasCount; i++) // Molduga
     {
-        // The data has down being positive and up being negative. This renderer uses the opposite, so reverse the koroks y-coordinate
         m_Moldugas[i].m_Position = glm::vec2(Data::Moldugas[i].x, -Data::Moldugas[i].y) * 0.5f;
 
         // Check if the korok has been found (if the found vector contains it)
-        if (std::find(SavefileIO::defeatedMoldugas.begin(), SavefileIO::defeatedMoldugas.end(), &Data::Moldugas[i]) != SavefileIO::defeatedMoldugas.end()) {
-            m_Moldugas[i].m_Found = true;
-        }
+        m_Moldugas[i].m_Found = std::find(
+            SavefileIO::defeatedMoldugas.begin(), 
+            SavefileIO::defeatedMoldugas.end(), 
+            &Data::Moldugas[i]) != SavefileIO::defeatedMoldugas.end();
     }
 }
 
@@ -197,7 +201,7 @@ void Map::Update()
     // Show all koroks and locations
     if (buttonsPressed & HidNpadButton_X)
     {
-        if (!m_Dialog->m_IsOpen)
+        if (!m_NoSavefileDialog->m_IsOpen)
             m_IsLegendOpen = !m_IsLegendOpen;
     }
 
@@ -236,8 +240,9 @@ void Map::Update()
 
             // Dont drag if finger is on the legend
             if (!(m_IsLegendOpen && m_Legend->IsPositionOnLegend(touchPosition)) && 
-                !(m_Dialog->m_IsOpen && m_Dialog->IsPositionOn(touchPosition)) &&
-                !(m_GameRunningDialog->m_IsOpen && m_Dialog->IsPositionOn(touchPosition)))
+                !(m_NoSavefileDialog->m_IsOpen && m_NoSavefileDialog->IsPositionOn(touchPosition)) &&
+                !(m_GameRunningDialog->m_IsOpen && m_GameRunningDialog->IsPositionOn(touchPosition)) &&
+                !(m_MasterModeDialog->m_IsOpen && m_MasterModeDialog->IsPositionOn(touchPosition)))
             {
                 // Check if the finger was pressed
                 if (state.count == 1)
@@ -274,10 +279,12 @@ void Map::Update()
     if (m_IsLegendOpen) 
         m_Legend->Update();
 
-    if (m_Dialog->m_IsOpen) 
-        m_Dialog->Update();
+    if (m_NoSavefileDialog->m_IsOpen) 
+        m_NoSavefileDialog->Update();
     if (m_GameRunningDialog->m_IsOpen)
         m_GameRunningDialog->Update();
+    if (m_MasterModeDialog->m_IsOpen)
+        m_MasterModeDialog->Update();
 
     // Update objects
     if (SavefileIO::LoadedSavefile)
@@ -326,10 +333,12 @@ void Map::Render()
     if (m_IsLegendOpen) 
         m_Legend->Render();
 
-    if (m_Dialog->m_IsOpen) 
-        m_Dialog->Render();
+    if (m_NoSavefileDialog->m_IsOpen) 
+        m_NoSavefileDialog->Render();
     if (m_GameRunningDialog->m_IsOpen)
         m_GameRunningDialog->Render();
+    if (m_MasterModeDialog->m_IsOpen)
+        m_MasterModeDialog->Render();
 
     glm::mat4 emptyViewMatrix(1.0);
     m_Font.m_ViewMatrix = &emptyViewMatrix; // Don't draw the text relative to the camera 
@@ -407,8 +416,9 @@ void Map::Destory()
     delete[] m_Moldugas;
     delete[] m_Locations;
 
-    delete m_Dialog;
+    delete m_NoSavefileDialog;
     delete m_GameRunningDialog;
+    delete m_MasterModeDialog;
 }
 
 Mesh<TextureVertex> Map::m_Mesh;
@@ -432,6 +442,7 @@ bool Map::m_IsLegendOpen = true;
 bool Map::m_IsInitialized = false;
 bool Map::m_ShouldExit = false;
 bool Map::m_ShouldChooseProfile = false;
+bool Map::m_ShouldLoadMastermodeFile = false;
 
 PadState* Map::m_Pad;
 MapObject<Data::Korok>* Map::m_Koroks;
@@ -441,5 +452,6 @@ MapObject<Data::Molduga>* Map::m_Moldugas;
 MapLocation* Map::m_Locations;
 
 Legend* Map::m_Legend;
-Dialog* Map::m_Dialog;
+Dialog* Map::m_NoSavefileDialog;
 Dialog* Map::m_GameRunningDialog;
+Dialog* Map::m_MasterModeDialog;

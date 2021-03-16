@@ -26,7 +26,7 @@ namespace SavefileIO
 
     uint32_t ReadU32(unsigned char* buffer, int offset);
 
-    int MountSavefile();
+    int MountSavefile(bool chooseProfile = true);
     bool UnmountSavefile();
 
     bool LoadBackup(const std::string& saveSlot);
@@ -37,6 +37,7 @@ namespace SavefileIO
     bool ParseFile(const char* filepath);
 
     bool DirectoryExists(const std::string& filepath);
+    bool FileExists(const std::string& filepath);
 
     extern u64 AccountUid1;
     extern u64 AccountUid2;
@@ -44,4 +45,7 @@ namespace SavefileIO
     extern bool LoadedSavefile;
     extern bool GameIsRunning;
     extern bool NoSavefileForUser;
+    extern bool MasterModeFileExists;
+
+    extern int MasterModeSlot;
 };

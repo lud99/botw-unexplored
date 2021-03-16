@@ -50,6 +50,19 @@ Dialog::Dialog(glm::vec2 position, float width, float height, DialogType type)
         m_Description = "Please run this app at least once without BotW running";
         m_Description2 = "After that you can use it while playing.";
     }
+    else if (m_Type == DialogType::MasterModeChoose)
+    {
+        m_ExitButton = new Button(glm::vec2(buttonX, buttonY), exitButtonWidth, buttonHeight, "No");
+        m_ExitButton->m_Button.m_Color = Button::SelectedColor;//glm::vec4(197, 77, 77, 0.8f);
+
+        float button2Width = exitButtonWidth;
+        float button2X = bgRight - sideMargin - button2Width;
+        m_ChooseProfileButton = new Button(glm::vec2(button2X, buttonY), exitButtonWidth, buttonHeight, "Yes");
+        m_Title = "Master mode save file detected";
+        m_Description = "Would you like to load it?";
+
+        m_SelectedButton = 1;
+    }
 
     UpdateSelectedButton();
 }
@@ -67,11 +80,14 @@ bool Dialog::IsPositionOn(glm::vec2 position)
 
 void Dialog::UpdateSelectedButton()
 {
-    m_ExitButton->m_IsSelected = false;
+    if (m_ExitButton) m_ExitButton->m_IsSelected = false;
     if (m_ChooseProfileButton) m_ChooseProfileButton->m_IsSelected = false;
 
+    //printf("button %d\n", m_SelectedButton);
+
     if (m_SelectedButton == 0)
-        m_ExitButton->m_IsSelected = true;
+        if (m_ExitButton)
+            m_ExitButton->m_IsSelected = true;
     else {
         if (m_ChooseProfileButton)
            m_ChooseProfileButton->m_IsSelected = true;
@@ -97,13 +113,22 @@ void Dialog::Update()
                     m_ExitButton->Click();
                     m_SelectedButton = 0;
 
-                    Map::m_ShouldExit = true;
+                    if (m_Type != DialogType::MasterModeChoose) 
+                        Map::m_ShouldExit = true;
+                    else if (m_Type == DialogType::MasterModeChoose) 
+                    {
+                        m_IsOpen = false;
+                        Map::m_IsLegendOpen = true;
+                    }
                 } else if (m_ChooseProfileButton && m_ChooseProfileButton->IsPositionOn(touchPosition))
                 {
                     m_ChooseProfileButton->Click();
                     m_SelectedButton = 1;
 
-                    Map::m_ShouldChooseProfile = true;
+                    if (m_Type == DialogType::InvalidSavefile) 
+                        Map::m_ShouldChooseProfile = true;
+                    else if (m_Type == DialogType::MasterModeChoose)
+                        Map::m_ShouldLoadMastermodeFile = true;
                 }
                     
                 UpdateSelectedButton();
@@ -114,7 +139,7 @@ void Dialog::Update()
     u64 buttonsPressed = padGetButtonsDown(Map::m_Pad);
     if (buttonsPressed & HidNpadButton_Left)
     {
-        if (m_ChooseProfileButton)
+        if (m_ExitButton)
         {
             if (m_SelectedButton == 1)
                 m_SelectedButton = 0;
@@ -137,10 +162,20 @@ void Dialog::Update()
         // Exit button
         if (m_SelectedButton == 0)
         {
-            Map::m_ShouldExit = true;
+            if (m_Type != DialogType::MasterModeChoose) 
+                Map::m_ShouldExit = true;
+            else if (m_Type == DialogType::MasterModeChoose)
+            {
+                m_IsOpen = false;
+                Map::m_IsLegendOpen = true;
+            }
+                
         } 
-        else if (m_SelectedButton == 1) { // Choose profile button
-            Map::m_ShouldChooseProfile = true;
+        else if (m_SelectedButton == 1) {
+            if (m_Type == DialogType::InvalidSavefile) 
+                Map::m_ShouldChooseProfile = true;
+            else if (m_Type == DialogType::MasterModeChoose)
+                Map::m_ShouldLoadMastermodeFile = true;
         }
     }
 }
