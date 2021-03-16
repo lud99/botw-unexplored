@@ -1,6 +1,7 @@
 #include "Dialog.h"
 
 #include <sstream>
+#include <iostream>
 #include <string>
 
 #include "Map.h"
@@ -83,12 +84,10 @@ void Dialog::UpdateSelectedButton()
     if (m_ExitButton) m_ExitButton->m_IsSelected = false;
     if (m_ChooseProfileButton) m_ChooseProfileButton->m_IsSelected = false;
 
-    //printf("button %d\n", m_SelectedButton);
-
-    if (m_SelectedButton == 0)
+    if (m_SelectedButton == 0) {
         if (m_ExitButton)
             m_ExitButton->m_IsSelected = true;
-    else {
+    } else if (m_SelectedButton == 1) {
         if (m_ChooseProfileButton)
            m_ChooseProfileButton->m_IsSelected = true;
     }
@@ -272,18 +271,11 @@ void Button::Render()
 
     float mainTextMargin = 35.0f;
     glm::vec2 mainTextPosition(
-        m_Position.x + m_Width / 2,//m_Icon.m_Position.x + mainTextMargin, 
+        m_Position.x + m_Width / 2,
         m_Position.y - (m_Height / 1.65f)
     );
 
-    // float countTextMargin = 20.0f;
-    // glm::vec2 countTextPosition(
-    //     m_Position.x + m_Width - countTextMargin, 
-    //     mainTextPosition.y
-    // );
-
     Map::m_Font.RenderText(m_Text, mainTextPosition, 0.55f, glm::vec3(1.0), ALIGN_CENTER);
-    //Map::m_Font.RenderText(countString, countTextPosition, 0.5f, glm::vec3(1.0), ALIGN_RIGHT);
 }
 
 bool Button::Click()
