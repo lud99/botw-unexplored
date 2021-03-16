@@ -26,6 +26,8 @@ bool LoadGamesave()
     // Try to mount the save directory
     int mountStatus = SavefileIO::MountSavefile();
 
+    Map::m_GameRunningDialog->SetOpen(false);
+
     glm::mat4 empty(1.0f);
     Map::m_Font.m_ViewMatrix = &empty; 
 
@@ -33,6 +35,8 @@ bool LoadGamesave()
         // Draw loading text
         Map::m_Font.RenderText("Loading savefile...", glm::vec2(0.0f, 0.0f), 1.0f, glm::vec3(1.0f), ALIGN_CENTER);
         eglSwapBuffers(s_display, s_surface);
+
+        Map::m_GameRunningDialog->SetOpen(false);
 
         bool success = SavefileIO::ParseFile("save:/0/game_data.sav");
         if (!success) 
@@ -65,7 +69,8 @@ bool LoadGamesave()
         if (!loadedBackupSuccess) 
         {
             SavefileIO::LoadedSavefile = false;
-            Map::m_Dialog->SetOpen(true);
+            Map::m_Dialog->SetOpen(false);
+            Map::m_GameRunningDialog->SetOpen(true);
 
             return false;
         }

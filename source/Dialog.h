@@ -45,7 +45,13 @@ public:
 class Dialog
 {
 public:
-    Dialog(glm::vec2 position, float width, float height);
+    enum DialogType {
+        InvalidSavefile,
+        GameIsRunning,
+        MasterModeChoose
+    };
+public:
+    Dialog(glm::vec2 position, float width, float height, DialogType type);
 
     bool IsPositionOn(glm::vec2 position);
     void UpdateSelectedButton();
@@ -60,8 +66,14 @@ public:
 public:
     Quad m_Background;
 
-    Button* m_ChooseProfileButton;
-    Button* m_ExitButton;
+    Button* m_ChooseProfileButton = nullptr;
+    Button* m_ExitButton = nullptr;
+
+    std::vector<Button*> m_Buttons;
+
+    std::string m_Title;
+    std::string m_Description;
+    std::string m_Description2;
 
     int m_PrevTouchCount = 0;
     unsigned int m_SelectedButton = 1;
@@ -72,4 +84,6 @@ public:
 
     float m_Width = 0.0f;
     float m_Height = 0.0f;
+
+    DialogType m_Type;
 };

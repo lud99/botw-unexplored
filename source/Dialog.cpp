@@ -1,13 +1,17 @@
 #include "Dialog.h"
 
+#include <sstream>
+#include <string>
+
 #include "Map.h"
 #include "Legend.h"
 
-Dialog::Dialog(glm::vec2 position, float width, float height)
+Dialog::Dialog(glm::vec2 position, float width, float height, DialogType type)
 {
     m_Position = position;
     m_Width = width;
     m_Height = height;
+    m_Type = type;
 
     m_Background.Create(position, width, height);
     m_Background.m_Color = glm::vec4(0.0f, 0.0f, 0.0f, 0.7f);
@@ -21,16 +25,31 @@ Dialog::Dialog(glm::vec2 position, float width, float height)
     float bottomMargin = 40.0f;
     float sideMargin = 60.0f;
     float buttonHeight = 75.0f;
-    float button1Width = 150.0f;
+    float exitButtonWidth = 150.0f;
     float buttonY = bgBottom + bottomMargin + buttonHeight;
     float buttonX = bgLeft + sideMargin;
 
-    m_ExitButton = new Button(glm::vec2(buttonX, buttonY), button1Width, buttonHeight, "Exit");
-    m_ExitButton->m_Button.m_Color = glm::vec4(197, 77, 77, 0.8f);
+    if (m_Type == DialogType::InvalidSavefile)
+    {
+        m_ExitButton = new Button(glm::vec2(buttonX, buttonY), exitButtonWidth, buttonHeight, "Exit");
+        m_ExitButton->m_Button.m_Color = glm::vec4(197, 77, 77, 0.8f);
 
-    float button2Width = 300.0f;
-    float button2X = bgRight - sideMargin - button2Width;
-    m_ChooseProfileButton = new Button(glm::vec2(button2X, buttonY), button2Width, buttonHeight, "Choose another profile");
+        float button2Width = 300.0f;
+        float button2X = bgRight - sideMargin - button2Width;
+        m_ChooseProfileButton = new Button(glm::vec2(button2X, buttonY), button2Width, buttonHeight, "Choose another profile");
+        m_Title = "No save data found for that user";
+        m_Description = "Make sure you chose the correct profile.";
+    } else if (m_Type == DialogType::GameIsRunning)
+    {
+        float centerX = -exitButtonWidth / 2.0f;
+        m_ExitButton = new Button(glm::vec2(centerX, buttonY), exitButtonWidth, buttonHeight, "Exit");
+        m_ExitButton->m_Button.m_Color = glm::vec4(197, 77, 77, 0.8f);
+
+        m_SelectedButton = 0;
+        m_Title = "BotW is running, can't load save";
+        m_Description = "Please run this app at least once without BotW running";
+        m_Description2 = "After that you can use it while playing.";
+    }
 
     UpdateSelectedButton();
 }
@@ -49,12 +68,14 @@ bool Dialog::IsPositionOn(glm::vec2 position)
 void Dialog::UpdateSelectedButton()
 {
     m_ExitButton->m_IsSelected = false;
-    m_ChooseProfileButton->m_IsSelected = false;
+    if (m_ChooseProfileButton) m_ChooseProfileButton->m_IsSelected = false;
 
     if (m_SelectedButton == 0)
         m_ExitButton->m_IsSelected = true;
-    else
-        m_ChooseProfileButton->m_IsSelected = true;
+    else {
+        if (m_ChooseProfileButton)
+           m_ChooseProfileButton->m_IsSelected = true;
+    }
 }
 
 void Dialog::Update()
@@ -72,12 +93,12 @@ void Dialog::Update()
                 // Convert to more suitable coords
                 glm::vec2 touchPosition = glm::vec2(state.touches[0].x - Map::m_CameraWidth / 2, -(state.touches[0].y - Map::m_CameraHeight / 2));
 
-                if (m_ExitButton->IsPositionOn(touchPosition)) {
+                if (m_ExitButton && m_ExitButton->IsPositionOn(touchPosition)) {
                     m_ExitButton->Click();
                     m_SelectedButton = 0;
 
                     Map::m_ShouldExit = true;
-                } else if (m_ChooseProfileButton->IsPositionOn(touchPosition))
+                } else if (m_ChooseProfileButton && m_ChooseProfileButton->IsPositionOn(touchPosition))
                 {
                     m_ChooseProfileButton->Click();
                     m_SelectedButton = 1;
@@ -93,17 +114,23 @@ void Dialog::Update()
     u64 buttonsPressed = padGetButtonsDown(Map::m_Pad);
     if (buttonsPressed & HidNpadButton_Left)
     {
-        if (m_SelectedButton == 1)
-            m_SelectedButton = 0;
+        if (m_ChooseProfileButton)
+        {
+            if (m_SelectedButton == 1)
+                m_SelectedButton = 0;
 
-        UpdateSelectedButton();
+            UpdateSelectedButton();
+        }
     }
     if (buttonsPressed & HidNpadButton_Right)
     {
-        if (m_SelectedButton == 0)
-            m_SelectedButton = 1;
+        if (m_ChooseProfileButton)
+        {
+            if (m_SelectedButton == 0)
+                m_SelectedButton = 1;
 
-        UpdateSelectedButton();
+            UpdateSelectedButton();
+        }
     }
     if (buttonsPressed & HidNpadButton_A)
     {
@@ -112,7 +139,7 @@ void Dialog::Update()
         {
             Map::m_ShouldExit = true;
         } 
-        else { // Choose profile button
+        else if (m_SelectedButton == 1) { // Choose profile button
             Map::m_ShouldChooseProfile = true;
         }
     }
@@ -128,10 +155,15 @@ void Dialog::Render()
     float top = m_Background.m_Position.y + m_Height / 2.0f;
     float titleTopMargin = 75.0f;
 
-    glm::vec2 titleSize = Map::m_Font.RenderText("No save data found for that user", glm::vec2(0.0f, top - titleTopMargin), 0.75f, glm::vec3(1.0f), ALIGN_CENTER);
+    glm::vec2 titleSize = Map::m_Font.RenderText(m_Title, glm::vec2(0.0f, top - titleTopMargin), 0.75f, glm::vec3(1.0f), ALIGN_CENTER);
 
-    m_ExitButton->Render();
-    m_ChooseProfileButton->Render();
+    float descTop = top - titleTopMargin - titleSize.y - 10.0f; 
+
+    Map::m_Font.RenderText(m_Description, glm::vec2(0.0f, descTop - 30.0f), 0.5f, glm::vec3(1.0f), ALIGN_CENTER);
+    Map::m_Font.RenderText(m_Description2, glm::vec2(0.0f, descTop - 70.0f), 0.5f, glm::vec3(1.0f), ALIGN_CENTER);
+
+    if (m_ExitButton) m_ExitButton->Render();
+    if (m_ChooseProfileButton) m_ChooseProfileButton->Render();
 
     Map::m_Font.m_ViewMatrix = &Map::m_ViewMatrix;
 }
@@ -206,7 +238,7 @@ void Button::Render()
     float mainTextMargin = 35.0f;
     glm::vec2 mainTextPosition(
         m_Position.x + m_Width / 2,//m_Icon.m_Position.x + mainTextMargin, 
-        m_Position.y - (m_Height / 1.5f)
+        m_Position.y - (m_Height / 1.65f)
     );
 
     // float countTextMargin = 20.0f;

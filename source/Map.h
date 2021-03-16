@@ -73,4 +73,5 @@ namespace Map
 
     extern Legend* m_Legend;
     extern Dialog* m_Dialog;
+    extern Dialog* m_GameRunningDialog;
 };

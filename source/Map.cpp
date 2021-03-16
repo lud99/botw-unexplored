@@ -81,7 +81,8 @@ void Map::Init()
 
     // Create UI
     m_Legend = new Legend();
-    m_Dialog = new Dialog(glm::vec2(0.0f, 0.0f), 700.0f, 400.0f);
+    m_Dialog = new Dialog(glm::vec2(0.0f, 0.0f), 700.0f, 400.0f, Dialog::InvalidSavefile);
+    m_GameRunningDialog = new Dialog(glm::vec2(0.0f, 0.0f), 700.0f, 400.0f, Dialog::GameIsRunning);
 
     // Create koroks
     m_Koroks = new MapObject<Data::Korok>[Data::KoroksCount];
@@ -130,8 +131,6 @@ void Map::UpdateMapObjects()
     {
         m_Koroks[i].m_Position = glm::vec2(Data::Koroks[i].x, -Data::Koroks[i].y) * 0.5f;
 
-        //m_Koroks[i].m_ObjectData = &Data::Koroks[i];
-
         // Check if the korok has been found (if the found vector contains it)
         if (std::find(SavefileIO::foundKoroks.begin(), SavefileIO::foundKoroks.end(), &Data::Koroks[i]) != SavefileIO::foundKoroks.end()) {
             m_Koroks[i].m_Found = true;
@@ -141,8 +140,6 @@ void Map::UpdateMapObjects()
     for (int i = 0; i < Data::HinoxesCount; i++) // Hinox
     {
         m_Hinoxes[i].m_Position = glm::vec2(Data::Hinoxes[i].x, -Data::Hinoxes[i].y) * 0.5f;
-
-        //m_Hinoxes[i].m_ObjectData = &Data::Hinoxes[i];
 
         // Check if the korok has been found (if the found vector contains it)
         if (std::find(SavefileIO::defeatedHinoxes.begin(), SavefileIO::defeatedHinoxes.end(), &Data::Hinoxes[i]) != SavefileIO::defeatedHinoxes.end()) {
@@ -154,8 +151,6 @@ void Map::UpdateMapObjects()
     {
         m_Taluses[i].m_Position = glm::vec2(Data::Taluses[i].x, -Data::Taluses[i].y) * 0.5f;
 
-        //m_Taluses[i].m_ObjectData = &Data::Taluses[i];
-
         // Check if the korok has been found (if the found vector contains it)
         if (std::find(SavefileIO::defeatedTaluses.begin(), SavefileIO::defeatedTaluses.end(), &Data::Taluses[i]) != SavefileIO::defeatedTaluses.end()) {
             m_Taluses[i].m_Found = true;
@@ -166,8 +161,6 @@ void Map::UpdateMapObjects()
     {
         // The data has down being positive and up being negative. This renderer uses the opposite, so reverse the koroks y-coordinate
         m_Moldugas[i].m_Position = glm::vec2(Data::Moldugas[i].x, -Data::Moldugas[i].y) * 0.5f;
-
-        //m_Moldugas[i].m_ObjectData = &Data::Moldugas[i];
 
         // Check if the korok has been found (if the found vector contains it)
         if (std::find(SavefileIO::defeatedMoldugas.begin(), SavefileIO::defeatedMoldugas.end(), &Data::Moldugas[i]) != SavefileIO::defeatedMoldugas.end()) {
@@ -243,7 +236,8 @@ void Map::Update()
 
             // Dont drag if finger is on the legend
             if (!(m_IsLegendOpen && m_Legend->IsPositionOnLegend(touchPosition)) && 
-                !(m_Dialog->m_IsOpen && m_Dialog->IsPositionOn(touchPosition)))
+                !(m_Dialog->m_IsOpen && m_Dialog->IsPositionOn(touchPosition)) &&
+                !(m_GameRunningDialog->m_IsOpen && m_Dialog->IsPositionOn(touchPosition)))
             {
                 // Check if the finger was pressed
                 if (state.count == 1)
@@ -277,6 +271,14 @@ void Map::Update()
     m_ViewMatrix = glm::scale(m_ViewMatrix, glm::vec3(m_Zoom, m_Zoom, 0.0f));
     m_ViewMatrix = glm::translate(m_ViewMatrix, glm::vec3(-m_CameraPosition, 1.0));
 
+    if (m_IsLegendOpen) 
+        m_Legend->Update();
+
+    if (m_Dialog->m_IsOpen) 
+        m_Dialog->Update();
+    if (m_GameRunningDialog->m_IsOpen)
+        m_GameRunningDialog->Update();
+
     // Update objects
     if (SavefileIO::LoadedSavefile)
     {
@@ -291,16 +293,10 @@ void Map::Update()
 
         // Update locations
         // for (int i = 0; i < 187; i++)
-        //     m_Locations[i].Update();
+        //      m_Locations[i].Update();
     }
 
     m_PrevCameraPosition = m_CameraPosition;
-
-    if (m_IsLegendOpen) 
-        m_Legend->Update();
-
-    if (m_Dialog->m_IsOpen) 
-        m_Dialog->Update();
 }
 
 void Map::Render()
@@ -332,6 +328,8 @@ void Map::Render()
 
     if (m_Dialog->m_IsOpen) 
         m_Dialog->Render();
+    if (m_GameRunningDialog->m_IsOpen)
+        m_GameRunningDialog->Render();
 
     glm::mat4 emptyViewMatrix(1.0);
     m_Font.m_ViewMatrix = &emptyViewMatrix; // Don't draw the text relative to the camera 
@@ -343,8 +341,8 @@ void Map::Render()
     }
         
 
-    //for (int i = 0; i < 187; i++)
-        //m_Locations[i].Render();
+    // for (int i = 0; i < 187; i++)
+    //     m_Locations[i].Render();
 
     //float textScale = 0.5f;
 
@@ -408,6 +406,9 @@ void Map::Destory()
     delete[] m_Taluses;
     delete[] m_Moldugas;
     delete[] m_Locations;
+
+    delete m_Dialog;
+    delete m_GameRunningDialog;
 }
 
 Mesh<TextureVertex> Map::m_Mesh;
@@ -441,3 +442,4 @@ MapLocation* Map::m_Locations;
 
 Legend* Map::m_Legend;
 Dialog* Map::m_Dialog;
+Dialog* Map::m_GameRunningDialog;
