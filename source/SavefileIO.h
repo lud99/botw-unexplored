@@ -12,6 +12,9 @@ namespace SavefileIO
     extern std::vector<Data::Korok*> foundKoroks;
     extern std::vector<Data::Korok*> missingKoroks;
 
+    extern std::vector<Data::Shrine*> foundShrines;
+    extern std::vector<Data::Shrine*> missingShrines;
+
     extern std::vector<Data::Location*> visitedLocations;
     extern std::vector<Data::Location*> unexploredLocations;
 

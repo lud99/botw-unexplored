@@ -275,7 +275,7 @@ void IconButton::Render()
         countString = std::to_string(SavefileIO::foundKoroks.size()) + "/" + std::to_string(Data::KoroksCount);
         break;
     case Shrines:
-        countString = "placeholder";
+        countString = std::to_string(SavefileIO::foundShrines.size()) + "/" + std::to_string(Data::ShrineCount);
         break;
     case Hinoxes:
         countString = std::to_string(SavefileIO::defeatedHinoxes.size()) + "/" + std::to_string(Data::HinoxesCount);

@@ -18,6 +18,21 @@ namespace Data
             hash(hash), x(x), y(y) {};
     };
 
+    // https://github.com/d4mation/botw-unexplored-viewer/blob/master/assets/js/map-locations.js warps
+
+    struct Shrine
+    {
+        uint32_t hash;
+
+        std::string displayName;
+
+        float x = 0;
+        float y = 0;
+
+        Shrine(uint32_t hash, const std::string& displayName, float x, float y) :
+            hash(hash), x(x), y(y) {};
+    };
+
     // For location names and their positions, https://github.com/MrCheeze/botw-waypoint-map/blob/gh-pages/map_locations.js
     // For the location hashes, https://github.com/marcrobledo/savegame-editors/blob/master/zelda-botw/zelda-botw.locations.js
 
@@ -79,6 +94,13 @@ namespace Data
     extern Korok Koroks[KoroksCount];
 
     Korok* KorokExists(uint32_t hash);
+
+    // Create shrines
+
+    const int ShrineCount = 120;
+    extern Shrine Shrines[ShrineCount];
+
+    Shrine* ShrineExists(uint32_t hash);
 
     // Create locations (coordinates are rounded)
     const int LocationsCount = 187;

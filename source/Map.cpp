@@ -89,6 +89,10 @@ void Map::Init()
     m_Koroks = new MapObject<Data::Korok>[Data::KoroksCount];
     MapObject<Data::Korok>::Init("romfs:/korokseed.png", Data::KoroksCount);
 
+    // Create shrines
+    m_Shrines = new MapObject<Data::Shrine>[Data::ShrineCount];
+    MapObject<Data::Shrine>::Init("romfs:/shrine.png", Data::ShrineCount);
+
     // Create hinoxes
     m_Hinoxes = new MapObject<Data::Hinox>[Data::HinoxesCount];
     MapObject<Data::Hinox>::Init("romfs:/hinox.png", Data::HinoxesCount);
@@ -137,6 +141,17 @@ void Map::UpdateMapObjects()
             SavefileIO::foundKoroks.begin(), 
             SavefileIO::foundKoroks.end(), 
             &Data::Koroks[i]) != SavefileIO::foundKoroks.end();
+    }
+
+    for (int i = 0; i < Data::ShrineCount; i++) // Shrine
+    {
+        m_Shrines[i].m_Position = glm::vec2(Data::Shrines[i].x, -Data::Shrines[i].y) * 0.5f;
+
+        // Check if the korok has been found (if the found vector contains it)
+        m_Shrines[i].m_Found = std::find(
+            SavefileIO::foundShrines.begin(), 
+            SavefileIO::foundShrines.end(), 
+            &Data::Shrines[i]) != SavefileIO::foundShrines.end();
     }
 
     for (int i = 0; i < Data::HinoxesCount; i++) // Hinox
@@ -291,6 +306,8 @@ void Map::Update()
     {
         for (int i = 0; i < Data::KoroksCount; i++)
             m_Koroks[i].Update();
+        for (int i = 0; i < Data::ShrineCount; i++)
+            m_Shrines[i].Update();
         for (int i = 0; i < Data::HinoxesCount; i++)
             m_Hinoxes[i].Update();
         for (int i = 0; i < Data::TalusesCount; i++)
@@ -322,6 +339,8 @@ void Map::Render()
     {
         if (m_Legend->m_Show[IconButton::ButtonTypes::Koroks])
             MapObject<Data::Korok>::Render();
+        if (m_Legend->m_Show[IconButton::ButtonTypes::Shrines])
+            MapObject<Data::Shrine>::Render();
         if (m_Legend->m_Show[IconButton::ButtonTypes::Hinoxes])
             MapObject<Data::Hinox>::Render();
         if (m_Legend->m_Show[IconButton::ButtonTypes::Taluses])
@@ -411,6 +430,7 @@ void Map::Destory()
     if (!m_IsInitialized) return;
     
     delete[] m_Koroks;
+    delete[] m_Shrines;
     delete[] m_Hinoxes;
     delete[] m_Taluses;
     delete[] m_Moldugas;
@@ -446,6 +466,7 @@ bool Map::m_ShouldLoadMastermodeFile = false;
 
 PadState* Map::m_Pad;
 MapObject<Data::Korok>* Map::m_Koroks;
+MapObject<Data::Shrine>* Map::m_Shrines;
 MapObject<Data::Hinox>* Map::m_Hinoxes;
 MapObject<Data::Talus>* Map::m_Taluses;
 MapObject<Data::Molduga>* Map::m_Moldugas;

@@ -304,6 +304,9 @@ bool SavefileIO::ParseFile(const char *filepath)
     foundKoroks.clear();
     missingKoroks.clear();
 
+    foundShrines.clear();
+    missingShrines.clear();
+
     visitedLocations.clear();
     unexploredLocations.clear();
 
@@ -350,6 +353,17 @@ bool SavefileIO::ParseFile(const char *filepath)
             bool found = ReadU32(buffer, offset + 4) != 0;
 
             found ? foundKoroks.push_back(korok) : missingKoroks.push_back(korok);
+        }
+        
+
+        // Check if a shrine with the hash exists
+        Data::Shrine *shrine = Data::ShrineExists(hashValue);
+        if (shrine)
+        {
+            // Read the 4 bytes after the hash. If it is not 0, then the shrine has been found.
+            bool defeated = ReadU32(buffer, offset + 4) != 0;
+
+            defeated ? foundShrines.push_back(shrine) : missingShrines.push_back(shrine);
         }
 
         // Check if a location with the hash exists
@@ -404,6 +418,9 @@ bool SavefileIO::ParseFile(const char *filepath)
 
 std::vector<Data::Korok *> SavefileIO::foundKoroks;
 std::vector<Data::Korok *> SavefileIO::missingKoroks;
+
+std::vector<Data::Shrine*> SavefileIO::foundShrines;
+std::vector<Data::Shrine*> SavefileIO::missingShrines;
 
 std::vector<Data::Location *> SavefileIO::visitedLocations;
 std::vector<Data::Location *> SavefileIO::unexploredLocations;
