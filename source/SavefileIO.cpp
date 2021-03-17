@@ -60,7 +60,20 @@ int SavefileIO::MountSavefile(bool chooseProfile)
     AccountUid uid = {0};
 
     // Display the profile picker so the user can choose the profile
-    uid = Accounts::RequestProfileSelection();
+    rc = accountInitialize(AccountServiceType_Administrator);
+    if (R_FAILED(rc)) {
+        printf("accountInitialize() failed: 0x%x\n", rc);
+    }
+
+    rc = accountGetLastOpenedUser(&uid);
+
+    if (R_SUCCEEDED(rc)) {
+        printf("Using last user used to launch app\n");
+    } else {
+        printf("Opening profile picker\n");
+
+        uid = Accounts::RequestProfileSelection();
+    }
 
     AccountUid1 = uid.uid[0];
     AccountUid2 = uid.uid[1];

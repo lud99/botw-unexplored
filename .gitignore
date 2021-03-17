@@ -4,3 +4,4 @@ build
 *.nro
 source/other/
 romfs/game_data.sav
+saves
