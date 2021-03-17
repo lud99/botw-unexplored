@@ -29,12 +29,15 @@ namespace SavefileIO
 
     uint32_t ReadU32(unsigned char* buffer, int offset);
 
-    int MountSavefile(bool useCached = false);
+    int MountSavefile(bool preferCache = true);
     bool UnmountSavefile();
 
-    bool LoadBackup(const std::string& saveSlot);
+    bool LoadBackup(bool masterMode = false);
 
-    void CopySavefiles(u64 uid1, u64 uid2);
+    uint32_t GetSavefilePlaytime(const std::string& filepath);
+    int GetMostRecentSavefile(const std::string& dir, bool masterMode = false); // Needs slash at end of dir
+
+    void CopySavefiles();
     s32 CopyFile(const std::string &srcPath, const std::string &dstPath);
 
     bool ParseFile(const char* filepath);
@@ -44,6 +47,9 @@ namespace SavefileIO
 
     extern u64 AccountUid1;
     extern u64 AccountUid2;
+
+    extern int MostRecentNormalModeFile;
+    extern int MostRecentMasterModeFile;
 
     extern bool LoadedSavefile;
     extern bool GameIsRunning;

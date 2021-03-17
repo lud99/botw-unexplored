@@ -53,7 +53,6 @@ int main()
     PadState pad;
     padInitializeDefault(&pad);
 
-
     // OpenGL
     // Initialize EGL on the default window
     openGLInitialized = initEgl(nwindowGetDefault());
@@ -101,16 +100,12 @@ int main()
 
             LoadGamesave();
 
-            Map::m_Font.m_ViewMatrix = &Map::m_ViewMatrix;
-
             Map::UpdateMapObjects();
         }
 
         if (firstDraw && hasDoneDirstDraw)
         {
             LoadGamesave();
-
-            Map::m_Font.m_ViewMatrix = &Map::m_ViewMatrix;
 
             Map::UpdateMapObjects();
             firstDraw = false;

@@ -29,35 +29,40 @@ uint32_t SavefileIO::ReadU32(unsigned char *buffer, int offset)
            0 /* Make it positive? */;
 }
 
-int SavefileIO::MountSavefile(bool useCached)
+int SavefileIO::MountSavefile(bool preferCache)
 {
     Result rc = 0;
 
     u64 botwId = 0x01007ef00011e000; //ApplicationId of the save to mount, in this case BOTW.
 
+    AccountUid uid = {0};
+
     // Use cached values
-    if (useCached) 
+    if (preferCache) 
     {
-        AccountUid uid;
         uid.uid[0] = AccountUid1;
         uid.uid[1] = AccountUid2;
 
-        Result rc = fsdevMountSaveData("save", botwId, uid);
-        if (R_FAILED(rc))
+        if (accountUidIsValid(&uid))
         {
-            printf("Failed to mount save (cached user)\n");
-            GameIsRunning = true;
+            Result rc = fsdevMountSaveData("save", botwId, uid);
+            if (R_FAILED(rc))
+            {
+                printf("Failed to mount save (cached user)\n");
+                GameIsRunning = true;
 
-            return -1;
+                return -1;
+            }
+
+            printf("Using cached account\n");
+
+            return 1;
         }
-
-        return 1;
     }
 
-    MasterModeFileExists = false;
+    std::cout << AccountUid1 << "; " << AccountUid2 << "\n";
 
-    //Get the userID for save mounting. To mount common savedata, use an all-zero userID.
-    AccountUid uid = {0};
+    MasterModeFileExists = false;
 
     // Display the profile picker so the user can choose the profile
     rc = accountInitialize(AccountServiceType_Administrator);
@@ -66,10 +71,18 @@ int SavefileIO::MountSavefile(bool useCached)
     }
 
     rc = accountGetLastOpenedUser(&uid);
+    bool couldGetLastUser = false;
 
     if (R_SUCCEEDED(rc)) {
         printf("Using last user used to launch app\n");
-    } else {
+
+        // Check if there is a user that last opened an app (ex. if you have restarted the console)
+        couldGetLastUser = accountUidIsValid(&uid);
+        if (!couldGetLastUser) printf("No last user available. ");
+    }
+
+    if (!couldGetLastUser) 
+    {
         printf("Opening profile picker\n");
 
         uid = Accounts::RequestProfileSelection();
@@ -133,17 +146,9 @@ int SavefileIO::MountSavefile(bool useCached)
         return -1;
     }
 
-    // Check for master mode file
-    // TODO: Read the latest file
-    if (FileExists("save:/7/game_data.sav")) // Manual save slot (probably the most recent?)
-    {
-        MasterModeFileExists = true;
-        MasterModeSlot = 7;
-    } else if (FileExists("save:/6/game_data.sav")) // Load auto save if manual doesn't exist
-    {
-        MasterModeFileExists = true;
-        MasterModeSlot = 6;
-    }
+    // Figure out which save file is the most recent one
+    MostRecentNormalModeFile = GetMostRecentSavefile("save:/", false);
+    MostRecentMasterModeFile = GetMostRecentSavefile("save:/", true);
 
     return 1;
 }
@@ -155,10 +160,10 @@ bool SavefileIO::UnmountSavefile()
     return R_SUCCEEDED(fsdevUnmountDevice("save"));
 }
 
-bool SavefileIO::LoadBackup(const std::string& saveSlot)
+bool SavefileIO::LoadBackup(bool masterMode)
 {
     std::string profileIdStr = std::to_string(AccountUid1) + " - " + std::to_string(AccountUid2);
-    std::string savesFolder = "sdmc:/switch/botw-unexplored/saves/" + profileIdStr;
+    std::string savesFolder = "sdmc:/switch/botw-unexplored/saves/" + profileIdStr + "/";
 
     if (!DirectoryExists("sdmc:/switch/botw-unexplored"))
         return false;
@@ -170,51 +175,118 @@ bool SavefileIO::LoadBackup(const std::string& saveSlot)
         return false;
     }
 
-    std::string saveFilePath = savesFolder + "/" + saveSlot + "/game_data.sav";
-    if (!FileExists(saveFilePath))
-        return false;
+    // Get most recent savefile
+    MostRecentNormalModeFile = GetMostRecentSavefile(savesFolder, false);
+    MostRecentMasterModeFile = GetMostRecentSavefile(savesFolder, true);
 
-    if (FileExists(savesFolder + "/7/game_data.sav"))
-    {
-        MasterModeFileExists = true;
-        MasterModeSlot = 7;
-    } else if (FileExists(savesFolder + "/6/game_data.sav"))
-    {
-        MasterModeFileExists = true;
-        MasterModeSlot = 6;
-    }
+    std::string savefilePath = savesFolder + std::to_string(!masterMode ? MostRecentNormalModeFile : MostRecentMasterModeFile) + "/game_data.sav";
 
     // Parse it
-    return ParseFile(saveFilePath.c_str());
+    return ParseFile(savefilePath.c_str());
 }
 
-void SavefileIO::CopySavefiles(u64 uid1, u64 uid2)
+uint32_t SavefileIO::GetSavefilePlaytime(const std::string& filepath)
+{
+    if (!FileExists(filepath))
+        return 0;
+
+    std::ifstream file;
+    file.open(filepath, std::ios::binary);
+
+    // Get length of file
+    file.seekg(0, file.end);
+    unsigned int fileSize = (unsigned int)file.tellg(); // Get file size
+    file.seekg(0, file.beg);
+
+    unsigned char *buffer = new unsigned char[fileSize];
+
+    // Read the entire file into the buffer. Need to cast the buffer to a non-signed char*.
+    file.read((char *)&buffer[0], fileSize);
+
+    file.close();
+
+    uint32_t playtimeHash = 0x73c29681;
+    
+    // Iterate to find the location of the hash
+    uint32_t playtime = 0;
+    for (unsigned int offset = 0x0c; offset < fileSize - 4; offset += 8)
+    {
+        // Read the hash
+        uint32_t hashValue = ReadU32(buffer, offset);
+        if (hashValue == playtimeHash)
+        {
+            playtime = ReadU32(buffer, offset + 4);
+            break;
+        }
+    }
+
+    delete buffer;
+
+    return playtime;
+}
+
+int SavefileIO::GetMostRecentSavefile(const std::string& dir, bool masterMode)
+{
+    // Figure out which save file is the most recent one
+
+    uint32_t highestPlaytime = 0;
+    int mostRecentFile = -1;
+
+    // Normal mode
+    if (!masterMode)
+    {
+        for (int i = 0; i <= 5; i++)
+        {
+            std::string path = dir + std::to_string(i) + "/game_data.sav";
+            uint32_t playtime = GetSavefilePlaytime(path); // 0 = Save doesn't exist
+
+            // If this file is more recent then the currently highest one
+            if (playtime != 0 && playtime >= highestPlaytime) 
+            {
+                highestPlaytime = playtime;
+                mostRecentFile = i;
+            }
+        }
+
+        return mostRecentFile;
+    }
+
+    // Master mode
+    for (int i = 6; i <= 7; i++)
+    {
+        std::string path = dir + std::to_string(i) + "/game_data.sav";
+        uint32_t playtime = GetSavefilePlaytime(path); // 0 = Save doesn't exist
+
+        // If this file is more recent then the currently highest one
+        if (playtime != 0 && playtime >= highestPlaytime) 
+        {
+            highestPlaytime = playtime;
+            mostRecentFile = i;
+        }
+    }
+
+    if (mostRecentFile != -1)
+        MasterModeFileExists = true;
+
+    return mostRecentFile;
+}
+
+void SavefileIO::CopySavefiles()
 {
     std::vector<std::string> savefileFolders;
+    
+    std::cout << MostRecentNormalModeFile << "; " << MostRecentMasterModeFile << "\n";
 
-    DIR *dir = opendir("save:/");
-    if (dir == NULL)
-    {
-        printf("Couldn't copy savefiles. Failed to open 'save:/'\n");
-
-        return;
+    if (MostRecentNormalModeFile != -1) {
+        printf("normal\n");
+        savefileFolders.push_back(std::to_string(MostRecentNormalModeFile));
     }
-    else
-    {
-        // Normal mode file
-        if (DirectoryExists("save:/0"))
-            savefileFolders.push_back("0");
-        // Master mode file
-        if (DirectoryExists("save:/7"))
-            savefileFolders.push_back("7");
-        // Prioritize file 7, but copy file 6 if 7 doesn't exist
-        else if (DirectoryExists("save:/6"))
-            savefileFolders.push_back("6");
-
-        closedir(dir);
+    if (MostRecentMasterModeFile != -1) {
+        savefileFolders.push_back(std::to_string(MostRecentMasterModeFile));
+        printf("master\n");
     }
 
-    std::string profileIdStr = std::to_string(uid1) + " - " + std::to_string(uid2);
+    std::string profileIdStr = std::to_string(AccountUid1) + " - " + std::to_string(AccountUid2);
     std::string savesFolder = "sdmc:/switch/botw-unexplored/saves/" + profileIdStr;
 
     if (!DirectoryExists("sdmc:/switch/botw-unexplored"))
@@ -449,6 +521,8 @@ std::vector<Data::Molduga *> SavefileIO::undefeatedMoldugas;
 
 u64 SavefileIO::AccountUid1;
 u64 SavefileIO::AccountUid2;
+int SavefileIO::MostRecentNormalModeFile = -1;
+int SavefileIO::MostRecentMasterModeFile = -1;
 bool SavefileIO::LoadedSavefile = false;
 bool SavefileIO::GameIsRunning = false;
 bool SavefileIO::NoSavefileForUser = false;

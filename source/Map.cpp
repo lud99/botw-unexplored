@@ -214,12 +214,13 @@ void Map::Update()
 
     if (buttonsPressed & HidNpadButton_Y)
     {
-        m_LoadMasterMode = !m_LoadMasterMode;
+        if (SavefileIO::MasterModeFileExists)
+        {
+            m_LoadMasterMode = !m_LoadMasterMode;
 
-        LoadGamesave(m_LoadMasterMode);
-        UpdateMapObjects();
-
-        m_Font.m_ViewMatrix = &m_ViewMatrix;
+            LoadGamesave(m_LoadMasterMode);
+            UpdateMapObjects();
+        }
     }
 
     // Analog stick camera movement

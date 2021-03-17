@@ -5,60 +5,60 @@
 
 AccountUid Accounts::RequestProfileSelection()
 {
-    AccountUid out_id;
-    LibAppletArgs args;
-    libappletArgsCreate(&args, 0x10000);
-    u8 st_in[0xA0]  = {0};
-    u8 st_out[0x18] = {0};
-    size_t repsz;
-
-    Result res = libappletLaunch(AppletId_LibraryAppletPlayerSelect, &args, st_in, 0xA0, st_out, 0x18, &repsz);
-    if (R_SUCCEEDED(res)) {
-        u64 lres       = *(u64*)st_out;
-        AccountUid uid = *(AccountUid*)&st_out[8];
-        if (lres == 0)
-            out_id = uid;
-    } else {
-        printf("libappletLaunch() failed\n");
-    }
-
-    return out_id;
-    // struct UserReturnData{
-    //     u64 result;
-    //     AccountUid UID;
-    // } PACKED;
-
-    // struct UserReturnData outdata;
-
-    // AppletHolder aph;
-    // AppletStorage ast;
-    // AppletStorage hast1;
+    // AccountUid out_id;
     // LibAppletArgs args;
+    // libappletArgsCreate(&args, 0x10000);
+    // u8 st_in[0xA0]  = {0};
+    // u8 st_out[0x18] = {0};
+    // size_t repsz;
 
-    // u8 indata[0xA0] = { 0 };
-    // indata[0x96] = 1;
+    // Result res = libappletLaunch(AppletId_LibraryAppletPlayerSelect, &args, st_in, 0xA0, st_out, 0x18, &repsz);
+    // if (R_SUCCEEDED(res)) {
+    //     u64 lres       = *(u64*)st_out;
+    //     AccountUid uid = *(AccountUid*)&st_out[8];
+    //     if (lres == 0)
+    //         out_id = uid;
+    // } else {
+    //     printf("libappletLaunch() failed\n");
+    // }
 
-    // appletCreateLibraryApplet(&aph, AppletId_LibraryAppletPlayerSelect, LibAppletMode_AllForeground);
-    // libappletArgsCreate(&args, 0);
-    // libappletArgsPush(&args, &aph);
+    // return out_id;
+    struct UserReturnData{
+        u64 result;
+        AccountUid UID;
+    } PACKED;
 
-    // appletCreateStorage(&hast1, 0xA0);
+    struct UserReturnData outdata;
 
-    // appletStorageWrite(&hast1, 0, indata, 0xA0);
-    // appletHolderPushInData(&aph, &hast1);
-    // appletHolderStart(&aph);
+    AppletHolder aph;
+    AppletStorage ast;
+    AppletStorage hast1;
+    LibAppletArgs args;
 
-    // while (appletHolderWaitInteractiveOut(&aph));
+    u8 indata[0xA0] = { 0 };
+    indata[0x96] = 1;
 
-    // appletHolderJoin(&aph);
-    // appletHolderPopOutData(&aph, &ast);
-    // appletStorageRead(&ast, 0, &outdata, 24);
+    appletCreateLibraryApplet(&aph, AppletId_LibraryAppletPlayerSelect, LibAppletMode_AllForeground);
+    libappletArgsCreate(&args, 0);
+    libappletArgsPush(&args, &aph);
 
-    // appletHolderClose(&aph);
-    // appletStorageClose(&ast);
-    // appletStorageClose(&hast1);
+    appletCreateStorage(&hast1, 0xA0);
 
-    // return outdata.UID;
+    appletStorageWrite(&hast1, 0, indata, 0xA0);
+    appletHolderPushInData(&aph, &hast1);
+    appletHolderStart(&aph);
+
+    while (appletHolderWaitInteractiveOut(&aph));
+
+    appletHolderJoin(&aph);
+    appletHolderPopOutData(&aph, &ast);
+    appletStorageRead(&ast, 0, &outdata, 24);
+
+    appletHolderClose(&aph);
+    appletStorageClose(&ast);
+    appletStorageClose(&hast1);
+
+    return outdata.UID;
 }
 
 // doesn't work
