@@ -1,3 +1,5 @@
+#pragma once
+
 #include <stdio.h>
 
 #include <switch.h>
@@ -92,7 +94,7 @@ _fail0:
     return false;
 }
 
-void deinitEgl()
+static void deinitEgl()
 {
     if (s_display)
     {

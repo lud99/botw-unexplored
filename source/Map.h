@@ -4,6 +4,7 @@
 #include "Graphics/Mesh.hpp"
 #include "Graphics/Shader.h" 
 #include "Graphics/Font.h"
+#include "Graphics/Quad.h"
 
 #include <glm/vec2.hpp>
 #include <glm/mat4x4.hpp>
@@ -44,6 +45,8 @@ namespace Map
     extern Shader m_Shader;
     extern Font m_Font;
 
+    extern TexturedQuad m_MasterModeIcon; 
+
     extern float m_Zoom;
 
     extern glm::mat4 m_ProjectionMatrix;
@@ -60,7 +63,7 @@ namespace Map
     extern bool m_IsInitialized;
     extern bool m_ShouldExit;
     extern bool m_ShouldChooseProfile;
-    extern bool m_ShouldLoadMastermodeFile;
+    extern bool m_LoadMasterMode;
 
     extern PadState* m_Pad;
 

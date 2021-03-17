@@ -29,14 +29,14 @@ uint32_t SavefileIO::ReadU32(unsigned char *buffer, int offset)
            0 /* Make it positive? */;
 }
 
-int SavefileIO::MountSavefile(bool chooseProfile)
+int SavefileIO::MountSavefile(bool useCached)
 {
     Result rc = 0;
 
     u64 botwId = 0x01007ef00011e000; //ApplicationId of the save to mount, in this case BOTW.
 
     // Use cached values
-    if (!chooseProfile) 
+    if (useCached) 
     {
         AccountUid uid;
         uid.uid[0] = AccountUid1;
@@ -45,7 +45,7 @@ int SavefileIO::MountSavefile(bool chooseProfile)
         Result rc = fsdevMountSaveData("save", botwId, uid);
         if (R_FAILED(rc))
         {
-            printf("Failed to mount save (master mode)\n");
+            printf("Failed to mount save (cached user)\n");
             GameIsRunning = true;
 
             return -1;
@@ -453,5 +453,6 @@ bool SavefileIO::LoadedSavefile = false;
 bool SavefileIO::GameIsRunning = false;
 bool SavefileIO::NoSavefileForUser = false;
 bool SavefileIO::MasterModeFileExists = false;
+bool SavefileIO::MasterModeFileLoaded = false;
 
 int SavefileIO::MasterModeSlot;

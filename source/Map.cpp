@@ -9,6 +9,8 @@
 #include "Dialog.h"
 #include "MapObject.hpp"
 
+#include "LoadGamesave.h"
+
 #include "SavefileIO.h" 
 
 void Map::Init()
@@ -85,6 +87,10 @@ void Map::Init()
     m_GameRunningDialog = new Dialog(glm::vec2(0.0f, 0.0f), 700.0f, 400.0f, Dialog::GameIsRunning);
     m_MasterModeDialog = new Dialog(glm::vec2(0.0f, 0.0f), 700.0f, 400.0f, Dialog::MasterModeChoose);
 
+    m_MasterModeIcon.Create("romfs:/mastermodeicon.png");
+    m_MasterModeIcon.m_Position = glm::vec2(m_ScreenRight - 65.0f, m_ScreenBottom + 50.0f);
+    m_MasterModeIcon.m_Scale = 0.15f;
+
     // Create koroks
     m_Koroks = new MapObject<Data::Korok>[Data::KoroksCount];
     MapObject<Data::Korok>::Init("romfs:/korokseed.png", Data::KoroksCount);
@@ -107,20 +113,6 @@ void Map::Init()
 
     // Create locations
     m_Locations = new MapLocation[187];
-    // for (int i = 0; i < 187; i++)
-    // {
-    //     // The data has down being positive and up being negative. This renderer uses the opposite, so reverse the koroks y-coordinate
-    //     m_Locations[i].m_Position = glm::vec2(Data::Locations[i].x, -Data::Locations[i].y) * 0.5f;
-
-    //     m_Locations[i].m_LocationData = &Data::Locations[i];
-
-    //     m_Locations[i].Init();
-
-    //     // Check if the korok has been found (if the found vector contains it)
-    //     if (std::find(SavefileIO::visitedLocations.begin(), SavefileIO::visitedLocations.end(), &Data::Locations[i]) != SavefileIO::visitedLocations.end()) {
-    //         m_Locations[i].m_Found = true;
-    //     }
-    // }
 
     UpdateMapObjects();
 
@@ -213,22 +205,22 @@ void Map::Update()
 
     if (m_Zoom < minZoom) m_Zoom = minZoom;
 
-    // Show all koroks and locations
+    // Toggle legend
     if (buttonsPressed & HidNpadButton_X)
     {
         if (!m_NoSavefileDialog->m_IsOpen)
             m_IsLegendOpen = !m_IsLegendOpen;
     }
 
-    // Show only those that are found
-    // if (buttonsUp & HidNpadButton_X)
-    // {
-    //     for (int i = 0; i < 900; i++)
-    //         m_Koroks[i].m_ShowAnyway = false;
+    if (buttonsPressed & HidNpadButton_Y)
+    {
+        m_LoadMasterMode = !m_LoadMasterMode;
 
-    //     for (int i = 0; i < 187; i++)
-    //         m_Locations[i].m_ShowAnyway = false;
-    // }
+        LoadGamesave(m_LoadMasterMode);
+        UpdateMapObjects();
+
+        m_Font.m_ViewMatrix = &m_ViewMatrix;
+    }
 
     // Analog stick camera movement
     // Read the sticks' position
@@ -314,10 +306,6 @@ void Map::Update()
             m_Taluses[i].Update();
         for (int i = 0; i < Data::MoldugasCount; i++)
             m_Moldugas[i].Update();
-
-        // Update locations
-        // for (int i = 0; i < 187; i++)
-        //      m_Locations[i].Update();
     }
 
     m_PrevCameraPosition = m_CameraPosition;
@@ -359,15 +347,20 @@ void Map::Render()
     if (m_MasterModeDialog->m_IsOpen)
         m_MasterModeDialog->Render();
 
+    if (m_LoadMasterMode)
+        m_MasterModeIcon.Render();
+
     glm::mat4 emptyViewMatrix(1.0);
     m_Font.m_ViewMatrix = &emptyViewMatrix; // Don't draw the text relative to the camera 
 
     if (SavefileIO::GameIsRunning && SavefileIO::LoadedSavefile)
     {
-        m_Font.RenderText("BotW is running.", glm::vec2(m_ScreenRight - 20, m_ScreenTop - 30), 0.5f, glm::vec3(1.0f), ALIGN_RIGHT);
+        glm::vec2 s = m_Font.RenderText("BotW is running.", glm::vec2(m_ScreenRight - 20, m_ScreenTop - 30), 0.5f, glm::vec3(1.0f), ALIGN_RIGHT);
         m_Font.RenderText("Loaded older save", glm::vec2(m_ScreenRight - 20, m_ScreenTop - 60), 0.5f, glm::vec3(1.0f), ALIGN_RIGHT);
+
+        if (SavefileIO::MasterModeFileExists)
+            m_Font.RenderText("Press Y to toggle master mode", glm::vec2(m_ScreenRight - 60 - s.x, m_ScreenTop - 30), 0.5f, glm::vec3(1.0f), ALIGN_RIGHT);
     }
-        
 
     // for (int i = 0; i < 187; i++)
     //     m_Locations[i].Render();
@@ -445,6 +438,7 @@ Mesh<TextureVertex> Map::m_Mesh;
 Texture2D Map::m_Texture;
 Shader Map::m_Shader;
 Font Map::m_Font;
+TexturedQuad Map::m_MasterModeIcon;
 
 float Map::m_Zoom = Map::m_DefaultZoom;
 
@@ -462,7 +456,7 @@ bool Map::m_IsLegendOpen = true;
 bool Map::m_IsInitialized = false;
 bool Map::m_ShouldExit = false;
 bool Map::m_ShouldChooseProfile = false;
-bool Map::m_ShouldLoadMastermodeFile = false;
+bool Map::m_LoadMasterMode = false;
 
 PadState* Map::m_Pad;
 MapObject<Data::Korok>* Map::m_Koroks;

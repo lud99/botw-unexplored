@@ -15,119 +15,25 @@
 #include "Map.h"
 #include "Accounts.h"
 #include "Dialog.h"
+#include "LoadGamesave.h"
 
 bool openGLInitialized = false;
 bool nxLinkInitialized = false;
 
-void cleanUp();
+void cleanUp()
+{
+    printf("Exiting, cleaning up...");
 
-bool LoadGamesave(bool loadMasterMode = false)
-{   
-    // Try to mount the save directory
-    int mountStatus = SavefileIO::MountSavefile(!loadMasterMode);
+    // Cleanup
+    if (Map::m_IsInitialized) Map::Destory();
 
-    Map::m_GameRunningDialog->SetOpen(false);
-    Map::m_MasterModeDialog->SetOpen(false);
+    romfsExit();
 
-    glm::mat4 empty(1.0f);
-    Map::m_Font.m_ViewMatrix = &empty; 
+    // Deinitialize EGL
+    if (openGLInitialized) deinitEgl();
 
-    if (mountStatus == 1) { // Good
-        // Draw loading text
-        Map::m_Font.RenderText("Loading savefile...", glm::vec2(0.0f, 0.0f), 1.0f, glm::vec3(1.0f), ALIGN_CENTER);
-        eglSwapBuffers(s_display, s_surface);
-
-        Map::m_GameRunningDialog->SetOpen(false);
-
-        if (loadMasterMode)
-        {
-            bool success = false;
-            if (SavefileIO::MasterModeFileExists) 
-            {
-                std::string path = "save:/" + std::to_string(SavefileIO::MasterModeSlot) + "/game_data.sav";
-                success = SavefileIO::ParseFile(path.c_str());
-            }
-
-            if (success) Map::m_IsLegendOpen = true;
-
-            SavefileIO::UnmountSavefile();
-                
-            return success;
-        }
-
-        bool success = SavefileIO::ParseFile("save:/0/game_data.sav");
-        if (!success) 
-        {
-            SavefileIO::UnmountSavefile();
-            Map::m_NoSavefileDialog->SetOpen(true);
-            return false;
-        }
-
-        SavefileIO::CopySavefiles(SavefileIO::AccountUid1, SavefileIO::AccountUid2);
-
-        SavefileIO::UnmountSavefile();
-
-        Map::m_NoSavefileDialog->SetOpen(false);
-
-        if (SavefileIO::MasterModeFileExists) 
-        {
-            std::cout << "Master mode savefile " << SavefileIO::MasterModeSlot << " exists\n";
-            Map::m_MasterModeDialog->SetOpen(true);
-        } else {
-            Map::m_IsLegendOpen = true;
-        }
-    } 
-    // Failed to mount it. Can happen if no profile was choosen, or some other account thing went wrong 
-    else if (mountStatus == 0) {  // No save for profile
-        printf("Canceled profile picker\n");
-
-        return false;
-    } else if (mountStatus == -1) { // Game is running
-        printf("Game is running. Loading backup...\n");
-
-        // Draw loading text
-        Map::m_Font.RenderText("Loading savefile...", glm::vec2(0.0f, 0.0f), 1.0f, glm::vec3(1.0f), ALIGN_CENTER);
-        eglSwapBuffers(s_display, s_surface);
-
-        if (loadMasterMode)
-        {
-            bool success = SavefileIO::LoadBackup(std::to_string(SavefileIO::MasterModeSlot));
-
-            if (success) Map::m_IsLegendOpen = true;
-
-            SavefileIO::UnmountSavefile();
-
-            return success;
-        }
-        
-        bool loadedBackupSuccess = SavefileIO::LoadBackup("0");
-
-        if (!loadedBackupSuccess) 
-        {
-            SavefileIO::LoadedSavefile = false;
-            Map::m_NoSavefileDialog->SetOpen(false);
-            Map::m_GameRunningDialog->SetOpen(true);
-
-            return false;
-        }
-
-        Map::m_NoSavefileDialog->SetOpen(false);
-
-        if (SavefileIO::MasterModeFileExists) 
-        {
-            std::cout << "Master mode savefile " << SavefileIO::MasterModeSlot << " exists\n";
-            Map::m_MasterModeDialog->SetOpen(true);
-        } else {
-            Map::m_IsLegendOpen = true;
-        }
-    } else if (mountStatus == -2) { // User has no save data
-        printf("The selected user has no save data\n");
-
-        Map::m_NoSavefileDialog->SetOpen(true);
-        return false;
-    }
-
-    return true;
+    // Deinitialize network 
+    if (nxLinkInitialized) socketExit();
 }
 
 int main()
@@ -200,17 +106,6 @@ int main()
             Map::UpdateMapObjects();
         }
 
-        if (Map::m_ShouldLoadMastermodeFile)
-        {
-            Map::m_ShouldLoadMastermodeFile = false;
-
-            LoadGamesave(true);
-
-            Map::m_Font.m_ViewMatrix = &Map::m_ViewMatrix;
-
-            Map::UpdateMapObjects();
-        }
-
         if (firstDraw && hasDoneDirstDraw)
         {
             LoadGamesave();
@@ -235,27 +130,4 @@ int main()
     cleanUp();
 
     return EXIT_SUCCESS;
-}
-
-void cleanUp()
-{
-    printf("Exiting, cleaning up...");
-
-    // printf("Waiting for thread...");
-    // while (true)
-    // {
-    //     if (SavefileIO::FinishedCopying)
-    //         break;
-    // };
-        
-    // Cleanup
-    if (Map::m_IsInitialized) Map::Destory();
-
-    romfsExit();
-
-    // Deinitialize EGL
-    if (openGLInitialized) deinitEgl();
-
-    // Deinitialize network 
-    if (nxLinkInitialized) socketExit();
 }

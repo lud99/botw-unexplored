@@ -126,8 +126,8 @@ void Dialog::Update()
 
                     if (m_Type == DialogType::InvalidSavefile) 
                         Map::m_ShouldChooseProfile = true;
-                    else if (m_Type == DialogType::MasterModeChoose)
-                        Map::m_ShouldLoadMastermodeFile = true;
+                    // else if (m_Type == DialogType::MasterModeChoose)
+                    //     Map::m_ShouldLoadMastermodeFile = true;
                 }
                     
                 UpdateSelectedButton();
@@ -173,8 +173,8 @@ void Dialog::Update()
         else if (m_SelectedButton == 1) {
             if (m_Type == DialogType::InvalidSavefile) 
                 Map::m_ShouldChooseProfile = true;
-            else if (m_Type == DialogType::MasterModeChoose)
-                Map::m_ShouldLoadMastermodeFile = true;
+            // else if (m_Type == DialogType::MasterModeChoose)
+            //     Map::m_ShouldLoadMastermodeFile = true;
         }
     }
 }

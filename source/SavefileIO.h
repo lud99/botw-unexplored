@@ -29,7 +29,7 @@ namespace SavefileIO
 
     uint32_t ReadU32(unsigned char* buffer, int offset);
 
-    int MountSavefile(bool chooseProfile = true);
+    int MountSavefile(bool useCached = false);
     bool UnmountSavefile();
 
     bool LoadBackup(const std::string& saveSlot);
@@ -49,6 +49,7 @@ namespace SavefileIO
     extern bool GameIsRunning;
     extern bool NoSavefileForUser;
     extern bool MasterModeFileExists;
+    extern bool MasterModeFileLoaded;
 
     extern int MasterModeSlot;
 };
