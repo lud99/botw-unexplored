@@ -237,6 +237,17 @@ void Font::RenderText(Text& text, glm::vec2 position, float scale, glm::vec3 col
     m_Shader.Unbind();
 }
 
+Font::~Font()
+{
+    m_Shader.Delete();
+
+    // Delete character textures
+    for (unsigned char c = 0; c < 128; c++)
+    {
+        glDeleteTextures(1, &m_Characters[c].TextureID);
+    }   
+}
+
 void Text::Create(const std::string& text)
 {
     float xPosition = 0.0f;
