@@ -62,7 +62,6 @@ namespace Map
     extern bool m_IsLegendOpen;
     extern bool m_IsInitialized;
     extern bool m_ShouldExit;
-    extern bool m_ShouldChooseProfile;
     extern bool m_LoadMasterMode;
 
     extern PadState* m_Pad;

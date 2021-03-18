@@ -114,7 +114,7 @@ int SavefileIO::MountSavefile(bool preferCache)
     if (!accountUidIsValid(&uid))
     {
         printf("The user canceled the profile picker\n");
-        return 0;
+        return -2;
     }
 
     FsSaveDataInfoReader reader;
@@ -166,6 +166,8 @@ int SavefileIO::MountSavefile(bool preferCache)
     // Figure out which save file is the most recent one
     MostRecentNormalModeFile = GetMostRecentSavefile("save:/", false);
     MostRecentMasterModeFile = GetMostRecentSavefile("save:/", true);
+
+    if (MostRecentNormalModeFile == -1) return -2;
 
     return 1;
 }

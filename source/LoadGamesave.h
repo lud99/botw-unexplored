@@ -9,11 +9,13 @@
 #include "Map.h"
 #include "Dialog.h"
 
-static bool LoadGamesave(bool loadMasterMode = false)
+static bool LoadGamesave(bool loadMasterMode = false, bool chooseProfile = false)
 {   
     printf("Loading gamesave...\n");
     // Try to mount the save directory
-    int mountStatus = SavefileIO::MountSavefile();
+    int mountStatus = SavefileIO::MountSavefile(!chooseProfile);
+
+    bool dialogWasOpen = Map::m_GameRunningDialog->m_IsOpen || Map::m_MasterModeDialog->m_IsOpen || Map::m_NoSavefileDialog->m_IsOpen;
 
     Map::m_GameRunningDialog->SetOpen(false);
     Map::m_MasterModeDialog->SetOpen(false);
@@ -48,7 +50,10 @@ static bool LoadGamesave(bool loadMasterMode = false)
             return false;
         }
 
-        //SavefileIO::CopySavefiles();
+        if (dialogWasOpen)
+            Map::m_IsLegendOpen = true;
+
+        SavefileIO::CopySavefiles();
 
         SavefileIO::UnmountSavefile();
     } 
@@ -70,11 +75,17 @@ static bool LoadGamesave(bool loadMasterMode = false)
 
             return false;
         }
+
+        if (dialogWasOpen)
+            Map::m_IsLegendOpen = true;
     } else if (mountStatus == -2) { // User has no save data
         printf("The selected user has no save data\n");
 
         SavefileIO::MasterModeFileLoaded = false;
         Map::m_NoSavefileDialog->SetOpen(true);
+        
+        SavefileIO::UnmountSavefile();
+
         return false;
     }
 

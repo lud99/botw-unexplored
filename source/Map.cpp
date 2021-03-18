@@ -459,7 +459,6 @@ bool Map::m_IsDragging = false;
 bool Map::m_IsLegendOpen = true;
 bool Map::m_IsInitialized = false;
 bool Map::m_ShouldExit = false;
-bool Map::m_ShouldChooseProfile = false;
 bool Map::m_LoadMasterMode = false;
 
 PadState* Map::m_Pad;

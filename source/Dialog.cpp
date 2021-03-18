@@ -6,6 +6,7 @@
 
 #include "Map.h"
 #include "Legend.h"
+#include "LoadGamesave.h"
 
 Dialog::Dialog(glm::vec2 position, float width, float height, DialogType type)
 {
@@ -125,7 +126,10 @@ void Dialog::Update()
                     m_SelectedButton = 1;
 
                     if (m_Type == DialogType::InvalidSavefile) 
-                        Map::m_ShouldChooseProfile = true;
+                    {
+                        LoadGamesave(false, true);
+                        Map::UpdateMapObjects();
+                    } 
                     // else if (m_Type == DialogType::MasterModeChoose)
                     //     Map::m_ShouldLoadMastermodeFile = true;
                 }
@@ -171,8 +175,12 @@ void Dialog::Update()
                 
         } 
         else if (m_SelectedButton == 1) {
-            if (m_Type == DialogType::InvalidSavefile) 
-                Map::m_ShouldChooseProfile = true;
+            if (m_Type == DialogType::InvalidSavefile)
+            {
+                LoadGamesave(false, true);
+                Map::UpdateMapObjects();
+            } 
+                
             // else if (m_Type == DialogType::MasterModeChoose)
             //     Map::m_ShouldLoadMastermodeFile = true;
         }

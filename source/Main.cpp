@@ -94,15 +94,6 @@ int main()
         // Render
         Map::Render();
 
-        if (Map::m_ShouldChooseProfile)
-        {
-            Map::m_ShouldChooseProfile = false;
-
-            LoadGamesave();
-
-            Map::UpdateMapObjects();
-        }
-
         if (firstDraw && hasDoneDirstDraw)
         {
             LoadGamesave();
