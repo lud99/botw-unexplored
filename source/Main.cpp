@@ -69,8 +69,7 @@ int main()
     Map::Init();
     Map::m_Pad = &pad;
 
-    bool firstDraw = true;
-    bool hasDoneDirstDraw = false;
+    bool hasDoneFirstDraw = false;
 
 	while (appletMainLoop())
 	{
@@ -94,12 +93,12 @@ int main()
         // Render
         Map::Render();
 
-        if (firstDraw && hasDoneDirstDraw)
+        if (!hasDoneFirstDraw)
         {
+            hasDoneFirstDraw = true;
             LoadGamesave();
 
             Map::UpdateMapObjects();
-            firstDraw = false;
         }
 
         eglSwapBuffers(s_display, s_surface);
@@ -109,8 +108,6 @@ int main()
         {
             printf("OpenGL error: %u\n", err);
         }
-
-        hasDoneDirstDraw = true;
 	}
 
     cleanUp();

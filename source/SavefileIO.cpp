@@ -29,17 +29,20 @@ uint32_t SavefileIO::ReadU32(unsigned char *buffer, int offset)
            0 /* Make it positive? */;
 }
 
-int SavefileIO::MountSavefile(bool preferCache)
+int SavefileIO::MountSavefile(bool openProfilePicker)
 {
     Result rc = 0;
-
-    u64 botwId = 0x01007ef00011e000; //ApplicationId of the save to mount, in this case BOTW.
-
+    u64 botwId = 0x01007ef00011e000;
     AccountUid uid = {0};
 
-    // Use cached values
-    if (preferCache) 
+    MasterModeFileExists = false;   
+    GameIsRunning = false;
+
+    if (openProfilePicker)
+        uid = Accounts::RequestProfileSelection();
+    else
     {
+        // Use cached values
         uid.uid[0] = AccountUid1;
         uid.uid[1] = AccountUid2;
 
@@ -56,51 +59,59 @@ int SavefileIO::MountSavefile(bool preferCache)
 
             printf("Using cached account\n");
 
+            // Figure out which save file is the most recent one
+            MostRecentNormalModeFile = GetMostRecentSavefile("save:/", false);
+            MostRecentMasterModeFile = GetMostRecentSavefile("save:/", true);
+
+            if (MostRecentNormalModeFile == -1) return -2;
+
             return 1;
         }
     }
 
     std::cout << AccountUid1 << "; " << AccountUid2 << "\n";
 
-    MasterModeFileExists = false;
-
-    // Display the profile picker so the user can choose the profile
+    // Required for getting users
     rc = accountInitialize(AccountServiceType_Administrator);
     if (R_FAILED(rc)) {
         printf("accountInitialize() failed: 0x%x\n", rc);
     }
 
-    rc = accountGetLastOpenedUser(&uid);
-    bool couldGetUserAutomatically = false;
+    // If the manual profile selection wasn't choosen 
+    if (!accountUidIsValid(&uid))
+    {
+        rc = accountGetLastOpenedUser(&uid);
+        bool couldGetUserAutomatically = false;
 
-    if (R_SUCCEEDED(rc)) {
-        printf("Using last user used to launch app\n");
+        if (R_SUCCEEDED(rc)) {
+            printf("Using last user used to launch app\n");
 
-        // Check if there is a user that last opened an app (ex. if you have restarted the console)
-        couldGetUserAutomatically = accountUidIsValid(&uid);
-        if (!couldGetUserAutomatically) 
-        {
-            printf("No last user available. ");
-            
-            // Try to get the user that was used to launch the app when holding down R
-            rc = accountGetPreselectedUser(&uid);
-            if (R_FAILED(rc))
+            // Check if there is a user that last opened an app (ex. if you have restarted the console)
+            couldGetUserAutomatically = accountUidIsValid(&uid);
+            if (!couldGetUserAutomatically) 
             {
-                couldGetUserAutomatically = false;
-                printf("No user used to launch the app\n");
-            } else if (R_SUCCEEDED(rc) && accountUidIsValid(&uid))
-            {
-                couldGetUserAutomatically = true;
-                printf("Got user used to launch the app\n");
+                printf("No last user available. ");
+                
+                // Try to get the user that was used to launch the app when holding down R
+                rc = accountGetPreselectedUser(&uid);
+                if (R_FAILED(rc))
+                {
+                    couldGetUserAutomatically = false;
+                    printf("No user used to launch the app\n");
+                } else if (R_SUCCEEDED(rc) && accountUidIsValid(&uid))
+                {
+                    couldGetUserAutomatically = true;
+                    printf("Got user used to launch the app\n");
+                }
             }
         }
-    }
 
-    if (!couldGetUserAutomatically) 
-    {
-        printf("Opening profile picker\n");
+        if (!couldGetUserAutomatically) 
+        {
+            printf("Opening profile picker\n");
 
-        uid = Accounts::RequestProfileSelection();
+            uid = Accounts::RequestProfileSelection();
+        }
     }
 
     accountExit();
@@ -198,6 +209,12 @@ bool SavefileIO::LoadBackup(bool masterMode)
     MostRecentNormalModeFile = GetMostRecentSavefile(savesFolder, false);
     MostRecentMasterModeFile = GetMostRecentSavefile(savesFolder, true);
 
+    // So savefile exists
+    if (MostRecentNormalModeFile == -1)
+        return false;
+    if (MostRecentMasterModeFile == -1 && masterMode)
+        return false;
+
     std::string savefilePath = savesFolder + std::to_string(!masterMode ? MostRecentNormalModeFile : MostRecentMasterModeFile) + "/game_data.sav";
 
     // Parse it
@@ -293,17 +310,11 @@ int SavefileIO::GetMostRecentSavefile(const std::string& dir, bool masterMode)
 void SavefileIO::CopySavefiles()
 {
     std::vector<std::string> savefileFolders;
-    
-    std::cout << MostRecentNormalModeFile << "; " << MostRecentMasterModeFile << "\n";
 
-    if (MostRecentNormalModeFile != -1) {
-        printf("normal\n");
+    if (MostRecentNormalModeFile != -1)
         savefileFolders.push_back(std::to_string(MostRecentNormalModeFile));
-    }
-    if (MostRecentMasterModeFile != -1) {
+    if (MostRecentMasterModeFile != -1) 
         savefileFolders.push_back(std::to_string(MostRecentMasterModeFile));
-        printf("master\n");
-    }
 
     std::string profileIdStr = std::to_string(AccountUid1) + " - " + std::to_string(AccountUid2);
     std::string savesFolder = "sdmc:/switch/botw-unexplored/saves/" + profileIdStr;

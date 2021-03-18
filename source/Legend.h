@@ -70,7 +70,7 @@ public:
 
     std::vector<IconButton*> m_Buttons;
 
-    float m_Width = 400.0f;
+    float m_Width = 350.0f;
 
     int m_PrevTouchCount = 0;
 

@@ -143,8 +143,8 @@ void Legend::Render()
 
     float viewLeft = -Map::m_CameraWidth / 2;
     float viewTop = Map::m_CameraHeight / 2;
-    Map::m_Font.RenderText("Map Legend", glm::vec2(viewLeft + 25.0f, viewTop - 55.0f), 0.75f, glm::vec3(1.0));
-    Map::m_Font.RenderText("X to close", glm::vec2(viewLeft + 400.0f - 25.0f, viewTop - 55.0f), 0.5f, glm::vec3(1.0), ALIGN_RIGHT);
+    Map::m_Font.RenderText("Legend", glm::vec2(viewLeft + 25.0f, viewTop - 55.0f), 0.75f, glm::vec3(1.0));
+    Map::m_Font.RenderText("X to close", glm::vec2(viewLeft + m_Width - 26.0f, viewTop - 55.0f), 0.5f, glm::vec3(1.0), ALIGN_RIGHT);
 
     for (unsigned int i = 0; i < m_Buttons.size(); i++)
     {

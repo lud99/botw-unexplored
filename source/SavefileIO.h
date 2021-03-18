@@ -29,7 +29,7 @@ namespace SavefileIO
 
     uint32_t ReadU32(unsigned char* buffer, int offset);
 
-    int MountSavefile(bool preferCache = true);
+    int MountSavefile(bool openProfilePicker = false);
     bool UnmountSavefile();
 
     bool LoadBackup(bool masterMode = false);

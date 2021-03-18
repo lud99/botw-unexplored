@@ -13,7 +13,7 @@ static bool LoadGamesave(bool loadMasterMode = false, bool chooseProfile = false
 {   
     printf("Loading gamesave...\n");
     // Try to mount the save directory
-    int mountStatus = SavefileIO::MountSavefile(!chooseProfile);
+    int mountStatus = SavefileIO::MountSavefile(chooseProfile);
 
     bool dialogWasOpen = Map::m_GameRunningDialog->m_IsOpen || Map::m_MasterModeDialog->m_IsOpen || Map::m_NoSavefileDialog->m_IsOpen;
 
@@ -22,8 +22,6 @@ static bool LoadGamesave(bool loadMasterMode = false, bool chooseProfile = false
     Map::m_NoSavefileDialog->SetOpen(false);
 
     if (mountStatus == 1) { // Good
-        Map::m_GameRunningDialog->SetOpen(false);
-
         if (loadMasterMode)
         {
             bool success = false;

@@ -200,8 +200,17 @@ void Map::Update()
     if (buttonsDown & HidNpadButton_L) // Zoom out
         m_Zoom *= 1.0f - zoomAmount;
 
+    // Open profile picker
     if (buttonsPressed & HidNpadButton_Minus)
-        m_Zoom = m_DefaultZoom;
+    {
+        if (SavefileIO::LoadedSavefile)
+        {
+            m_LoadMasterMode = false;
+
+            LoadGamesave(false, true);
+            UpdateMapObjects();
+        }
+    }
 
     if (m_Zoom < minZoom) m_Zoom = minZoom;
 
@@ -212,9 +221,10 @@ void Map::Update()
             m_IsLegendOpen = !m_IsLegendOpen;
     }
 
+    // Toggle master mode
     if (buttonsPressed & HidNpadButton_Y)
     {
-        if (SavefileIO::MasterModeFileExists)
+        if (SavefileIO::MostRecentMasterModeFile != -1)
         {
             m_LoadMasterMode = !m_LoadMasterMode;
 
@@ -354,48 +364,30 @@ void Map::Render()
     glm::mat4 emptyViewMatrix(1.0);
     m_Font.m_ViewMatrix = &emptyViewMatrix; // Don't draw the text relative to the camera 
 
-    if (SavefileIO::GameIsRunning && SavefileIO::LoadedSavefile)
+    if (!m_IsLegendOpen)
+        m_Font.RenderText("Press X to open legend", glm::vec2(m_ScreenLeft + 20, m_ScreenTop - 30), 0.5f, glm::vec3(1.0f));  
+
+    if (SavefileIO::LoadedSavefile)
     {
-        glm::vec2 s = m_Font.RenderText("BotW is running.", glm::vec2(m_ScreenRight - 20, m_ScreenTop - 30), 0.5f, glm::vec3(1.0f), ALIGN_RIGHT);
-        m_Font.RenderText("Loaded older save", glm::vec2(m_ScreenRight - 20, m_ScreenTop - 60), 0.5f, glm::vec3(1.0f), ALIGN_RIGHT);
+        if (SavefileIO::GameIsRunning)
+        {
+            m_Font.RenderText("BotW is running.", glm::vec2(m_ScreenRight - 20, m_ScreenTop - 30), 0.5f, glm::vec3(1.0f), ALIGN_RIGHT);
+            m_Font.RenderText("Loaded older save", glm::vec2(m_ScreenRight - 20, m_ScreenTop - 60), 0.5f, glm::vec3(1.0f), ALIGN_RIGHT);
+        }
 
-        if (SavefileIO::MasterModeFileExists)
-            m_Font.RenderText("Press Y to toggle master mode", glm::vec2(m_ScreenRight - 60 - s.x, m_ScreenTop - 30), 0.5f, glm::vec3(1.0f), ALIGN_RIGHT);
-    }
+        float bottomTextX = m_ScreenRight - 30;
 
-    // for (int i = 0; i < 187; i++)
-    //     m_Locations[i].Render();
+        if (m_LoadMasterMode)
+            bottomTextX -= 80.0f;
 
-    //float textScale = 0.5f;
-
-    //m_Font.RenderText("Press Y to open Legend", glm::vec2(0, 0), textScale, glm::vec3(1.0f) /* white */);
-
-    // Render stats text
-    // glm::mat4 emptyViewMatrix(1.0);
-    // m_Font.m_ViewMatrix = &emptyViewMatrix; // Don't draw the text relative to the camera 
+        if (SavefileIO::MasterModeFileExists && !m_LoadMasterMode)
+            m_Font.RenderText("Press Y to load master mode", glm::vec2(bottomTextX, m_ScreenBottom + 55), 0.5f, glm::vec3(1.0f), ALIGN_RIGHT);  
+        else if (m_LoadMasterMode)
+            m_Font.RenderText("Press Y to load normal mode", glm::vec2(bottomTextX, m_ScreenBottom + 55), 0.5f, glm::vec3(1.0f), ALIGN_RIGHT);  
     
-    // // Koroks
-    // std::string koroksText = std::to_string(SavefileIO::foundKoroks.size()) + " / 900 koroks found";
-
-    // glm::vec2 koroksPadding(25.0f, 25.0f);
-    // glm::vec2 koroksPosition = glm::vec2(-m_CameraWidth / 2, -m_CameraHeight / 2) + koroksPadding;
-
-    // // Render the text and get the width, so the next text can be relative to that
-    // glm::vec2 koroksTextSize = m_Font.RenderText(koroksText, koroksPosition, textScale, glm::vec3(1.0f) /* white */);
-
-    // // Locations
-    // std::string locationsText = std::to_string(SavefileIO::visitedLocations.size()) + " / 187 locations visited";
-
-    // glm::vec2 locationsPadding(25.0f, 0.0f);
-    // glm::vec2 locationsPosition = koroksPosition + glm::vec2(koroksTextSize.x, 0.0f) /* only use the text width, not height */ + locationsPadding;
-
-    // // Render the text
-    // m_Font.RenderText(locationsText, locationsPosition, textScale, glm::vec3(1.0f) /* white */);
-
-    // glm::vec2 showAllPosition(-m_CameraWidth / 2 + koroksPadding.x, m_CameraHeight / 2 - (koroksTextSize.y + koroksPadding.y));
-
-    // // Render the text
-    // m_Font.RenderText("Hold X to show all koroks and locations, L and R to zoom, - to reset zoom, + to exit", showAllPosition, textScale, glm::vec3(1.0f) /* white */);
+        m_Font.RenderText("L and R to zoom, (-) to change user, (+) to exit", 
+            glm::vec2(bottomTextX, m_ScreenBottom + 20), 0.5f, glm::vec3(1.0f), ALIGN_RIGHT);  
+    }
 
     m_Font.m_ViewMatrix = &m_ViewMatrix;
 }
