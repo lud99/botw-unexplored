@@ -326,11 +326,6 @@ bool IconButton::Click(Legend* legend, bool toggled)
     return m_IsToggled;
 }
 
-IconButton::~IconButton()
-{
-    
-}
-
 constexpr glm::vec4 IconButton::HighlightedColor;
 constexpr glm::vec4 IconButton::DefaultColor;
 constexpr glm::vec4 IconButton::SelectedColor;

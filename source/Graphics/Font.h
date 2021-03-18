@@ -41,8 +41,6 @@ public:
 
     glm::vec2 RenderText(const std::string& text, glm::vec2 position, float scale, glm::vec3 color, int align = ALIGN_LEFT);
     void RenderText(Text& text, glm::vec2 position, float scale, glm::vec3 color);
-
-    ~Font();
 };
 
 class Text

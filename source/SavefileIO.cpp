@@ -71,39 +71,22 @@ int SavefileIO::MountSavefile(bool preferCache)
     }
 
     rc = accountGetLastOpenedUser(&uid);
-    bool couldGetUserAutomatically = false;
+    bool couldGetLastUser = false;
 
     if (R_SUCCEEDED(rc)) {
         printf("Using last user used to launch app\n");
 
         // Check if there is a user that last opened an app (ex. if you have restarted the console)
-        couldGetUserAutomatically = accountUidIsValid(&uid);
-        if (!couldGetUserAutomatically) 
-        {
-            printf("No last user available. ");
-            
-            // Try to get the user that was used to launch the app when holding down R
-            rc = accountGetPreselectedUser(&uid);
-            if (R_FAILED(rc))
-            {
-                couldGetUserAutomatically = false;
-                printf("No user used to launch the app\n");
-            } else if (R_SUCCEEDED(rc) && accountUidIsValid(&uid))
-            {
-                couldGetUserAutomatically = true;
-                printf("Got user used to launch the app\n");
-            }
-        }
+        couldGetLastUser = accountUidIsValid(&uid);
+        if (!couldGetLastUser) printf("No last user available. ");
     }
 
-    if (!couldGetUserAutomatically) 
+    if (!couldGetLastUser) 
     {
         printf("Opening profile picker\n");
 
         uid = Accounts::RequestProfileSelection();
     }
-
-    accountExit();
 
     AccountUid1 = uid.uid[0];
     AccountUid2 = uid.uid[1];

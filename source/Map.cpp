@@ -430,12 +430,9 @@ void Map::Destory()
     delete[] m_Moldugas;
     delete[] m_Locations;
 
-    delete m_Legend;
     delete m_NoSavefileDialog;
     delete m_GameRunningDialog;
     delete m_MasterModeDialog;
-
-    m_Shader.Delete();
 }
 
 Mesh<TextureVertex> Map::m_Mesh;

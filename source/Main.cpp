@@ -25,15 +25,15 @@ void cleanUp()
     printf("Exiting, cleaning up...");
 
     // Cleanup
-    Map::Destory();
+    if (Map::m_IsInitialized) Map::Destory();
 
     romfsExit();
 
     // Deinitialize EGL
-    deinitEgl();
+    if (openGLInitialized) deinitEgl();
 
     // Deinitialize network 
-    socketExit();
+    if (nxLinkInitialized) socketExit();
 }
 
 int main()

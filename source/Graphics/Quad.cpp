@@ -94,7 +94,7 @@ void Quad::Render()
 
 Quad::~Quad()
 {
-    m_Shader.Delete();
+
 }
 
 Shader Quad::m_Shader;
@@ -201,8 +201,7 @@ void TexturedQuad::Render()
 
 TexturedQuad::~TexturedQuad()
 {
-    m_Shader.Delete();
-    delete m_Texture;
+
 }
 
 Shader TexturedQuad::m_Shader;
