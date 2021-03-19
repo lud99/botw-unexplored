@@ -2,10 +2,12 @@
 #include <cstdint>
 #include <iostream>
 #include <iomanip>
+#include <stdlib.h>
 #include <stdio.h>
 #include <vector>
 #include <thread>
 #include <chrono>
+#include <dirent.h>
 
 #include <switch.h>
 
@@ -19,45 +21,68 @@
 
 bool openGLInitialized = false;
 bool nxLinkInitialized = false;
+int s_nxlinkSock = -1;
+
+static void deinitNxLink()
+{
+    if (s_nxlinkSock >= 0)
+    {
+        close(s_nxlinkSock);
+        socketExit();
+        s_nxlinkSock = -1;
+    }
+}
 
 void cleanUp()
 {
-    printf("Exiting, cleaning up...");
+    // Save settings
+    if (!SavefileIO::DirectoryExists("sdmc:/switch/botw-unexplored"))
+        mkdir("sdmc:/switch/botw-unexplored", 0777);
 
-    // Cleanup
+    std::ofstream file("sdmc:/switch/botw-unexplored/settings.txt");
+    if (file.is_open())
+    {
+        file << Map::m_CameraPosition.x << "\n";
+        file << Map::m_CameraPosition.y << "\n";
+        file << Map::m_Zoom << "\n";
+        printf("Saved settings\n");
+    } else
+        printf("Failed top open settings file (cleanUp())\n");
+    file.close();
+
     Map::Destory();
 
+    // Cleanup
     romfsExit();
 
     // Deinitialize EGL
     deinitEgl();
 
     // Deinitialize network 
+    deinitNxLink();
     socketExit();
 }
 
 int main()
 {
+    appletLockExit(); // To be able to run when the app closes
+
     // Setup NXLink
     socketInitializeDefault();
-    nxlinkStdio();
+    s_nxlinkSock = nxlinkStdio();
     nxLinkInitialized = true;
 
     // Init romfs
     romfsInit();
-
+    
     // Configure our supported input layout: a single player with standard controller styles
     padConfigureInput(1, HidNpadStyleSet_NpadStandard);
-
-    // Initialize the default gamepad (which reads handheld mode inputs as well as the first connected controller)
-    PadState pad;
-    padInitializeDefault(&pad);
 
     // OpenGL
     // Initialize EGL on the default window
     openGLInitialized = initEgl(nwindowGetDefault());
     if (!openGLInitialized)
-        return EXIT_FAILURE;
+        return 0;
 
     // Load OpenGL routines using glad
     gladLoadGL();
@@ -65,11 +90,36 @@ int main()
     // OpenGL config
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);  
+
+    // Initialize the default gamepad (which reads handheld mode inputs as well as the first connected controller)
+    PadState pad;
+    padInitializeDefault(&pad);
     
     Map::Init();
     Map::m_Pad = &pad;
 
+
     bool hasDoneFirstDraw = false;
+
+    // Load settings if they exist
+    std::ifstream settingsFile("sdmc:/switch/botw-unexplored/settings.txt");
+    if (settingsFile.is_open())
+    {
+        std::string line;
+
+        std::getline(settingsFile, line);
+        Map::m_CameraPosition.x = std::stof(line);
+
+        std::getline(settingsFile, line);
+        Map::m_CameraPosition.y = std::stof(line);
+
+        std::getline(settingsFile, line);
+        Map::m_Zoom = std::stof(line);
+    } else {
+        printf("Failed to open settings file\n");
+    }
+
+    settingsFile.close();
 
 	while (appletMainLoop())
 	{
@@ -111,6 +161,8 @@ int main()
 	}
 
     cleanUp();
+
+    appletUnlockExit(); // Exit the app
 
     return EXIT_SUCCESS;
 }
