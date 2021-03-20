@@ -88,8 +88,8 @@ void Map::Init()
     m_MasterModeDialog = new Dialog(glm::vec2(0.0f, 0.0f), 700.0f, 400.0f, Dialog::MasterModeChoose);
 
     m_MasterModeIcon.Create("romfs:/mastermodeicon.png");
-    m_MasterModeIcon.m_Position = glm::vec2(m_ScreenRight - 65.0f, m_ScreenBottom + 50.0f);
-    m_MasterModeIcon.m_Scale = 0.15f;
+    m_MasterModeIcon.m_Position = glm::vec2(m_ScreenLeft + 45.0f, m_ScreenBottom + 40.0f);
+    m_MasterModeIcon.m_Scale = 0.1f;
 
     // Create koroks
     m_Koroks = new MapObject<Data::Korok>[Data::KoroksCount];
@@ -365,6 +365,10 @@ void Map::Render()
            MapObject<Data::Molduga>::Render();
     }
 
+    // Draw behind legend
+    if (m_LoadMasterMode)
+        m_MasterModeIcon.Render();
+
     if (m_IsLegendOpen) 
         m_Legend->Render();
 
@@ -375,13 +379,10 @@ void Map::Render()
     if (m_MasterModeDialog->m_IsOpen)
         m_MasterModeDialog->Render();
 
-    if (m_LoadMasterMode)
-        m_MasterModeIcon.Render();
-
     glm::mat4 emptyViewMatrix(1.0);
     m_Font.m_ViewMatrix = &emptyViewMatrix; // Don't draw the text relative to the camera 
 
-    if (!m_IsLegendOpen)
+    if (!m_IsLegendOpen && SavefileIO::LoadedSavefile)
         m_Font.RenderText("Press X to open legend", glm::vec2(m_ScreenLeft + 20, m_ScreenTop - 30), 0.5f, glm::vec3(1.0f));  
 
     if (SavefileIO::LoadedSavefile)
@@ -393,9 +394,6 @@ void Map::Render()
         }
 
         float bottomTextX = m_ScreenRight - 30;
-
-        if (m_LoadMasterMode)
-            bottomTextX -= 80.0f;
 
         if (SavefileIO::MasterModeFileExists && !m_LoadMasterMode)
             m_Font.RenderText("Press Y to load master mode", glm::vec2(bottomTextX, m_ScreenBottom + 55), 0.5f, glm::vec3(1.0f), ALIGN_RIGHT);  

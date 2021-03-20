@@ -33,6 +33,9 @@ namespace Data
             hash(hash), x(x), y(y) {};
     };
 
+    // From https://github.com/MrCheeze/botw-tools/blob/master/gamedata/s32_data_0.xml
+    // and https://objmap.zeldamods.org/#/map/z3,0,0
+
     struct DLCShrine
     {
         uint32_t hash;

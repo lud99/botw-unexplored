@@ -37,6 +37,7 @@ int SavefileIO::MountSavefile(bool openProfilePicker)
 
     MasterModeFileExists = false;   
     GameIsRunning = false;
+    LoadedSavefile = false;
 
     if (openProfilePicker)
         uid = Accounts::RequestProfileSelection();
@@ -529,12 +530,9 @@ bool SavefileIO::ParseFile(const char *filepath)
         }
 
         // Check if has the dlc
-        uint32_t dlcHash = 1186840637;
-        if (hashValue == dlcHash)
-        {
+        uint32_t BalladOfHeroes_Ready = 1186840637; // Set to true if the DLC is owned
+        if (hashValue == BalladOfHeroes_Ready)
             HasDLC = ReadU32(buffer, offset + 4) == 1;
-            std::cout << "DLC found\n";
-        }
     }
 
     delete buffer;
