@@ -114,7 +114,7 @@ void Map::Init()
     MapObject<Data::Molduga>::Init("romfs:/molduga.png", Data::MoldugasCount);
 
     // Create locations
-    m_Locations = new MapLocation[187];
+    m_Locations = new MapLocation[Data::LocationsCount];
 
     UpdateMapObjects();
 
@@ -190,6 +190,18 @@ void Map::UpdateMapObjects()
             SavefileIO::defeatedMoldugas.begin(), 
             SavefileIO::defeatedMoldugas.end(), 
             &Data::Moldugas[i]) != SavefileIO::defeatedMoldugas.end();
+    }
+
+    for (int i = 0; i < Data::LocationsCount; i++) // Locations
+    {
+        m_Locations[i].m_Position = glm::vec2(Data::Locations[i].x, -Data::Locations[i].y) * 0.5f;
+        m_Locations[i].m_LocationData = &Data::Locations[i];
+
+        // Check if the korok has been found (if the found vector contains it)
+        m_Locations[i].m_Found = std::find(
+            SavefileIO::visitedLocations.begin(), 
+            SavefileIO::visitedLocations.end(), 
+            &Data::Locations[i]) != SavefileIO::visitedLocations.end();
     }
 }
 
@@ -332,6 +344,8 @@ void Map::Update()
             m_Taluses[i].Update();
         for (int i = 0; i < Data::MoldugasCount; i++)
             m_Moldugas[i].Update();
+        for (int i = 0; i < Data::LocationsCount; i++)
+            m_Locations[i].Update();
     }
 
     m_PrevCameraPosition = m_CameraPosition;
@@ -363,6 +377,8 @@ void Map::Render()
             MapObject<Data::Talus>::Render();
         if (m_Legend->m_Show[IconButton::ButtonTypes::Moldugas])
            MapObject<Data::Molduga>::Render();
+        for (int i = 0; i < Data::LocationsCount; i++)
+            m_Locations[i].Render();
     }
 
     // Draw behind legend

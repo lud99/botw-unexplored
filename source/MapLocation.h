@@ -36,7 +36,5 @@ public:
     void Update();
     void Render();
 
-    void SetFontMatrices();
-
     ~MapLocation();
 };

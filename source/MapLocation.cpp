@@ -43,13 +43,7 @@ void MapLocation::Render()
     if (!Map::IsInView(m_Position, margin))
         return;
 
-    Map::m_Font.RenderText(m_LocationData->displayName, m_Position, m_Scale, m_Color);
-}
-
-void MapLocation::SetFontMatrices()
-{
-    Map::m_Font.m_ProjectionMatrix = &Map::m_ProjectionMatrix;
-    Map::m_Font.m_ViewMatrix = &Map::m_ViewMatrix;
+    Map::m_Font.RenderText(m_LocationData->displayName, m_Position, m_Scale, m_Color, ALIGN_CENTER);
 }
 
 MapLocation::~MapLocation()
