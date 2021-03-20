@@ -98,9 +98,6 @@ int main()
     Map::Init();
     Map::m_Pad = &pad;
 
-
-    bool hasDoneFirstDraw = false;
-
     // Load settings if they exist
     std::ifstream settingsFile("sdmc:/switch/botw-unexplored/settings.txt");
     if (settingsFile.is_open())
@@ -120,6 +117,9 @@ int main()
     }
 
     settingsFile.close();
+    
+    bool hasDoneFirstDraw = false;
+    bool hasLoadedSave = false;
 
 	while (appletMainLoop())
 	{
@@ -143,9 +143,9 @@ int main()
         // Render
         Map::Render();
 
-        if (!hasDoneFirstDraw)
+        if (hasDoneFirstDraw && !hasLoadedSave)
         {
-            hasDoneFirstDraw = true;
+            hasLoadedSave = true;
             LoadGamesave();
 
             Map::UpdateMapObjects();
@@ -158,6 +158,8 @@ int main()
         {
             printf("OpenGL error: %u\n", err);
         }
+
+        hasDoneFirstDraw = true;
 	}
 
     cleanUp();
