@@ -112,6 +112,15 @@ int main()
 
         std::getline(settingsFile, line);
         Map::m_Zoom = std::stof(line);
+
+        if (Map::m_CameraPosition.x > 4500.0f)
+            Map::m_CameraPosition.x = 4250.0f;
+        if (Map::m_CameraPosition.x < -4500.0f)
+            Map::m_CameraPosition.x = -4250.0f;
+        if (Map::m_CameraPosition.y > 2500.0f)
+            Map::m_CameraPosition.y = 2250.0f;
+        if (Map::m_CameraPosition.y < -2000.0f)
+            Map::m_CameraPosition.y = -1750.0f;
     } else {
         printf("Failed to open settings file\n");
     }
