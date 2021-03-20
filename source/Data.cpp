@@ -2,6 +2,239 @@
 
 using namespace Data;
 
+/*
+[
+    "0x1536e14df",
+    "0x124692449",
+    "0xbd6075f3",
+    "0xca674565",
+    "0x15403d0c6",
+    "0x12304e050",
+    "0xba0db1ea",
+    "0xcd0a817c",
+    "0x15db59ced",
+    "0x12ab2ac7b",
+    "0x14a75259e",
+    "0x13d721508",
+    "0xa47b44b2",
+    "0xd37c7424",
+    "0x14d18e187",
+    "0x13a1fd111",
+    "0xa31680ab"
+]
+
+[
+    {
+        "Icon": "Dungeon",
+        "MessageID": "Dungeon120",
+        "Priority": 1,
+        "SaveFlag": "Location_Dungeon120",
+        "Translate": {
+            "X": -941.8468017578125,
+            "Y": 196.6999969482422,
+            "Z": 1671.74169921875
+        },
+        "WarpDestMapName": "MainField/E-6",
+        "WarpDestPosName": "StartPos_CDungeon120"
+    },
+    {
+        "Icon": "Dungeon",
+        "MessageID": "Dungeon121",
+        "Priority": 1,
+        "SaveFlag": "Location_Dungeon121",
+        "Translate": {
+            "X": -3392.15625,
+            "Y": 450.978515625,
+            "Z": 1347.4669189453125
+        },
+        "WarpDestMapName": "MainField/B-6",
+        "WarpDestPosName": "StartPos_CDungeon121"
+    },
+    {
+        "Icon": "Dungeon",
+        "MessageID": "Dungeon122",
+        "Priority": 1,
+        "SaveFlag": "Location_Dungeon122",
+        "Translate": {
+            "X": -1215.9742431640625,
+            "Y": 349.5,
+            "Z": 2110.884521484375
+        },
+        "WarpDestMapName": "MainField/D-7",
+        "WarpDestPosName": "StartPos_CDungeon122"
+    },
+    {
+        "Icon": "Dungeon",
+        "MessageID": "Dungeon123",
+        "Priority": 1,
+        "SaveFlag": "Location_Dungeon123",
+        "Translate": {
+            "X": -517.9490356445312,
+            "Y": 182.8000030517578,
+            "Z": 1799.02392578125
+        },
+        "WarpDestMapName": "MainField/E-6",
+        "WarpDestPosName": "StartPos_CDungeon123"
+    },
+    {
+        "Icon": "Dungeon",
+        "MessageID": "Dungeon124",
+        "Priority": 1,
+        "SaveFlag": "Location_Dungeon124",
+        "Translate": {
+            "X": 3103.6083984375,
+            "Y": 551.9120483398438,
+            "Z": -833.9618530273438
+        },
+        "WarpDestMapName": "MainField/I-4",
+        "WarpDestPosName": "StartPos_CDungeon124"
+    },
+    {
+        "Icon": "Dungeon",
+        "MessageID": "Dungeon125",
+        "Priority": 1,
+        "SaveFlag": "Location_Dungeon125",
+        "Translate": {
+            "X": 4934.23291015625,
+            "Y": 115.80000305175781,
+            "Z": -1002.050537109375
+        },
+        "WarpDestMapName": "MainField/J-4",
+        "WarpDestPosName": "StartPos_CDungeon125"
+    },
+    {
+        "Icon": "Dungeon",
+        "MessageID": "Dungeon126",
+        "Priority": 1,
+        "SaveFlag": "Location_Dungeon126",
+        "Translate": {
+            "X": 3761.8720703125,
+            "Y": 556.78271484375,
+            "Z": -645.5045166015625
+        },
+        "WarpDestMapName": "MainField/I-4",
+        "WarpDestPosName": "StartPos_CDungeon126"
+    },
+    {
+        "Icon": "Dungeon",
+        "MessageID": "Dungeon127",
+        "Priority": 1,
+        "SaveFlag": "Location_Dungeon127",
+        "Translate": {
+            "X": -3821.00244140625,
+            "Y": 98.7734375,
+            "Z": -2310.520751953125
+        },
+        "WarpDestMapName": "MainField/B-2",
+        "WarpDestPosName": "StartPos_CDungeon127"
+    },
+    {
+        "Icon": "Dungeon",
+        "MessageID": "Dungeon128",
+        "Priority": 1,
+        "SaveFlag": "Location_Dungeon128",
+        "Translate": {
+            "X": -2156.432373046875,
+            "Y": 459.3999938964844,
+            "Z": -3188.149658203125
+        },
+        "WarpDestMapName": "MainField/C-1",
+        "WarpDestPosName": "StartPos_CDungeon128"
+    },
+    {
+        "Icon": "Dungeon",
+        "MessageID": "Dungeon129",
+        "Priority": 1,
+        "SaveFlag": "Location_Dungeon129",
+        "Translate": {
+            "X": -2377.081298828125,
+            "Y": 273.9705810546875,
+            "Z": -1383.91943359375
+        },
+        "WarpDestMapName": "MainField/C-3",
+        "WarpDestPosName": "StartPos_CDungeon129"
+    },
+    {
+        "Icon": "Dungeon",
+        "MessageID": "Dungeon130",
+        "Priority": 1,
+        "SaveFlag": "Location_Dungeon130",
+        "Translate": {
+            "X": 2129.3486328125,
+            "Y": 518.9150390625,
+            "Z": -3228.66064453125
+        },
+        "WarpDestMapName": "MainField/H-1",
+        "WarpDestPosName": "StartPos_CDungeon130"
+    },
+    {
+        "Icon": "Dungeon",
+        "MessageID": "Dungeon131",
+        "Priority": 1,
+        "SaveFlag": "Location_Dungeon131",
+        "Translate": {
+            "X": 2242.218505859375,
+            "Y": 550.82275390625,
+            "Z": -1996.1873779296875
+        },
+        "WarpDestMapName": "MainField/H-2",
+        "WarpDestPosName": "StartPos_CDungeon131"
+    },
+    {
+        "Icon": "Dungeon",
+        "MessageID": "Dungeon132",
+        "Priority": 1,
+        "SaveFlag": "Location_Dungeon132",
+        "Translate": {
+            "X": 2931.935546875,
+            "Y": 639.5069580078125,
+            "Z": -2418.7333984375
+        },
+        "WarpDestMapName": "MainField/H-2",
+        "WarpDestPosName": "StartPos_CDungeon132"
+    },
+    {
+        "Icon": "Dungeon",
+        "MessageID": "Dungeon133",
+        "Priority": 1,
+        "SaveFlag": "Location_Dungeon133",
+        "Translate": {
+            "X": -2340.23095703125,
+            "Y": 138.5,
+            "Z": 3900.926513671875
+        },
+        "WarpDestMapName": "MainField/C-8",
+        "WarpDestPosName": "StartPos_CDungeon133"
+    },
+    {
+        "Icon": "Dungeon",
+        "MessageID": "Dungeon134",
+        "Priority": 1,
+        "SaveFlag": "Location_Dungeon134",
+        "Translate": {
+            "X": -4894.4912109375,
+            "Y": 150.984375,
+            "Z": 2155.50146484375
+        },
+        "WarpDestMapName": "MainField/A-7",
+        "WarpDestPosName": "StartPos_CDungeon134"
+    },
+    {
+        "Icon": "Dungeon",
+        "MessageID": "Dungeon135",
+        "Priority": 1,
+        "SaveFlag": "Location_Dungeon135",
+        "Translate": {
+            "X": -833.5947265625,
+            "Y": 198.8000030517578,
+            "Z": 2144.810546875
+        },
+        "WarpDestMapName": "MainField/E-7",
+        "WarpDestPosName": "StartPos_CDungeon135"
+    }
+]
+*/
+
 namespace Data
 {
     Data::Korok Koroks[900] = {
@@ -1030,6 +1263,25 @@ namespace Data
         Data::Shrine(4288834160, "Dow Na'eh Shrine", 2696.77f, 1333.02f),
     };
 
+    Data::DLCShrine DLCShrines[DLCShrineCount] = {
+        Data::DLCShrine(2895244064, -941.8468017578125f, 1671.74169921875f),
+        Data::DLCShrine(3684096950, -3392.15625f, 1347.4669189453125f),
+        Data::DLCShrine(1117751820, -1215.9742431640625f, 2110.884521484375f),
+        Data::DLCShrine(899201690, -517.9490356445312f, 1799.02392578125f),
+        Data::DLCShrine(2885431097, 3103.6083984375f, -833.9618530273438f),
+        Data::DLCShrine(3707445167, 4934.23291015625f, -1002.050537109375f),
+        Data::DLCShrine(1173507605, 3761.8720703125f, -645.5045166015625f),
+        Data::DLCShrine(854949507, -3821.00244140625f, -2310.520751953125f),
+        Data::DLCShrine(2722784018, -2156.432373046875f, -3188.149658203125f),
+        Data::DLCShrine(3578614660, -2377.081298828125f, -1383.91943359375f),
+        Data::DLCShrine(3045775969, 2129.3486328125f, -3228.66064453125f),
+        Data::DLCShrine(3264080631, 2242.218505859375f, -1996.1873779296875f),
+        Data::DLCShrine(1535425357, 2931.935546875f, -2418.7333984375f),
+        Data::DLCShrine(746818523, -2340.23095703125f, 3900.926513671875f),
+        Data::DLCShrine(3001491064, -4894.4912109375f, 2155.50146484375f),
+        Data::DLCShrine(3319803630, -833.5947265625f, 2144.810546875f),
+    };
+
     Data::Location Locations[187] = {
         Data::Location(3175296555, "Deya Village Ruins", 353.0f, 1953.0f),
         Data::Location(1277840484, "Akkala Span", 3008.0f, -1243.0f),
@@ -1335,6 +1587,19 @@ Data::Shrine* Data::ShrineExists(uint32_t hash)
         // Found it
         if (Shrines[i].hash == hash)
             return &Shrines[i];
+    }
+
+    return nullptr;
+}
+
+Data::DLCShrine* Data::DLCShrineExists(uint32_t hash)
+{
+    // Check if the shrines contains this one
+    for (int i = 0; i < Data::DLCShrineCount; i++)
+    {
+        // Found it
+        if (DLCShrines[i].hash == hash)
+            return &DLCShrines[i];
     }
 
     return nullptr;

@@ -398,12 +398,12 @@ bool SavefileIO::FileExists(const std::string& filepath)
     int res = access(filepath.c_str(), R_OK);
     if (res < 0)
     {
-        if (errno == ENOENT)
-            printf("File '%s' doesn't exist\n", filepath.c_str());
-        else if (errno == EACCES)
-            printf("File '%s' could not be read for some reason\n", filepath.c_str());
-        else
-            printf("File access('%s') failed\n", filepath.c_str());
+        // if (errno == ENOENT)
+        //     printf("File '%s' doesn't exist\n", filepath.c_str());
+        // else if (errno == EACCES)
+        //     printf("File '%s' could not be read for some reason\n", filepath.c_str());
+        // else
+        //     printf("File access('%s') failed\n", filepath.c_str());
 
         return false;
     }
@@ -418,19 +418,16 @@ bool SavefileIO::ParseFile(const char *filepath)
     // Clear the current file data
     foundKoroks.clear();
     missingKoroks.clear();
-
     foundShrines.clear();
     missingShrines.clear();
-
+    foundDLCShrines.clear();
+    missingDLCShrines.clear();
     visitedLocations.clear();
     unexploredLocations.clear();
-
     defeatedHinoxes.clear();
     undefeatedHinoxes.clear();
-
     defeatedTaluses.clear();
     undefeatedTaluses.clear();
-
     defeatedMoldugas.clear();
     undefeatedMoldugas.clear();
 
@@ -481,6 +478,16 @@ bool SavefileIO::ParseFile(const char *filepath)
             defeated ? foundShrines.push_back(shrine) : missingShrines.push_back(shrine);
         }
 
+        // Check for dlc shrines
+        Data::DLCShrine *dlcShrine = Data::DLCShrineExists(hashValue);
+        if (dlcShrine)
+        {
+            // Read the 4 bytes after the hash. If it is not 0, then the shrine has been found.
+            bool defeated = ReadU32(buffer, offset + 4) != 0;
+
+            defeated ? foundDLCShrines.push_back(dlcShrine) : missingDLCShrines.push_back(dlcShrine);
+        }
+
         // Check if a location with the hash exists
         Data::Location *location = Data::LocationExists(hashValue);
         if (location)
@@ -520,6 +527,14 @@ bool SavefileIO::ParseFile(const char *filepath)
 
             defeated ? defeatedMoldugas.push_back(molduga) : undefeatedMoldugas.push_back(molduga);
         }
+
+        // Check if has the dlc
+        uint32_t dlcHash = 1186840637;
+        if (hashValue == dlcHash)
+        {
+            HasDLC = ReadU32(buffer, offset + 4) == 1;
+            std::cout << "DLC found\n";
+        }
     }
 
     delete buffer;
@@ -533,19 +548,16 @@ bool SavefileIO::ParseFile(const char *filepath)
 
 std::vector<Data::Korok *> SavefileIO::foundKoroks;
 std::vector<Data::Korok *> SavefileIO::missingKoroks;
-
 std::vector<Data::Shrine*> SavefileIO::foundShrines;
 std::vector<Data::Shrine*> SavefileIO::missingShrines;
-
+std::vector<Data::DLCShrine*> SavefileIO::foundDLCShrines;
+std::vector<Data::DLCShrine*> SavefileIO::missingDLCShrines;
 std::vector<Data::Location *> SavefileIO::visitedLocations;
 std::vector<Data::Location *> SavefileIO::unexploredLocations;
-
 std::vector<Data::Hinox *> SavefileIO::defeatedHinoxes;
 std::vector<Data::Hinox *> SavefileIO::undefeatedHinoxes;
-
 std::vector<Data::Talus *> SavefileIO::defeatedTaluses;
 std::vector<Data::Talus *> SavefileIO::undefeatedTaluses;
-
 std::vector<Data::Molduga *> SavefileIO::defeatedMoldugas;
 std::vector<Data::Molduga *> SavefileIO::undefeatedMoldugas;
 
@@ -558,5 +570,6 @@ bool SavefileIO::GameIsRunning = false;
 bool SavefileIO::NoSavefileForUser = false;
 bool SavefileIO::MasterModeFileExists = false;
 bool SavefileIO::MasterModeFileLoaded = false;
+bool SavefileIO::HasDLC = false;
 
 int SavefileIO::MasterModeSlot;

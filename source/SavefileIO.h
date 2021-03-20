@@ -11,19 +11,16 @@ namespace SavefileIO
 {
     extern std::vector<Data::Korok*> foundKoroks;
     extern std::vector<Data::Korok*> missingKoroks;
-
     extern std::vector<Data::Shrine*> foundShrines;
     extern std::vector<Data::Shrine*> missingShrines;
-
+    extern std::vector<Data::DLCShrine*> foundDLCShrines;
+    extern std::vector<Data::DLCShrine*> missingDLCShrines;
     extern std::vector<Data::Location*> visitedLocations;
     extern std::vector<Data::Location*> unexploredLocations;
-
     extern std::vector<Data::Hinox*> defeatedHinoxes;
     extern std::vector<Data::Hinox*> undefeatedHinoxes;
-
     extern std::vector<Data::Talus*> defeatedTaluses;
     extern std::vector<Data::Talus*> undefeatedTaluses;
-
     extern std::vector<Data::Molduga*> defeatedMoldugas;
     extern std::vector<Data::Molduga*> undefeatedMoldugas;
 
@@ -56,6 +53,7 @@ namespace SavefileIO
     extern bool NoSavefileForUser;
     extern bool MasterModeFileExists;
     extern bool MasterModeFileLoaded;
+    extern bool HasDLC;
 
     extern int MasterModeSlot;
 };

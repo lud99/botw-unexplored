@@ -65,7 +65,7 @@ void cleanUp()
 
 int main()
 {
-    appletLockExit(); // To be able to run when the app closes
+    appletLockExit(); // To be able to run memory cleanup when the app closes
 
     // Setup NXLink
     socketInitializeDefault();

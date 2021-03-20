@@ -68,6 +68,7 @@ namespace Map
 
     extern MapObject<Data::Korok>* m_Koroks;
     extern MapObject<Data::Shrine>* m_Shrines;
+    extern MapObject<Data::DLCShrine>* m_DLCShrines;
     extern MapObject<Data::Hinox>* m_Hinoxes;
     extern MapObject<Data::Talus>* m_Taluses;
     extern MapObject<Data::Molduga>* m_Moldugas;

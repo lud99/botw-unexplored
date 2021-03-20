@@ -33,6 +33,16 @@ namespace Data
             hash(hash), x(x), y(y) {};
     };
 
+    struct DLCShrine
+    {
+        uint32_t hash;
+
+        float x = 0;
+        float y = 0;
+
+        DLCShrine(uint32_t hash, float x, float y) : hash(hash), x(x), y(y) {};
+    };
+
     // For location names and their positions, https://github.com/MrCheeze/botw-waypoint-map/blob/gh-pages/map_locations.js
     // For the location hashes, https://github.com/marcrobledo/savegame-editors/blob/master/zelda-botw/zelda-botw.locations.js
 
@@ -101,6 +111,11 @@ namespace Data
     extern Shrine Shrines[ShrineCount];
 
     Shrine* ShrineExists(uint32_t hash);
+
+    const int DLCShrineCount = 16;
+    extern DLCShrine DLCShrines[DLCShrineCount];
+
+    DLCShrine* DLCShrineExists(uint32_t hash);
 
     // Create locations (coordinates are rounded)
     const int LocationsCount = 187;

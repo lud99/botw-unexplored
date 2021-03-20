@@ -98,6 +98,8 @@ void Map::Init()
     // Create shrines
     m_Shrines = new MapObject<Data::Shrine>[Data::ShrineCount];
     MapObject<Data::Shrine>::Init("romfs:/shrine.png", Data::ShrineCount);
+    m_DLCShrines = new MapObject<Data::DLCShrine>[Data::DLCShrineCount];
+    MapObject<Data::DLCShrine>::Init("romfs:/dlcshrine.png", Data::DLCShrineCount);
 
     // Create hinoxes
     m_Hinoxes = new MapObject<Data::Hinox>[Data::HinoxesCount];
@@ -144,6 +146,17 @@ void Map::UpdateMapObjects()
             SavefileIO::foundShrines.begin(), 
             SavefileIO::foundShrines.end(), 
             &Data::Shrines[i]) != SavefileIO::foundShrines.end();
+    }
+
+    for (int i = 0; i < Data::DLCShrineCount; i++) // DLC Shrine
+    {
+        m_DLCShrines[i].m_Position = glm::vec2(Data::DLCShrines[i].x, -Data::DLCShrines[i].y) * 0.5f;
+
+        // Check if the korok has been found (if the found vector contains it)
+        m_DLCShrines[i].m_Found = std::find(
+            SavefileIO::foundDLCShrines.begin(), 
+            SavefileIO::foundDLCShrines.end(), 
+            &Data::DLCShrines[i]) != SavefileIO::foundDLCShrines.end();
     }
 
     for (int i = 0; i < Data::HinoxesCount; i++) // Hinox
@@ -311,6 +324,8 @@ void Map::Update()
             m_Koroks[i].Update();
         for (int i = 0; i < Data::ShrineCount; i++)
             m_Shrines[i].Update();
+        for (int i = 0; i < Data::DLCShrineCount; i++)
+            m_DLCShrines[i].Update();
         for (int i = 0; i < Data::HinoxesCount; i++)
             m_Hinoxes[i].Update();
         for (int i = 0; i < Data::TalusesCount; i++)
@@ -340,6 +355,8 @@ void Map::Render()
             MapObject<Data::Korok>::Render();
         if (m_Legend->m_Show[IconButton::ButtonTypes::Shrines])
             MapObject<Data::Shrine>::Render();
+        if (SavefileIO::HasDLC)
+            MapObject<Data::DLCShrine>::Render();
         if (m_Legend->m_Show[IconButton::ButtonTypes::Hinoxes])
             MapObject<Data::Hinox>::Render();
         if (m_Legend->m_Show[IconButton::ButtonTypes::Taluses])
@@ -456,6 +473,7 @@ bool Map::m_LoadMasterMode = false;
 PadState* Map::m_Pad;
 MapObject<Data::Korok>* Map::m_Koroks;
 MapObject<Data::Shrine>* Map::m_Shrines;
+MapObject<Data::DLCShrine>* Map::m_DLCShrines;
 MapObject<Data::Hinox>* Map::m_Hinoxes;
 MapObject<Data::Talus>* Map::m_Taluses;
 MapObject<Data::Molduga>* Map::m_Moldugas;
