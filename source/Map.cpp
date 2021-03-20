@@ -377,8 +377,11 @@ void Map::Render()
             MapObject<Data::Talus>::Render();
         if (m_Legend->m_Show[IconButton::ButtonTypes::Moldugas])
            MapObject<Data::Molduga>::Render();
-        for (int i = 0; i < Data::LocationsCount; i++)
-            m_Locations[i].Render();
+        if (m_Legend->m_Show[IconButton::ButtonTypes::Locations])
+        {
+            for (int i = 0; i < Data::LocationsCount; i++)
+                m_Locations[i].Render();
+        }
     }
 
     // Draw behind legend
