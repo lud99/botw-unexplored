@@ -135,6 +135,8 @@ void Map::UpdateMapObjects()
     {
         m_Koroks[i].m_Position = glm::vec2(Data::Koroks[i].x, -Data::Koroks[i].y) * 0.5f;
 
+        m_Koroks[i].m_ObjectData = &Data::Koroks[i];
+
         // Check if the korok has been found (if the found vector contains it)
         m_Koroks[i].m_Found = std::find(
             SavefileIO::foundKoroks.begin(), 
@@ -216,8 +218,7 @@ void Map::Update()
 
     u64 buttonsPressed = padGetButtonsDown(m_Pad);
     u64 buttonsDown = padGetButtons(m_Pad);
-    u64 buttonsUp = padGetButtonsUp(m_Pad);
-
+    
     float zoomAmount = 0.01f;
     float dragAmont = 0.85f;
     float analogStickMovementSpeed = 10.0f;
@@ -272,8 +273,8 @@ void Map::Update()
    
     float deadzone = 0.1f;
     float distanceToCenter = glm::distance(stickLPosition, glm::vec2(0.0f, 0.0f));
-    // if (distanceToCenter >= deadzone)
-    //     m_CameraPosition += stickLPosition * (analogStickMovementSpeed / m_Zoom);
+    if (distanceToCenter >= deadzone)
+        m_CameraPosition += stickLPosition * (analogStickMovementSpeed / m_Zoom);
 
     // Dragging
     HidTouchScreenState state={0};
@@ -373,18 +374,26 @@ void Map::Render()
         if (m_Legend->m_Show[IconButton::ButtonTypes::Koroks]) 
         {   
             // Render korok paths
-            for (int i = 0; i < Data::KorokPathsCount; i++)
+            for (int k = 0; k < Data::KoroksCount; k++)
             {
-                Data::KorokPath& path = Data::KorokPaths[i];
+                // This korok has no paths
+                if (m_Koroks[k].m_ObjectData->path == nullptr)
+                    continue;
+
+                // Don't render if found
+                if (m_Koroks[k].m_Found)
+                    continue;
+
+                Data::KorokPath* path = m_Koroks[k].m_ObjectData->path;
 
                 // 0 -> 1
                 // 1 -> 2
                 // 2 -> 3
-                for (unsigned int p = 1; p < path.points.size(); p++)
+                for (unsigned int p = 1; p < path->points.size(); p++)
                 {
-                    glm::vec2 start = path.points[p - 1] * 0.5f;
+                    glm::vec2 start = path->points[p - 1] * 0.5f;
                     start.y *= -1; // Flip the y coord
-                    glm::vec2 end = path.points[p] * 0.5f;
+                    glm::vec2 end = path->points[p] * 0.5f;
                     end.y *= -1;
 
                     m_LineRenderer->AddLine(start, end, 2.0f);

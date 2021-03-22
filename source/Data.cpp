@@ -1021,6 +1021,15 @@ namespace Data
 
             i++;
         }
+
+        for (int k = 0; k < Data::KoroksCount; k++)
+        {
+            for (int p = 0; p < Data::KorokPathsCount; p++)
+            {
+                if (Data::Koroks[k].internalName == Data::KorokPaths[p].internalName)
+                    Data::Koroks[k].path = &Data::KorokPaths[p];
+            }
+        }
     }
 
     Data::Shrine Shrines[Data::ShrineCount] = {

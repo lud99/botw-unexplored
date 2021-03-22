@@ -7,6 +7,17 @@
 
 namespace Data
 {
+    struct KorokPath
+    {
+        std::string internalName;
+        std::vector<glm::vec2> points;
+
+        KorokPath(const std::string& internalName, std::vector<glm::vec2>& points) :
+            internalName(internalName), points(points) {}
+
+        KorokPath() {};
+    };
+
     // For korok names and positions, https://github.com/d4mation/botw-unexplored-viewer/blob/master/assets/js/map-locations.js
 
     struct Korok
@@ -18,19 +29,10 @@ namespace Data
         float x = 0;
         float y = 0;
 
+        Data::KorokPath* path = nullptr;
+
         Korok(uint32_t hash, const std::string& internalName, float x, float y) :
             hash(hash), internalName(internalName), x(x), y(y) {};
-    };
-
-    struct KorokPath
-    {
-        std::string internalName;
-        std::vector<glm::vec2> points;
-
-        KorokPath(const std::string& internalName, std::vector<glm::vec2>& points) :
-            internalName(internalName), points(points) {}
-
-        KorokPath() {};
     };
 
     // https://github.com/d4mation/botw-unexplored-viewer/blob/master/assets/js/map-locations.js warps
@@ -125,7 +127,6 @@ namespace Data
 
     const int KorokPathsCount = 97;
     extern KorokPath KorokPaths[KorokPathsCount];
-    extern glm::vec2 KorokPathPoints[KorokPathsCount];
 
     void LoadPaths();
 

@@ -18,7 +18,6 @@
 #include "Accounts.h"
 #include "Dialog.h"
 #include "LoadGamesave.h"
-#include "Graphics/LineRenderer.h"
 
 bool openGLInitialized = false;
 bool nxLinkInitialized = false;
@@ -131,11 +130,6 @@ int main()
     bool hasDoneFirstDraw = false;
     bool hasLoadedSave = false;
 
-    LineRenderer* line = new LineRenderer();
-
-    glm::vec2 s(0.0f);
-    glm::vec2 e(0.0f);
-
 	while (appletMainLoop())
 	{
         // Scan the gamepad. This should be done once for each frame
@@ -165,35 +159,6 @@ int main()
 
             Map::UpdateMapObjects();
         }
-
-        HidAnalogStickState analog_stick_l = padGetStickPos(&pad, 0);
-
-        // Get the stick position between -1.0f and 1.0f, instead of -32767 and 32767
-        glm::vec2 stickLPosition = glm::vec2(
-            ((float)analog_stick_l.x / (float)JOYSTICK_MAX), 
-            ((float)analog_stick_l.y / (float)JOYSTICK_MAX));
-
-        //std::cout << stickLPosition.x << ", " << stickLPosition.y << "\n";
-    
-        float deadzone = 0.1f;
-        float distanceToCenter = glm::distance(stickLPosition, glm::vec2(0.0f, 0.0f));
-        if (distanceToCenter >= deadzone)
-            s = stickLPosition * 100.0f;
-        
-        HidAnalogStickState analog_stick_r = padGetStickPos(&pad, 1);
-
-        // Get the stick position between -1.0f and 1.0f, instead of -32767 and 32767
-        glm::vec2 stickRPosition = glm::vec2(
-            ((float)analog_stick_r.x / (float)JOYSTICK_MAX), 
-            ((float)analog_stick_r.y / (float)JOYSTICK_MAX));
-    
-        deadzone = 0.1f;
-        distanceToCenter = glm::distance(stickRPosition, glm::vec2(0.0f, 0.0f));
-        if (distanceToCenter >= deadzone)
-            e = stickRPosition * 100.0f;
-
-        line->AddLine(s, e, 10.0f);
-        line->RenderLines(Map::m_ProjectionMatrix);
 
         eglSwapBuffers(s_display, s_surface);
 
