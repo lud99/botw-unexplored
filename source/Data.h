@@ -2,6 +2,8 @@
 
 #include <cstdint>
 #include <string>
+#include <glm/vec2.hpp>
+#include <vector>
 
 namespace Data
 {
@@ -16,6 +18,17 @@ namespace Data
 
         Korok(uint32_t hash, float x, float y) :
             hash(hash), x(x), y(y) {};
+    };
+
+    struct KorokPath
+    {
+        std::string internalName;
+        std::vector<glm::vec2> points;
+
+        KorokPath(const std::string& internalName, std::vector<glm::vec2>& points) :
+            internalName(internalName), points(points) {}
+
+        KorokPath() {};
     };
 
     // https://github.com/d4mation/botw-unexplored-viewer/blob/master/assets/js/map-locations.js warps
@@ -107,6 +120,12 @@ namespace Data
     extern Korok Koroks[KoroksCount];
 
     Korok* KorokExists(uint32_t hash);
+
+    const int KorokPathsCount = 97;
+    extern KorokPath KorokPaths[KorokPathsCount];
+    extern glm::vec2 KorokPathPoints[KorokPathsCount];
+
+    void LoadPaths();
 
     // Create shrines
 

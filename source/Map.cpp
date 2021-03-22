@@ -4,6 +4,7 @@
 #include <switch.h>
 
 #include "Graphics/BasicVertices.h"
+#include "Graphics/LineRenderer.h"
 #include "MapLocation.h"
 #include "Legend.h"
 #include "Dialog.h"
@@ -15,6 +16,8 @@
 
 void Map::Init()
 {
+    Data::LoadPaths();
+
     m_Texture.Load("romfs:/BotW-Map-lowres.png");
 
     std::string vertexShaderSource = R"text(
@@ -80,6 +83,8 @@ void Map::Init()
     m_Font.Load("romfs:/arial.ttf");
     m_Font.m_ProjectionMatrix = &m_ProjectionMatrix;
     m_Font.m_ViewMatrix = &m_ViewMatrix;
+
+    m_LineRenderer = new LineRenderer();
 
     // Create UI
     m_Legend = new Legend();
@@ -267,8 +272,8 @@ void Map::Update()
    
     float deadzone = 0.1f;
     float distanceToCenter = glm::distance(stickLPosition, glm::vec2(0.0f, 0.0f));
-    if (distanceToCenter >= deadzone)
-        m_CameraPosition += stickLPosition * (analogStickMovementSpeed / m_Zoom);
+    // if (distanceToCenter >= deadzone)
+    //     m_CameraPosition += stickLPosition * (analogStickMovementSpeed / m_Zoom);
 
     // Dragging
     HidTouchScreenState state={0};
@@ -365,8 +370,31 @@ void Map::Render()
 
     if (SavefileIO::LoadedSavefile)
     {
-        if (m_Legend->m_Show[IconButton::ButtonTypes::Koroks])
+        if (m_Legend->m_Show[IconButton::ButtonTypes::Koroks]) 
+        {   
+            // Render korok paths
+            for (int i = 0; i < Data::KorokPathsCount; i++)
+            {
+                Data::KorokPath& path = Data::KorokPaths[i];
+
+                // 0 -> 1
+                // 1 -> 2
+                // 2 -> 3
+                for (unsigned int p = 1; p < path.points.size(); p++)
+                {
+                    glm::vec2 start = path.points[p - 1] * 0.5f;
+                    start.y *= -1; // Flip the y coord
+                    glm::vec2 end = path.points[p] * 0.5f;
+                    end.y *= -1;
+
+                    m_LineRenderer->AddLine(start, end, 2.0f);
+                }
+            }
+
             MapObject<Data::Korok>::Render();
+
+            m_LineRenderer->RenderLines(m_ProjectionMatrix, m_ViewMatrix);
+        }
         if (m_Legend->m_Show[IconButton::ButtonTypes::Shrines])
             MapObject<Data::Shrine>::Render();
         if (SavefileIO::HasDLC)
@@ -472,6 +500,7 @@ Mesh<TextureVertex> Map::m_Mesh;
 Texture2D Map::m_Texture;
 Shader Map::m_Shader;
 Font Map::m_Font;
+LineRenderer* Map::m_LineRenderer;
 TexturedQuad Map::m_MasterModeIcon;
 
 float Map::m_Zoom = Map::m_DefaultZoom;

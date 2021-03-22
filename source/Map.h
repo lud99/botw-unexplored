@@ -18,6 +18,7 @@ template <typename T> class MapObject;
 class MapLocation;
 class Legend;
 class Dialog;
+class LineRenderer;
 
 namespace Map
 {
@@ -44,6 +45,7 @@ namespace Map
     extern Texture2D m_Texture;
     extern Shader m_Shader;
     extern Font m_Font;
+    extern LineRenderer* m_LineRenderer;
 
     extern TexturedQuad m_MasterModeIcon; 
 

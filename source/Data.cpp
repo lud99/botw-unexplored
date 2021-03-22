@@ -2,6 +2,9 @@
 
 using namespace Data;
 
+#include <map>
+#include <vector>
+
 /*
 [
     "0x1536e14df",
@@ -1139,6 +1142,119 @@ namespace Data
         Data::Korok(4289156346, -1045.92f, -2707.64f),
         Data::Korok(4294696708, 4110.98f, 2588.17f)
     };
+
+    Data::KorokPath KorokPaths[Data::KorokPathsCount];
+
+    void LoadPaths()
+    {
+        std::map<std::string, std::vector<glm::vec2>> points = {
+            { "MainField_Npc_HiddenKorokFly_4105883532", { glm::vec2(1915.68f, -2382.1f), glm::vec2(1867.95f, -2400.7f) } },
+            { "MainField_Npc_HiddenKorokFly_2879961570", { glm::vec2(-2018.28f, 3437.19f), glm::vec2(-1996.6f, 3619.67f) } },
+            { "MainField_Npc_HiddenKorokFly_642507168", { glm::vec2(-2603.74f, 2126.61f), glm::vec2(-2697.26f, 2105.06f) } },
+            { "MainField_Npc_HiddenKorokFly_3755199878", { glm::vec2(3735.97f, 1686.96f), glm::vec2(3525.98f, 1710.62f) } },
+            { "MainField_Npc_HiddenKorokFly_2046521464", { glm::vec2(-2458.83f, -276.05f), glm::vec2(-2547.83f, -306.3f) } },
+            { "MainField_Npc_HiddenKorokFly_1465600658", { glm::vec2(3170.78f, -3317.52f), glm::vec2(3152.59f, -3328.35f) } },
+            { "MainField_Npc_HiddenKorokFly_3408673367", { glm::vec2(-3757.1f, 2445.96f), glm::vec2(-3751.84f, 2531.62f) } },
+            { "MainField_Npc_HiddenKorokFly_4022716825", { glm::vec2(-4251.77f, -3590.21f), glm::vec2(-4167.16f, -3615.94f) } },
+            { "MainField_Npc_HiddenKorokFly_377746506", { glm::vec2(-3647.12f, -436.34f), glm::vec2(-3675.04f, -393.32f) } },
+            { "MainField_Npc_HiddenKorokFly_3488513756", { glm::vec2(-1984.92f, -624.09f), glm::vec2(-1964.68f, -584.16f) } },
+            { "MainField_Npc_HiddenKorokFly_707729943", { glm::vec2(546.27f, 3580.35f), glm::vec2(271.72f, 3289.59f) } },
+            { "MainField_Npc_HiddenKorokFly_3540012681", { glm::vec2(-3018.71f, -585.07f), glm::vec2(-3212.86f, -574.01f) } },
+            { "MainField_Npc_HiddenKorokFly_2832530704", { glm::vec2(3439.15f, 1100.78f), glm::vec2(3432.94f, 1150.31f) } },
+            { "MainField_Npc_HiddenKorokFly_3901382303", { glm::vec2(-2591.2f, 3543.36f), glm::vec2(-2448.41f, 3751.94f) } },
+            { "MainField_Npc_HiddenKorokFly_2690380187", { glm::vec2(-1173.58f, 1166.04f), glm::vec2(-1190.02f, 1116.74f) } },
+            { "MainField_Npc_HiddenKorokFly_2263906631", { glm::vec2(1776.99f, 3057.73f), glm::vec2(1785.54f, 3009.1f) } },
+            { "MainField_Npc_HiddenKorokFly_2408228336", { glm::vec2(-3822.16f, -170.91f), glm::vec2(-3828.84f, -118.42f) } },
+            { "MainField_Npc_HiddenKorokFly_4164980717", { glm::vec2(-2772.74f, -1472.73f), glm::vec2(-2826.25f, -1580.08f) } },
+            { "MainField_Npc_HiddenKorokFly_219442737", { glm::vec2(-597.87f, 3845.34f), glm::vec2(-657.77f, 3851.84f) } },
+            { "MainField_Npc_HiddenKorokFly_1677622965", { glm::vec2(1559.28f, 2896.84f), glm::vec2(1562.56f, 2898.32f) } },
+            { "MainField_Npc_HiddenKorokFly_112511260", { glm::vec2(-989.87f, -541.01f), glm::vec2(-1115.56f, -528.59f) } },
+            { "MainField_Npc_HiddenKorokFly_1193735031", { glm::vec2(4069.f, -2462.26f), glm::vec2(4181.04f, -2540.41f) } },
+            { "MainField_Npc_HiddenKorokFly_1636091100", { glm::vec2(-3692.07f, -792.07f), glm::vec2(-3661.36f, -828.8f) } },
+            { "MainField_Npc_HiddenKorokFly_1151365424", { glm::vec2(-1892.06f, -1235.05f), glm::vec2(-1855.99f, -1192.54f) } },
+            { "MainField_Npc_HiddenKorokFly_2981673548", { glm::vec2(-1787.71f, -377.97f), glm::vec2(-1631.54f, -515.19f) } },
+            { "MainField_Npc_HiddenKorokFly_2251374971", { glm::vec2(1585.26f, -719.34f), glm::vec2(1398.04f, -856.35f) } },
+            { "MainField_Npc_HiddenKorokFly_2651170340", { glm::vec2(2374.46f, -807.5f), glm::vec2(2275.01f, -720.15f) } },
+            { "MainField_Npc_HiddenKorokFly_425273904", { glm::vec2(4349.08f, -1496.86f), glm::vec2(4356.78f, -1528.1f) } },
+            { "MainField_Npc_HiddenKorokFly_3160306273", { glm::vec2(4079.84f, 1716.65f), glm::vec2(4282.69f, 1655.67f) } },
+            { "MainField_Npc_HiddenKorokFly_959088135", { glm::vec2(-3782.46f, -1798.64f), glm::vec2(-3696.67f, -1684.11f) } },
+            { "MainField_Npc_HiddenKorokFly_3700933592", { glm::vec2(894.81f, 3476.66f), glm::vec2(963.3f, 3371.1f) } },
+            { "MainField_Npc_HiddenKorokFly_993744813", { glm::vec2(-4207.97f, 266.73f), glm::vec2(-4183.68f, 291.07f) } },
+            { "MainField_Npc_HiddenKorokFly_1090454606", { glm::vec2(-4384.57f, 2575.82f), glm::vec2(-4373.9f, 2587.06f) } },
+            { "MainField_Npc_HiddenKorokFly_3190071149", { glm::vec2(1527.35f, -1887.45f), glm::vec2(1544.33f, -1837.21f) } },
+            { "MainField_Npc_HiddenKorokFly_2057390424", { glm::vec2(-4276.29f, 610.64f), glm::vec2(-4325.41f, 698.29f) } },
+            { "MainField_Npc_HiddenKorokFly_3225537006", { glm::vec2(4252.4f, -3134.47f), glm::vec2(4344.06f, -3178.37f) } },
+            { "MainField_Npc_HiddenKorokFly_4111462616", { glm::vec2(-668.85f, 2392.43f), glm::vec2(-609.81f, 2390.65f) } },
+            { "MainField_Npc_HiddenKorokFly_2515119845", { glm::vec2(-2395.78f, 1915.51f), glm::vec2(-2429.14f, 1921.34f) } },
+            { "MainField_Npc_HiddenKorokFly_2546320076", { glm::vec2(-254.f, -1044.5f), glm::vec2(-254.f, -994.61f) } },
+            { "MainField_Npc_HiddenKorokFly_3182217296", { glm::vec2(-2187.6f, 573.36f), glm::vec2(-2175.13f, 463.35f) } },
+            { "MainField_Npc_HiddenKorokFly_1469044075", { glm::vec2(4016.93f, 2971.36f), glm::vec2(4083.59f, 2973.26f) } },
+            { "MainField_Npc_HiddenKorokFly_3796948896", { glm::vec2(-2941.33f, -2483.43f), glm::vec2(-2883.83f, -2398.01f) } },
+            { "MainField_Npc_HiddenKorokFly_1474527610", { glm::vec2(-4388.92f, 1218.42f), glm::vec2(-4210.02f, 1133.51f) } },
+            { "MainField_Npc_HiddenKorokFly_2640143091", { glm::vec2(1131.8f, 2327.59f), glm::vec2(1188.64f, 2476.71f) } },
+            { "MainField_Npc_HiddenKorokFly_3090117635", { glm::vec2(-2103.93f, 2297.19f), glm::vec2(-2066.65f, 2397.05f) } },
+            { "MainField_Npc_HiddenKorokFly_1840487990", { glm::vec2(1610.18f, -2544.72f), glm::vec2(1725.35f, -2553.94f) } },
+            { "MainField_Npc_HiddenKorokFly_2490721015", { glm::vec2(2089.33f, -327.27f), glm::vec2(1832.71f, -535.64f) } },
+            { "MainField_Npc_HiddenKorokFly_3748954375", { glm::vec2(-296.75f, -261.92f), glm::vec2(-253.83f, -425.73f) } },
+            { "MainField_Npc_HiddenKorokFly_2946306338", { glm::vec2(-276.76f, 3316.47f), glm::vec2(-387.59f, 3151.55f) } },
+            { "MainField_Npc_HiddenKorokFly_3859942761", { glm::vec2(2330.11f, -1486.41f), glm::vec2(2407.27f, -1613.6f) } },
+            { "MainField_Npc_HiddenKorokFly_2875183771", { glm::vec2(-4495.71f, -2510.34f), glm::vec2(-4396.84f, -2049.89f) } },
+            { "MainField_Npc_HiddenKorokGround_3577973525", { glm::vec2(-2288.86f, 413.65f), glm::vec2(-2281.03f, 430.56f), glm::vec2(-2263.9f, 440.5f), glm::vec2(-2257.35f, 452.47f), glm::vec2(-2248.36f, 463.14f) } },
+            { "MainField_Npc_HiddenKorokGround_1022760820", { glm::vec2(-1094.6f, 196.73f), glm::vec2(-1105.74f, 216.9f), glm::vec2(-1101.07f, 233.77f), glm::vec2(-1125.37f, 238.33f), glm::vec2(-1154.53f, 244.98f) } },
+            { "MainField_Npc_HiddenKorokGround_2646642296", { glm::vec2(4126.2f, 2542.35f), glm::vec2(4116.05f, 2561.58f), glm::vec2(4132.32f, 2563.09f), glm::vec2(4137.84f, 2575.74f), glm::vec2(4111.49f, 2586.74f) } },
+            { "MainField_Npc_HiddenKorokGround_66646874", { glm::vec2(2043.58f, 2660.78f), glm::vec2(2054.12f, 2705.84f), glm::vec2(2092.84f, 2692.7f), glm::vec2(2112.5f, 2710.14f), glm::vec2(2105.21f, 2723.79f) } },
+            { "MainField_Npc_HiddenKorokGround_1841374467", { glm::vec2(-3466.84f, 2956.78f), glm::vec2(-3498.91f, 2952.55f), glm::vec2(-3480.76f, 2986.11f), glm::vec2(-3469.87f, 2926.08f), glm::vec2(-3437.03f, 2979.05f) } },
+            { "MainField_Npc_HiddenKorokGround_1410368125", { glm::vec2(-257.07f, -589.49f), glm::vec2(-250.14f, -583.87f), glm::vec2(-246.7f, -579.26f), glm::vec2(-243.03f, -585.36f), glm::vec2(-237.45f, -584.97f), glm::vec2(-237.7f, -590.68f), glm::vec2(-237.48f, -597.91f), glm::vec2(-237.52f, -610.94f), glm::vec2(-233.49f, -624.32f), glm::vec2(-230.73f, -630.73f) } },
+            { "MainField_Npc_HiddenKorokGround_3440400112", { glm::vec2(316.09f, 2161.86f), glm::vec2(334.36f, 2161.11f), glm::vec2(358.6f, 2164.08f), glm::vec2(376.94f, 2150.91f), glm::vec2(399.02f, 2151.04f) } },
+            { "MainField_Npc_HiddenKorokGround_2885083477", { glm::vec2(4483.81f, 637.03f), glm::vec2(4497.5f, 637.89f), glm::vec2(4517.59f, 630.68f), glm::vec2(4544.74f, 640.39f), glm::vec2(4568.1f, 646.32f) } },
+            { "MainField_Npc_HiddenKorokGround_805441109", { glm::vec2(4083.13f, -424.81f), glm::vec2(4114.89f, -438.15f), glm::vec2(4153.29f, -436.52f), glm::vec2(4151.59f, -415.25f), glm::vec2(4139.2f, -409.91f) } },
+            { "MainField_Npc_HiddenKorokGround_2206451776", { glm::vec2(-2052.12f, -507.62f), glm::vec2(-2052.09f, -495.07f), glm::vec2(-2055.43f, -483.19f), glm::vec2(-2031.36f, -506.91f), glm::vec2(-2030.22f, -545.77f) } },
+            { "MainField_Npc_HiddenKorokGround_810709137", { glm::vec2(-4084.91f, -3717.65f), glm::vec2(-4056.62f, -3726.4f), glm::vec2(-4020.83f, -3712.15f), glm::vec2(-4003.97f, -3693.82f), glm::vec2(-3961.39f, -3720.91f) } },
+            { "MainField_Npc_HiddenKorokGround_3780330715", { glm::vec2(-4201.37f, -3117.92f), glm::vec2(-4205.57f, -3121.48f), glm::vec2(-4230.32f, -3126.51f), glm::vec2(-4228.86f, -3132.67f), glm::vec2(-4227.86f, -3135.04f) } },
+            { "MainField_Npc_HiddenKorokGround_3433640415", { glm::vec2(-2376.8f, -1790.9f), glm::vec2(-2370.25f, -1778.33f), glm::vec2(-2370.82f, -1764.25f), glm::vec2(-2359.08f, -1757.9f), glm::vec2(-2338.22f, -1728.2f) } },
+            { "MainField_Npc_HiddenKorokGround_4128059100", { glm::vec2(3079.72f, 3643.24f), glm::vec2(3093.29f, 3659.51f), glm::vec2(3082.66f, 3705.24f), glm::vec2(3061.24f, 3658.99f), glm::vec2(3027.25f, 3653.85f) } },
+            { "MainField_Npc_HiddenKorokGround_2229769454", { glm::vec2(-4349.5f, 1828.01f), glm::vec2(-4345.34f, 1832.49f), glm::vec2(-4353.39f, 1834.54f), glm::vec2(-4352.04f, 1826.04f), glm::vec2(-4353.39f, 1837.03f) } },
+            { "MainField_Npc_HiddenKorokGround_884157545", { glm::vec2(1737.64f, 3204.04f), glm::vec2(1754.08f, 3198.55f), glm::vec2(1766.46f, 3195.1f), glm::vec2(1788.81f, 3210.6f), glm::vec2(1803.67f, 3220.17f) } },
+            { "MainField_Npc_HiddenKorokGround_3336956392", { glm::vec2(2947.57f, 3003.18f), glm::vec2(2952.04f, 2989.74f), glm::vec2(2962.11f, 2982.25f), glm::vec2(2955.57f, 2973.68f), glm::vec2(2950.32f, 2965.55f), glm::vec2(2967.16f, 2948.4f), glm::vec2(2968.22f, 2965.22f), glm::vec2(2972.14f, 2975.83f), glm::vec2(2974.78f, 2989.42f), glm::vec2(2951.52f, 3003.33f) } },
+            { "MainField_Npc_HiddenKorokGround_3143270869", { glm::vec2(-4171.26f, 3058.97f), glm::vec2(-4174.61f, 3065.55f), glm::vec2(-4186.84f, 3064.5f), glm::vec2(-4190.1f, 3083.78f), glm::vec2(-4195.16f, 3090.17f) } },
+            { "MainField_Npc_HiddenKorokGround_1845056285", { glm::vec2(4594.88f, 2520.45f), glm::vec2(4622.89f, 2470.21f), glm::vec2(4632.42f, 2436.13f), glm::vec2(4651.31f, 2412.54f), glm::vec2(4658.92f, 2379.92f) } },
+            { "MainField_Npc_HiddenKorokGround_3288214517", { glm::vec2(981.38f, 1837.23f), glm::vec2(995.8f, 1836.55f), glm::vec2(1006.34f, 1828.51f), glm::vec2(1033.92f, 1807.87f), glm::vec2(1047.49f, 1786.98f) } },
+            { "MainField_Npc_HiddenKorokGround_4221382154", { glm::vec2(-209.34f, 3444.94f), glm::vec2(-210.17f, 3399.51f), glm::vec2(-205.12f, 3370.46f), glm::vec2(-217.37f, 3353.34f), glm::vec2(-227.5f, 3344.2f) } },
+            { "MainField_Npc_HiddenKorokGround_1528393793", { glm::vec2(3509.61f, 519.34f), glm::vec2(3488.92f, 536.12f), glm::vec2(3492.29f, 560.71f), glm::vec2(3471.08f, 547.4f), glm::vec2(3455.12f, 550.52f) } },
+            { "MainField_Npc_HiddenKorokGround_2250578196", { glm::vec2(-4381.95f, 782.54f), glm::vec2(-4372.32f, 783.49f), glm::vec2(-4369.9f, 783.49f), glm::vec2(-4364.1f, 783.49f), glm::vec2(-4361.97f, 783.49f), glm::vec2(-4359.14f, 783.49f), glm::vec2(-4357.24f, 783.49f), glm::vec2(-4353.39f, 783.49f), glm::vec2(-4346.97f, 783.49f), glm::vec2(-4343.21f, 780.59f) } },
+            { "MainField_Npc_HiddenKorokGround_3779803099", { glm::vec2(-3973.11f, -1695.f), glm::vec2(-3968.9f, -1671.42f), glm::vec2(-4015.77f, -1684.29f), glm::vec2(-4044.05f, -1686.62f), glm::vec2(-4064.37f, -1678.98f) } },
+            { "MainField_Npc_HiddenKorokGround_3113887708", { glm::vec2(1378.68f, 2767.8f), glm::vec2(1361.44f, 2758.8f), glm::vec2(1371.11f, 2743.77f), glm::vec2(1370.41f, 2742.94f), glm::vec2(1372.88f, 2747.96f) } },
+            { "MainField_Npc_HiddenKorokGround_3747962265", { glm::vec2(1012.99f, 3212.9f), glm::vec2(1012.9f, 3222.67f), glm::vec2(999.86f, 3234.49f), glm::vec2(1007.53f, 3247.78f), glm::vec2(1012.07f, 3255.07f) } },
+            { "MainField_Npc_HiddenKorokGround_4030967171", { glm::vec2(468.27f, 1717.43f), glm::vec2(475.17f, 1749.54f), glm::vec2(499.28f, 1783.29f), glm::vec2(506.46f, 1803.81f), glm::vec2(514.52f, 1791.f) } },
+            { "MainField_Npc_HiddenKorokGround_2267408466", { glm::vec2(2947.3f, 3436.f), glm::vec2(2948.65f, 3435.43f), glm::vec2(2950.21f, 3434.97f), glm::vec2(2942.35f, 3435.77f), glm::vec2(2941.7f, 3430.52f) } },
+            { "MainField_Npc_HiddenKorokGround_771357632", { glm::vec2(-587.14f, 875.57f), glm::vec2(-601.66f, 860.79f), glm::vec2(-616.98f, 861.43f), glm::vec2(-632.29f, 873.98f), glm::vec2(-643.29f, 876.87f) } },
+            { "MainField_Npc_HiddenKorokGround_577144012", { glm::vec2(-1234.31f, -1094.26f), glm::vec2(-1265.71f, -1047.65f), glm::vec2(-1272.4f, -1035.54f), glm::vec2(-1235.62f, -1004.94f), glm::vec2(-1226.6f, -1001.78f) } },
+            { "MainField_Npc_HiddenKorokGround_2760820393", { glm::vec2(-4063.42f, -2285.92f), glm::vec2(-4048.41f, -2299.71f), glm::vec2(-4043.07f, -2307.4f), glm::vec2(-4031.27f, -2322.24f), glm::vec2(-4022.05f, -2349.86f) } },
+            { "MainField_Npc_HiddenKorokGround_3637762495", { glm::vec2(3372.41f, 2301.17f), glm::vec2(3391.55f, 2305.14f), glm::vec2(3420.12f, 2319.36f), glm::vec2(3444.12f, 2342.22f), glm::vec2(3459.52f, 2344.f), glm::vec2(3470.77f, 2347.6f), glm::vec2(3468.32f, 2364.61f), glm::vec2(3453.78f, 2384.8f), glm::vec2(3440.93f, 2392.3f), glm::vec2(3425.15f, 2390.67f) } },
+            { "MainField_Npc_HiddenKorokGround_2926065930", { glm::vec2(2308.26f, 750.53f), glm::vec2(2308.8f, 731.38f), glm::vec2(2306.25f, 715.55f), glm::vec2(2292.73f, 701.58f), glm::vec2(2288.5f, 702.21f) } },
+            { "MainField_Npc_HiddenKorokGround_1955626705", { glm::vec2(2984.44f, -177.12f), glm::vec2(3014.53f, -182.23f), glm::vec2(3031.13f, -168.81f), glm::vec2(3048.19f, -165.46f), glm::vec2(3059.07f, -158.3f), glm::vec2(3068.42f, -157.76f), glm::vec2(3081.95f, -160.38f), glm::vec2(3088.52f, -162.44f), glm::vec2(3090.17f, -160.65f), glm::vec2(3084.77f, -166.86f) } },
+            { "MainField_Npc_HiddenKorokFly_1992448098", { glm::vec2(693.88f, 3059.2f), glm::vec2(678.99f, 3061.2f), glm::vec2(678.7f, 3088.63f), glm::vec2(698.36f, 3081.73f), glm::vec2(694.38f, 3072.41f) } },
+            { "MainField_Npc_HiddenKorokGround_3121333541", { glm::vec2(4668.77f, -1290.65f), glm::vec2(4661.62f, -1313.48f), glm::vec2(4667.06f, -1330.71f), glm::vec2(4683.88f, -1340.37f), glm::vec2(4704.77f, -1352.87f) } },
+            { "MainField_Npc_HiddenKorokGround_2092993004", { glm::vec2(-4204.78f, -2782.24f), glm::vec2(-4216.36f, -2769.8f), glm::vec2(-4216.6f, -2766.18f), glm::vec2(-4211.13f, -2755.22f), glm::vec2(-4209.61f, -2735.39f), glm::vec2(-4201.12f, -2719.52f), glm::vec2(-4197.85f, -2709.39f), glm::vec2(-4196.75f, -2699.01f), glm::vec2(-4197.7f, -2689.47f), glm::vec2(-4193.41f, -2681.f) } },
+            { "MainField_Npc_HiddenKorokFly_1339515579", { glm::vec2(-1181.31f, -237.17f), glm::vec2(-1195.48f, -233.79f), glm::vec2(-1194.82f, -236.62f), glm::vec2(-1172.15f, -232.36f), glm::vec2(-1148.42f, -223.14f) } },
+            { "MainField_Npc_HiddenKorokGround_449189269", { glm::vec2(-3063.65f, 2905.87f), glm::vec2(-3073.02f, 2902.19f), glm::vec2(-3079.64f, 2897.47f), glm::vec2(-3093.85f, 2889.26f), glm::vec2(-3105.95f, 2881.95f) } },
+            { "MainField_Npc_HiddenKorokGround_3115869048", { glm::vec2(4131.11f, 2001.99f), glm::vec2(4142.23f, 2008.3f), glm::vec2(4151.47f, 1992.49f), glm::vec2(4173.42f, 1980.35f), glm::vec2(4190.38f, 1984.68f), glm::vec2(4200.09f, 1979.95f), glm::vec2(4213.94f, 1979.82f), glm::vec2(4229.49f, 1983.12f), glm::vec2(4246.43f, 1983.63f), glm::vec2(4271.46f, 1980.52f) } },
+            { "MainField_Npc_HiddenKorokGround_196795324", { glm::vec2(4385.6f, -1548.02f), glm::vec2(4433.26f, -1577.73f), glm::vec2(4493.91f, -1609.91f), glm::vec2(4502.12f, -1654.62f), glm::vec2(4526.4f, -1695.15f), glm::vec2(4553.33f, -1724.99f), glm::vec2(4577.97f, -1756.76f), glm::vec2(4601.99f, -1791.67f), glm::vec2(4617.25f, -1812.53f), glm::vec2(4635.92f, -1836.44f) } },
+            { "MainField_Npc_HiddenKorokGround_3872040196", { glm::vec2(-2723.18f, -2263.21f), glm::vec2(-2729.82f, -2264.78f), glm::vec2(-2737.84f, -2263.83f), glm::vec2(-2742.96f, -2258.24f), glm::vec2(-2750.28f, -2254.98f) } },
+            { "MainField_Npc_HiddenKorokGround_3712478777", { glm::vec2(4512.28f, 980.84f), glm::vec2(4526.36f, 1009.01f), glm::vec2(4502.82f, 1016.54f), glm::vec2(4473.22f, 1010.4f), glm::vec2(4497.55f, 1016.65f) } },
+            { "MainField_Npc_HiddenKorokGround_44975391", { glm::vec2(-997.5f, 1660.79f), glm::vec2(-988.46f, 1650.88f), glm::vec2(-979.8f, 1646.63f), glm::vec2(-978.5f, 1633.33f), glm::vec2(-966.47f, 1626.78f) } },
+            { "MainField_Npc_HiddenKorokFly_2413762907", { glm::vec2(-5.81f, 2580.12f), glm::vec2(-11.36f, 2577.65f), glm::vec2(-10.7f, 2581.5f), glm::vec2(-5.38f, 2584.1f), glm::vec2(-11.96f, 2582.16f) } },
+            { "MainField_Npc_HiddenKorokFly_2329548229", { glm::vec2(4112.67f, -1634.03f), glm::vec2(4101.66f, -1635.66f), glm::vec2(4096.97f, -1637.62f), glm::vec2(4093.97f, -1634.61f), glm::vec2(4095.89f, -1630.73f) } },
+        };
+
+        int i = 0;
+        for (auto& point : points)
+        {
+            KorokPaths[i] = KorokPath(point.first, point.second);
+
+            i++;
+        }
+    }
 
     Data::Shrine Shrines[Data::ShrineCount] = {
         Data::Shrine(12786689, "Misae Suma Shrine", -2969.8f, 3780.63f),
