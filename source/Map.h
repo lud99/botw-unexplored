@@ -65,6 +65,7 @@ namespace Map
     extern bool m_IsInitialized;
     extern bool m_ShouldExit;
     extern bool m_LoadMasterMode;
+    extern bool m_ShowAllObjects;
 
     extern PadState* m_Pad;
 

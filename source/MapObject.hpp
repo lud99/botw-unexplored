@@ -126,7 +126,7 @@ void MapObject<T>::AddToMesh()
 template <typename T>
 void MapObject<T>::Update()
 {
-    if (m_Found && !m_ShowAnyway) 
+    if (m_Found && !Map::m_ShowAllObjects) 
         return;
 
     m_Scale = 1.0f / Map::m_Zoom;

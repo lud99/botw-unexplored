@@ -218,7 +218,8 @@ void Map::Update()
 
     u64 buttonsPressed = padGetButtonsDown(m_Pad);
     u64 buttonsDown = padGetButtons(m_Pad);
-    
+    u64 buttonsUp = padGetButtonsUp(m_Pad);
+
     float zoomAmount = 0.01f;
     float dragAmont = 0.85f;
     float analogStickMovementSpeed = 10.0f;
@@ -251,6 +252,12 @@ void Map::Update()
         if (!m_NoSavefileDialog->m_IsOpen)
             m_IsLegendOpen = !m_IsLegendOpen;
     }
+
+    // Toggle showing everything
+    if (buttonsDown & HidNpadButton_B)
+        m_ShowAllObjects = true;
+    if (buttonsUp & HidNpadButton_B)
+        m_ShowAllObjects = false;
 
     // Toggle master mode
     if (buttonsPressed & HidNpadButton_Y)
@@ -528,6 +535,7 @@ bool Map::m_IsLegendOpen = true;
 bool Map::m_IsInitialized = false;
 bool Map::m_ShouldExit = false;
 bool Map::m_LoadMasterMode = false;
+bool Map::m_ShowAllObjects = false;
 
 PadState* Map::m_Pad;
 MapObject<Data::Korok>* Map::m_Koroks;
