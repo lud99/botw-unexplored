@@ -18,6 +18,7 @@
 #include "Accounts.h"
 #include "Dialog.h"
 #include "LoadGamesave.h"
+#include "Graphics/LineRenderer.h"
 
 bool openGLInitialized = false;
 bool nxLinkInitialized = false;
@@ -130,6 +131,8 @@ int main()
     bool hasDoneFirstDraw = false;
     bool hasLoadedSave = false;
 
+    LineRenderer* line = new LineRenderer();
+
 	while (appletMainLoop())
 	{
         // Scan the gamepad. This should be done once for each frame
@@ -159,6 +162,10 @@ int main()
 
             Map::UpdateMapObjects();
         }
+
+        line->AddLine(glm::vec2(-300.0f, -200.0f), glm::vec2(300.0f, 33.0f), 10.0f);
+        line->RenderLines(Map::m_ProjectionMatrix, Map::m_ViewMatrix
+        );
 
         eglSwapBuffers(s_display, s_surface);
 
