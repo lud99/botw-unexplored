@@ -13,11 +13,13 @@ namespace Data
     {
         uint32_t hash;
 
+        std::string internalName;
+
         float x = 0;
         float y = 0;
 
-        Korok(uint32_t hash, float x, float y) :
-            hash(hash), x(x), y(y) {};
+        Korok(uint32_t hash, const std::string& internalName, float x, float y) :
+            hash(hash), internalName(internalName), x(x), y(y) {};
     };
 
     struct KorokPath
