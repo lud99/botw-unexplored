@@ -40,10 +40,10 @@ void MapLocation::Render()
     margin += margin * m_Scale;
 
     // Don't render the text if it isn't in view
-    if (!Map::IsInView(m_Position, margin))
-        return;
+    //if (!Map::IsInView(m_Position, margin))
+      //  return;
 
-    Map::m_Font.RenderText(m_LocationData->displayName, m_Position, m_Scale, m_Color, ALIGN_CENTER);
+    Map::m_Font.AddTextToBatch(m_LocationData->displayName, m_Position, m_Scale, m_Color, ALIGN_CENTER);
 }
 
 MapLocation::~MapLocation()

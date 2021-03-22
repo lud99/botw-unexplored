@@ -149,7 +149,7 @@ int main()
         // Update
         Map::Update();
 
-        // Render
+        // // Render
         Map::Render();
 
         if (hasDoneFirstDraw && !hasLoadedSave)

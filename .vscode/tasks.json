@@ -29,7 +29,7 @@
         {
             "type": "shell",
             "label": "Build",
-            "command": "make -j 4",
+            "command": "make -j 3",
             "problemMatcher": []
         }
     ],

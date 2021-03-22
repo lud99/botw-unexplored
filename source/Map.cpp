@@ -379,8 +379,12 @@ void Map::Render()
            MapObject<Data::Molduga>::Render();
         if (m_Legend->m_Show[IconButton::ButtonTypes::Locations])
         {
+            Map::m_Font.BeginBatch();
+
             for (int i = 0; i < Data::LocationsCount; i++)
                 m_Locations[i].Render();
+
+            Map::m_Font.RenderBatch();
         }
     }
 

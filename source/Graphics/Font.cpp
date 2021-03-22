@@ -1,5 +1,6 @@
 #include "Font.h"
 
+#include <iostream>
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
@@ -97,7 +98,7 @@ int Font::Load(const std::string& filepath)
         out vec4 color;
 
         uniform sampler2D text;
-        uniform vec3 textColor;
+        uniform vec3 textColor = vec3(1.0, 1.0, 1.0);
 
         void main()
         {    
@@ -138,6 +139,12 @@ int Font::Load(const std::string& filepath)
         m_Mesh.AddIndex(indices[i]);
 
     m_Mesh.Update();
+
+    // Set settings for the optimized mesh
+    int maxCountOfEachChar = 300; // Might need to be adjusted
+    m_CharMesh.m_UseDynamicBuffer = true;
+    m_CharMesh.m_DynamicBufferSize = sizeof(TextureVertex) * 4 * maxCountOfEachChar;
+    m_CharMesh.CreateEmptyBuffer();
 
     m_Initialized = true;
 
@@ -213,26 +220,115 @@ glm::vec2 Font::RenderText(const std::string& text, glm::vec2 position, float sc
     return textSize;
 }
 
-
-void Font::RenderText(Text& text, glm::vec2 position, float scale, glm::vec3 color)
+void Font::BeginBatch()
 {
+    m_CharsToRender.clear();
+}
+
+glm::vec2 Font::AddTextToBatch(const std::string& text, glm::vec2 position, float scale, glm::vec3 color, int align)
+{
+    glm::vec2 itPosition(position);
+    glm::vec2 startPosition(position);
+    glm::vec2 textSize;
+
+    // Calculate text positions first
+    std::vector<glm::vec2> charPositions;
+    for (unsigned int i = 0; i < text.length(); i++)
+    {
+        Character ch = m_Characters[text[i]];
+
+        // Calculate the position of each character
+        charPositions.push_back(glm::vec2(itPosition.x + ch.Bearing.x * scale, itPosition.y - (ch.Size.y - ch.Bearing.y) * scale));
+
+        // The text height should be equal to the highest character;
+        float h = ch.Size.y * scale;
+        if (h > textSize.y)
+            textSize.y = h;
+
+        // now advance cursors for next glyph (note that advance is number of 1/64 pixels)
+        itPosition.x += (ch.Advance >> 6) * scale;
+    }
+    textSize.x = itPosition.x - startPosition.x;
+
+    // Add the characters to the map
+    for (unsigned int i = 0; i < text.length(); i++)
+    {
+        char c = text[i];
+
+        // Calculate the position of each character
+        glm::vec2 charPosition = charPositions[i];
+
+        if (align == ALIGN_CENTER)
+            charPosition.x -= textSize.x / 2;
+        else if (align == ALIGN_RIGHT)
+            charPosition.x -= textSize.x;
+
+        // Add the text to the vector of char
+        m_CharsToRender[c].emplace_back(c, charPosition, scale, color, align);
+    }
+
+    return textSize;
+}
+
+void Font::RenderBatch()
+{
+    glm::vec2 textureCoords[4] = {
+        glm::vec2(0.0f, 0.0f),
+        glm::vec2(0.0f, 1.0f),
+        glm::vec2(1.0f, 1.0f),
+        glm::vec2(1.0f, 0.0f)
+    };
+
     m_Shader.Bind();
 
-    glm::mat4 modelMatrix(1.0f);
-    modelMatrix = glm::translate(modelMatrix, glm::vec3(position, 0.0f));
-
-    m_Shader.SetUniform("u_ModelMatrix", modelMatrix);
-
-    m_Shader.SetUniform("textColor", color);
     m_Shader.SetUniform("u_ProjectionMatrix", *m_ProjectionMatrix);
     m_Shader.SetUniform("u_ViewMatrix", *m_ViewMatrix);
-    m_Shader.SetUniform("u_ModelMatrix", modelMatrix);
+    m_Shader.SetUniform("u_Color", glm::vec3(1.0f, 1.0f, 1.0f)); // Hard coded value, should probably fix
 
-    glActiveTexture(GL_TEXTURE0);
+    for (auto &entry : m_CharsToRender)
+    {
+        std::vector<Text>& texts = entry.second;
 
-    text.m_Mesh.Render();
+        Character ch = m_Characters[entry.first];
 
-    glBindTexture(GL_TEXTURE_2D, 0);
+        m_CharMesh.Clear();
+
+        // Iterate through all texts
+        for (unsigned int i = 0; i < texts.size(); i++)
+        {
+            Text text = texts[i];
+
+            float w = ch.Size.x * text.scale;
+            float h = ch.Size.y * text.scale;
+
+            // Construct all the verticies
+            glm::vec3 vertexPositions[4];
+            BasicVertices::Quad::ConstructFromBottomleft(vertexPositions, text.position, w, h);
+
+            for (int i = 0; i < 4; i++)
+            {
+                TextureVertex vertex;
+                vertex.position = vertexPositions[i];
+
+                vertex.textureCoord = textureCoords[i];
+                m_CharMesh.AddVertex(vertex);
+            }
+
+            for (int i = 0; i < 6; i++)
+                m_CharMesh.AddIndex(BasicVertices::Quad::Indices[i] + m_CharMesh.GetVertices().size() - 4);
+        }
+
+        glBindTexture(GL_TEXTURE_2D, ch.TextureID);
+
+        // Set to standard values. Will create weird rendering otherwise
+        m_Shader.SetUniform("u_ModelMatrix", glm::mat4(1.0f));
+        m_Shader.SetUniform("u_Size", glm::vec2(1.0f, 1.0f));
+
+        m_CharMesh.Update();
+        m_CharMesh.Render();
+    }
+
+    m_CharsToRender.clear();
 
     m_Shader.Unbind();
 }
@@ -246,87 +342,4 @@ Font::~Font()
     {
         glDeleteTextures(1, &m_Characters[c].TextureID);
     }   
-}
-
-void Text::Create(const std::string& text)
-{
-    float xPosition = 0.0f;
-
-    std::string::const_iterator c;
-    for (c = text.begin(); c != text.end(); c++)
-    {
-        Character ch = m_Font->m_Characters[*c];
-
-        float x = xPosition + ch.Bearing.x;
-        float y = (ch.Size.y - ch.Bearing.y);
-
-        float w = ch.Size.x;
-        float h = ch.Size.y;
-
-        // update VBO for each character
-        glm::vec3 vertexPositions[4] = {
-            glm::vec3(x,     y + h, 0.0f),
-            glm::vec3(x,     y,     0.0f),
-            glm::vec3(x + w, y,     0.0f),
-            glm::vec3(x + w, y + h, 0.0f)
-        };
-
-        glm::vec2 textureCoords[4] = {
-            glm::vec2(0.0f, 0.0f),
-            glm::vec2(0.0f, 1.0f),
-            glm::vec2(1.0f, 1.0f),
-            glm::vec2(1.0f, 0.0f)
-        };
-
-        uint16_t indices[6] = {
-            0, 1, 2, 0, 2, 3
-        };
-
-        /*
-        uint16_t indices2[6] = {
-            4, 5, 6, 4, 6, 7
-        };
-        */
-
-        for (int i = 0; i < 4; i++)
-        {
-            TextureVertex vertex;
-            vertex.position = vertexPositions[i];
-            vertex.textureCoord = textureCoords[i];
-            m_Mesh.AddVertex(vertex);
-        }
-
-        for (int i = 0; i < 6; i++)
-            m_Mesh.AddIndex(indices[i] + m_Mesh.GetVertices().size() - 4); // Index into the correct quad 
-
-        // now advance cursors for next glyph (note that advance is number of 1/64 pixels)
-        xPosition += (ch.Advance >> 6); // bitshift by 6 to get value in pixels (2^6 = 64)
-    }
-
-    m_Mesh.Update();
-
-    /*
-        float w = ch.Size.x * scale;
-        float h = ch.Size.y * scale;
-        // update VBO for each character
-        float vertices[6][4] = {
-            { xpos,     ypos + h,   0.0f, 0.0f },            
-            { xpos,     ypos,       0.0f, 1.0f },
-            { xpos + w, ypos,       1.0f, 1.0f },
-
-            { xpos,     ypos + h,   0.0f, 0.0f },
-            { xpos + w, ypos,       1.0f, 1.0f },
-            { xpos + w, ypos + h,   1.0f, 0.0f }           
-        };
-        // render glyph texture over quad
-        glBindTexture(GL_TEXTURE_2D, ch.textureID);
-        // update content of VBO memory
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices); 
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        // render quad
-        glDrawArrays(GL_TRIANGLES, 0, 6);
-        // now advance cursors for next glyph (note that advance is number of 1/64 pixels)
-        x += (ch.Advance >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64)
-    */
 }

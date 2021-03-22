@@ -167,5 +167,12 @@ namespace BasicVertices {
             positions[2] = glm::vec3(origin.x + width / 2, origin.y + height / 2, 0.0f);
             positions[3] = glm::vec3(origin.x - width / 2, origin.y + height / 2, 0.0f);
         }
+        inline void ConstructFromBottomleft(glm::vec3 positions[4], glm::vec2 origin, float width, float height)
+        {
+            positions[0] = glm::vec3(origin.x, origin.y + height, 0.0f);
+            positions[1] = glm::vec3(origin.x, origin.y, 0.0f);
+            positions[2] = glm::vec3(origin.x + width, origin.y, 0.0f);
+            positions[3] = glm::vec3(origin.x + width, origin.y + height, 0.0f);
+        }
     }
 };
