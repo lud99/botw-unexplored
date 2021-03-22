@@ -224,13 +224,18 @@ void Map::Update()
     float dragAmont = 0.85f;
     float analogStickMovementSpeed = 10.0f;
     float minZoom = 0.1f;
+        
+    // Handle zooming like BotW
+    HidAnalogStickState analog_stick_r = padGetStickPos(m_Pad, 1);
 
-    // Zoom
-    if (buttonsDown & HidNpadButton_R) // Zoom in
-        m_Zoom *= 1.0f + zoomAmount;
+    // Get the stick position between -1.0f and 1.0f, instead of -32767 and 32767
+    glm::vec2 stickRPosition = glm::vec2((float)analog_stick_r.x / (float)JOYSTICK_MAX, (float)analog_stick_r.y / (float)JOYSTICK_MAX);
+   
+    float deadzone = 0.1f;
+    if (fabs(stickRPosition.y) >= deadzone)
+        m_Zoom *= 1.0f + zoomAmount * stickRPosition.y;
 
-    if (buttonsDown & HidNpadButton_L) // Zoom out
-        m_Zoom *= 1.0f - zoomAmount;
+    if (m_Zoom < minZoom) m_Zoom = minZoom;
 
     // Open profile picker
     if (buttonsPressed & HidNpadButton_Minus)
@@ -243,8 +248,6 @@ void Map::Update()
             UpdateMapObjects();
         }
     }
-
-    if (m_Zoom < minZoom) m_Zoom = minZoom;
 
     // Toggle legend
     if (buttonsPressed & HidNpadButton_X)
@@ -278,7 +281,6 @@ void Map::Update()
     // Get the stick position between -1.0f and 1.0f, instead of -32767 and 32767
     glm::vec2 stickLPosition = glm::vec2((float)analog_stick_l.x / (float)JOYSTICK_MAX, (float)analog_stick_l.y / (float)JOYSTICK_MAX);
    
-    float deadzone = 0.1f;
     float distanceToCenter = glm::distance(stickLPosition, glm::vec2(0.0f, 0.0f));
     if (distanceToCenter >= deadzone)
         m_CameraPosition += stickLPosition * (analogStickMovementSpeed / m_Zoom);
