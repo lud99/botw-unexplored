@@ -400,9 +400,9 @@ void Map::Render()
                 }
             }
 
-            MapObject<Data::Korok>::Render();
-
             m_LineRenderer->RenderLines(m_ProjectionMatrix, m_ViewMatrix);
+
+            MapObject<Data::Korok>::Render();
         }
         if (m_Legend->m_Show[IconButton::ButtonTypes::Shrines])
             MapObject<Data::Shrine>::Render();

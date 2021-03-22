@@ -51,7 +51,9 @@ static bool LoadGamesave(bool loadMasterMode = false, bool chooseProfile = false
         if (dialogWasOpen)
             Map::m_IsLegendOpen = true;
 
-        SavefileIO::CopySavefiles();
+        // No need to copy savefiles if they have already been copied (this flag is never set the first time)
+        if (!chooseProfile)
+            SavefileIO::CopySavefiles();
 
         SavefileIO::UnmountSavefile();
     } 
