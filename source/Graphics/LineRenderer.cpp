@@ -99,6 +99,10 @@ void LineRenderer::AddLine(glm::vec2 start, glm::vec2 end, float width, glm::vec
 
 void LineRenderer::RenderLines(glm::mat4 projMat, glm::mat4 viewMat)
 {
+    // Don't render if there are no lines
+    if (m_Mesh.GetVertices().empty())
+        return;
+
     m_Shader.Bind();
 
     m_Shader.SetUniform("u_ProjectionMatrix", projMat);

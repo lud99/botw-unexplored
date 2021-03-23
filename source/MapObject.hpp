@@ -35,7 +35,7 @@ public:
 
     void AddToMesh();
 
-    void Update();
+    void Update(bool clear = false);
     static void Render();
 
     ~MapObject();
@@ -124,12 +124,14 @@ void MapObject<T>::AddToMesh()
 }
 
 template <typename T>
-void MapObject<T>::Update()
+void MapObject<T>::Update(bool clear)
 {
+    m_Scale = 1.0f / Map::m_Zoom;
+
+    if (clear) m_Mesh.Clear();
+
     if (m_Found && !Map::m_ShowAllObjects) 
         return;
-
-    m_Scale = 1.0f / Map::m_Zoom;
     
     // Culling 
     float margin = m_Texture->m_Width + 10.0f;

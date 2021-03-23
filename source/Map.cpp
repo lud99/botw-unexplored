@@ -131,6 +131,8 @@ void Map::UpdateMapObjects()
     if (!SavefileIO::LoadedSavefile)
         return;
 
+    printf("Update map objects\n");
+
     for (int i = 0; i < Data::KoroksCount; i++) // Korok
     {
         m_Koroks[i].m_Position = glm::vec2(Data::Koroks[i].x, -Data::Koroks[i].y) * 0.5f;
@@ -347,18 +349,19 @@ void Map::Update()
     // Update objects
     if (SavefileIO::LoadedSavefile)
     {
+        // Clear the meshes during the first iteration of the loop (i == 0) == true
         for (int i = 0; i < Data::KoroksCount; i++)
-            m_Koroks[i].Update();
+            m_Koroks[i].Update(i == 0);
         for (int i = 0; i < Data::ShrineCount; i++)
-            m_Shrines[i].Update();
+            m_Shrines[i].Update(i == 0);
         for (int i = 0; i < Data::DLCShrineCount; i++)
-            m_DLCShrines[i].Update();
+            m_DLCShrines[i].Update(i == 0);
         for (int i = 0; i < Data::HinoxesCount; i++)
-            m_Hinoxes[i].Update();
+            m_Hinoxes[i].Update(i == 0);
         for (int i = 0; i < Data::TalusesCount; i++)
-            m_Taluses[i].Update();
+            m_Taluses[i].Update(i == 0);
         for (int i = 0; i < Data::MoldugasCount; i++)
-            m_Moldugas[i].Update();
+            m_Moldugas[i].Update(i == 0);
         for (int i = 0; i < Data::LocationsCount; i++)
             m_Locations[i].Update();
     }
