@@ -235,7 +235,21 @@ void Map::Update()
    
     float deadzone = 0.1f;
     if (fabs(stickRPosition.y) >= deadzone)
-        m_Zoom *= 1.0f + zoomAmount * stickRPosition.y;
+        m_Zoom *= 1.0f + zoomAmount * 1.5f * stickRPosition.y;
+
+    // Zoom with L and R
+    if (buttonsDown & HidNpadButton_R) // Zoom in
+        m_Zoom *= 1.0f + zoomAmount;
+
+    if (buttonsDown & HidNpadButton_L) // Zoom out
+        m_Zoom *= 1.0f - zoomAmount;
+
+    // Reset zoom if pressing L or R stick
+    if (buttonsPressed & HidNpadButton_StickL)
+    {
+        m_Zoom = m_DefaultZoom;
+        m_CameraPosition = glm::vec2(0.0f, 0.0f);
+    }
 
     if (m_Zoom < minZoom) m_Zoom = minZoom;
 
@@ -472,7 +486,7 @@ void Map::Render()
         else if (m_LoadMasterMode)
             m_Font.RenderText("Press Y to load normal mode", glm::vec2(bottomTextX, m_ScreenBottom + 55), 0.5f, glm::vec3(1.0f), ALIGN_RIGHT);  
     
-        m_Font.RenderText("L and R to zoom, (-) to change user, (+) to exit", 
+        m_Font.RenderText("L and R or R stick to zoom, (-) to change user, (+) to exit", 
             glm::vec2(bottomTextX, m_ScreenBottom + 20), 0.5f, glm::vec3(1.0f), ALIGN_RIGHT);  
     }
 
