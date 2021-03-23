@@ -166,7 +166,7 @@ int SavefileIO::MountSavefile(bool openProfilePicker)
         return -2;
     }
 
-    rc = fsdevMountSaveData("save", botwId, uid);
+    rc = fsdevMountSaveDataReadOnly("save", botwId, uid);
     if (R_FAILED(rc))
     {
         printf("Botw is running. Failed to mount save\n");
