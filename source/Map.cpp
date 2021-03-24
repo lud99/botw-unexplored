@@ -220,7 +220,7 @@ void Map::Update()
     u64 buttonsDown = padGetButtons(m_Pad);
     u64 buttonsUp = padGetButtonsUp(m_Pad);
 
-    float zoomAmount = 0.01f;
+    float zoomAmount = 0.01f * 1.5f;
     float dragAmont = 0.85f;
     float analogStickMovementSpeed = 10.0f;
     float minZoom = 0.1f;
@@ -233,7 +233,7 @@ void Map::Update()
    
     float deadzone = 0.1f;
     if (fabs(stickRPosition.y) >= deadzone)
-        m_Zoom *= 1.0f + zoomAmount * 1.5f * stickRPosition.y;
+        m_Zoom *= 1.0f + zoomAmount * stickRPosition.y;
 
     // Zoom with L and R
     if (buttonsDown & HidNpadButton_R) // Zoom in
@@ -249,7 +249,7 @@ void Map::Update()
         m_CameraPosition = glm::vec2(0.0f, 0.0f);
     }
 
-    //if (m_Zoom < minZoom) m_Zoom = minZoom;
+    if (m_Zoom < minZoom) m_Zoom = minZoom;
 
     // Open profile picker
     if (buttonsPressed & HidNpadButton_Minus)

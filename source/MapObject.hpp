@@ -131,6 +131,10 @@ void MapObject<T>::Update(bool clear)
 {
     m_Scale = 1.0f / Map::m_Zoom;
 
+    float minScale = 1.0f;
+    if (m_Scale < minScale)
+        m_Scale = minScale;
+
     if (clear) m_Mesh.Clear();
 
     if (m_Found && !Map::m_ShowAllObjects) 
