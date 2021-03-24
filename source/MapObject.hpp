@@ -8,6 +8,7 @@
 #include "Map.h"
 
 #include <glm/vec2.hpp>
+#include <iostream>
 
 class Texture2D;
 
@@ -37,6 +38,8 @@ public:
 
     void Update(bool clear = false);
     static void Render();
+
+    bool IsClicked(glm::vec2 position);
 
     ~MapObject();
 };
@@ -136,7 +139,7 @@ void MapObject<T>::Update(bool clear)
     // Culling 
     float margin = m_Texture->m_Width + 10.0f;
     if (!Map::IsInView(m_Position, margin)) 
-        return;
+      return;
 
     // Set dynamic mesh
     AddToMesh();
@@ -162,6 +165,25 @@ void MapObject<T>::Render()
     // Clear the mesh
     m_Mesh.GetVertices().clear();
     m_Mesh.GetIndices().clear();
+}
+
+template <typename T>
+bool MapObject<T>::IsClicked(glm::vec2 position)
+{
+    glm::vec2 worldPos = position / Map::m_Zoom + Map::m_CameraPosition;
+
+    float width = m_Texture->m_Width * m_Scale;
+    float height = m_Texture->m_Height * m_Scale; 
+
+    if (worldPos.x > m_Position.x - width / 2 && worldPos.x < m_Position.x + width / 2)
+    {
+        if (worldPos.y > m_Position.y - height / 2 && worldPos.y < m_Position.y + height / 2)
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 template <typename T>

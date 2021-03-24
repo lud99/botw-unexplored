@@ -5,3 +5,4 @@ build
 source/other/
 romfs/game_data.sav
 saves
+script/out

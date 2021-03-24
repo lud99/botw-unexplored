@@ -4,6 +4,7 @@
 #include <string>
 #include <glm/vec2.hpp>
 #include <vector>
+#include <map>
 
 namespace Data
 {
@@ -29,10 +30,12 @@ namespace Data
         float x = 0;
         float y = 0;
 
+        int zeldaDungeonId;
+
         Data::KorokPath* path = nullptr;
 
-        Korok(uint32_t hash, const std::string& internalName, float x, float y) :
-            hash(hash), internalName(internalName), x(x), y(y) {};
+        Korok(uint32_t hash, const std::string& internalName, float x, float y, int zeldaDungeonId) :
+            hash(hash), internalName(internalName), x(x), y(y), zeldaDungeonId(zeldaDungeonId) {};
     };
 
     // https://github.com/d4mation/botw-unexplored-viewer/blob/master/assets/js/map-locations.js warps
@@ -118,10 +121,21 @@ namespace Data
             hash(hash), x(x), y(y) {};
     };
 
+    struct KorokInfo
+    {
+        std::string text;
+        std::string image;
+
+        KorokInfo(std::string text , std::string image) : 
+            text(text), image(image) {};
+    };
+
     // Create koroks
 
     const int KoroksCount = 900;
     extern Korok Koroks[KoroksCount];
+
+    extern std::map<int, KorokInfo> KorokInfos;
 
     Korok* KorokExists(uint32_t hash);
 

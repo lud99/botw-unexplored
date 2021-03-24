@@ -131,8 +131,6 @@ void Map::UpdateMapObjects()
     if (!SavefileIO::LoadedSavefile)
         return;
 
-    printf("Update map objects\n");
-
     for (int i = 0; i < Data::KoroksCount; i++) // Korok
     {
         m_Koroks[i].m_Position = glm::vec2(Data::Koroks[i].x, -Data::Koroks[i].y) * 0.5f;
@@ -251,7 +249,7 @@ void Map::Update()
         m_CameraPosition = glm::vec2(0.0f, 0.0f);
     }
 
-    if (m_Zoom < minZoom) m_Zoom = minZoom;
+    //if (m_Zoom < minZoom) m_Zoom = minZoom;
 
     // Open profile picker
     if (buttonsPressed & HidNpadButton_Minus)
@@ -301,6 +299,10 @@ void Map::Update()
     if (distanceToCenter >= deadzone)
         m_CameraPosition += stickLPosition * (analogStickMovementSpeed / m_Zoom);
 
+    m_ViewMatrix = glm::mat4(1.0f); // Reset (important)
+    m_ViewMatrix = glm::scale(m_ViewMatrix, glm::vec3(m_Zoom, m_Zoom, 0.0f));
+    m_ViewMatrix = glm::translate(m_ViewMatrix, glm::vec3(-m_CameraPosition, 1.0));
+
     // Dragging
     HidTouchScreenState state={0};
     if (hidGetTouchScreenStates(&state, 1)) {
@@ -323,6 +325,15 @@ void Map::Update()
                 {
                     m_IsDragging = true;
                     m_PrevTouchPosition = touchPosition; // The origin of the drag
+
+                    for (int i = 0; i < Data::KoroksCount; i++)
+                    {
+                        if (m_Koroks[i].IsClicked(touchPosition * glm::vec2(1.0f, -1.0f)))
+                        {
+                            std::cout << Data::KorokInfos.at(m_Koroks[i].m_ObjectData->zeldaDungeonId).text << "\n";
+                            break;
+                        }
+                    }
                 }
             }
                 
@@ -432,7 +443,7 @@ void Map::Render()
         }
         if (m_Legend->m_Show[IconButton::ButtonTypes::Shrines])
             MapObject<Data::Shrine>::Render();
-        if (SavefileIO::HasDLC)
+        if (m_Legend->m_Show[IconButton::ButtonTypes::Shrines] && SavefileIO::HasDLC)
             MapObject<Data::DLCShrine>::Render();
         if (m_Legend->m_Show[IconButton::ButtonTypes::Hinoxes])
             MapObject<Data::Hinox>::Render();

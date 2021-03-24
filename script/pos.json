@@ -1,0 +1,5402 @@
+[
+    {
+        "id": "Seed004",
+        "loc": "Squabble River",
+        "x": 1047.5,
+        "y": -1787
+    },
+    {
+        "id": "Seed007",
+        "loc": "Hills of Baumer",
+        "x": 514.5,
+        "y": -1791
+    },
+    {
+        "id": "Seed023",
+        "loc": "Forest of Spirits",
+        "x": -966.5,
+        "y": -1627
+    },
+    {
+        "id": "Seed042",
+        "loc": "Satori Mountain",
+        "x": -2248.5,
+        "y": -463
+    },
+    {
+        "id": "Seed046",
+        "loc": "Tarrey Town",
+        "x": 4096,
+        "y": 1631
+    },
+    {
+        "id": "Seed059",
+        "loc": "Ebon Mountain",
+        "x": 3425,
+        "y": -2390.5
+    },
+    {
+        "id": "Seed084",
+        "loc": "Lanayru Road - West Gate",
+        "x": 2288.5,
+        "y": -702
+    },
+    {
+        "id": "Seed085",
+        "loc": "Barula Plain",
+        "x": 271.5,
+        "y": -3289.5
+    },
+    {
+        "id": "Seed089",
+        "loc": "Wintre Island",
+        "x": 4497.5,
+        "y": -1016.5
+    },
+    {
+        "id": "Seed090",
+        "loc": "Tenoko Island",
+        "x": 4083.5,
+        "y": -2973.5
+    },
+    {
+        "id": "Seed101",
+        "loc": "Lake Totori",
+        "x": -3696.5,
+        "y": 1684
+    },
+    {
+        "id": "Seed109",
+        "loc": "Pagos Woods",
+        "x": 694.5,
+        "y": -3072.5
+    },
+    {
+        "id": "Seed118",
+        "loc": "Aquame Lake",
+        "x": -1190,
+        "y": -1116.5
+    },
+    {
+        "id": "Seed132",
+        "loc": "Giant's Forest",
+        "x": -1154.5,
+        "y": -245
+    },
+    {
+        "id": "Seed161",
+        "loc": "Riola Spring",
+        "x": 1785.5,
+        "y": -3009
+    },
+    {
+        "id": "Seed172",
+        "loc": "East Barrens",
+        "x": -2448.5,
+        "y": -3752
+    },
+    {
+        "id": "Seed198",
+        "loc": "Mapla Point",
+        "x": 4659,
+        "y": -2380
+    },
+    {
+        "id": "Seed211",
+        "loc": "Gerudo Canyon Stable",
+        "x": -2697.5,
+        "y": -2105
+    },
+    {
+        "id": "Seed230",
+        "loc": "Parache Plains",
+        "x": -387.5,
+        "y": -3151.5
+    },
+    {
+        "id": "Seed237",
+        "loc": "Trilby Plain",
+        "x": 1398,
+        "y": 856.5
+    },
+    {
+        "id": "Seed238",
+        "loc": "Bridge of Hylia (Breath of the Wild)",
+        "x": -12,
+        "y": -2582
+    },
+    {
+        "id": "Seed239",
+        "loc": "East Akkala Stable",
+        "x": 4181,
+        "y": 2540.5
+    },
+    {
+        "id": "Seed241",
+        "loc": "Breman Peak",
+        "x": 2105,
+        "y": -2724
+    },
+    {
+        "id": "Seed242",
+        "loc": "Floria Falls",
+        "x": 1803.5,
+        "y": -3220
+    },
+    {
+        "id": "Seed249",
+        "loc": "South Lomei Labyrinth",
+        "x": -1996.5,
+        "y": -3619.5
+    },
+    {
+        "id": "Seed252",
+        "loc": "Palu Wasteland",
+        "x": -3106,
+        "y": -2882
+    },
+    {
+        "id": "Seed253",
+        "loc": "Palu Wasteland",
+        "x": -3437,
+        "y": -2979
+    },
+    {
+        "id": "Seed255",
+        "loc": "Gerudo Town",
+        "x": -4195,
+        "y": -3090
+    },
+    {
+        "id": "Seed273",
+        "loc": "Nautelle Wetlands",
+        "x": -658,
+        "y": -3852
+    },
+    {
+        "id": "Seed274",
+        "loc": "Northern Icehouse",
+        "x": -3752,
+        "y": -2531.5
+    },
+    {
+        "id": "Seed278",
+        "loc": "Deya Lake",
+        "x": 399,
+        "y": -2151
+    },
+    {
+        "id": "Seed280",
+        "loc": "Passer Hill",
+        "x": -4064.5,
+        "y": 1679
+    },
+    {
+        "id": "Seed284",
+        "loc": "Breach of Demise",
+        "x": -1631.5,
+        "y": 515
+    },
+    {
+        "id": "Seed296",
+        "loc": "Gero Pond",
+        "x": 2407.5,
+        "y": 1613.5
+    },
+    {
+        "id": "Seed321",
+        "loc": "Hebra Falls",
+        "x": -2750.5,
+        "y": 2255
+    },
+    {
+        "id": "Seed335",
+        "loc": "Zelkoa Pond",
+        "x": 3526,
+        "y": -1710.5
+    },
+    {
+        "id": "Seed339",
+        "loc": "Purifier Lake",
+        "x": 3433,
+        "y": -1150.5
+    },
+    {
+        "id": "Seed350",
+        "loc": "Tingel Island",
+        "x": 4704.5,
+        "y": 1353
+    },
+    {
+        "id": "Seed351",
+        "loc": "Malin Bay",
+        "x": 4636,
+        "y": 1836.5
+    },
+    {
+        "id": "Seed353",
+        "loc": "Malin Bay",
+        "x": 4357,
+        "y": 1528
+    },
+    {
+        "id": "Seed355",
+        "loc": "Sanctum",
+        "x": -254,
+        "y": 994.5
+    },
+    {
+        "id": "Seed367",
+        "loc": "Walnot Mountain",
+        "x": 4282.5,
+        "y": -1655.5
+    },
+    {
+        "id": "Seed375",
+        "loc": "Walnot Mountain",
+        "x": 4271.5,
+        "y": -1980.5
+    },
+    {
+        "id": "Seed377",
+        "loc": "Hateno Bay",
+        "x": 4111.5,
+        "y": -2587
+    },
+    {
+        "id": "Seed402",
+        "loc": "Regencia River",
+        "x": -1148.5,
+        "y": 223
+    },
+    {
+        "id": "Seed403",
+        "loc": "Skull Lake",
+        "x": 3152.5,
+        "y": 3328.5
+    },
+    {
+        "id": "Seed404",
+        "loc": "Korne Beach",
+        "x": 3027,
+        "y": -3654
+    },
+    {
+        "id": "Seed420",
+        "loc": "Dunsel Plateau",
+        "x": 2951.5,
+        "y": -3003.5
+    },
+    {
+        "id": "Seed442",
+        "loc": "Zelo Pond",
+        "x": 1832.5,
+        "y": 535.5
+    },
+    {
+        "id": "Seed452",
+        "loc": "Keelay Plain",
+        "x": 1562.5,
+        "y": -2898.5
+    },
+    {
+        "id": "Seed463",
+        "loc": "Parache Plains",
+        "x": -227.5,
+        "y": -3344
+    },
+    {
+        "id": "Seed465",
+        "loc": "Ruto Lake",
+        "x": 3085,
+        "y": 167
+    },
+    {
+        "id": "Seed474",
+        "loc": "Tal Tal Peak",
+        "x": 4139,
+        "y": 410
+    },
+    {
+        "id": "Seed482",
+        "loc": "Lanayru Bay",
+        "x": 3455,
+        "y": -550.5
+    },
+    {
+        "id": "Seed491",
+        "loc": "Lodrum Headland",
+        "x": 4568,
+        "y": -646.5
+    },
+    {
+        "id": "Seed492",
+        "loc": "Satori Mountain",
+        "x": -2175,
+        "y": -463.5
+    },
+    {
+        "id": "Seed507",
+        "loc": "Koukot Plateau",
+        "x": -2429,
+        "y": -1921.5
+    },
+    {
+        "id": "Seed509",
+        "loc": "Statue of the Eighth Heroine",
+        "x": -4325.5,
+        "y": -698.5
+    },
+    {
+        "id": "Seed510",
+        "loc": "Risoka Snowfield",
+        "x": -4343,
+        "y": -780.5
+    },
+    {
+        "id": "Seed512",
+        "loc": "Hemaar's Descent",
+        "x": -4183.5,
+        "y": -291
+    },
+    {
+        "id": "Seed514",
+        "loc": "Keelay Plain",
+        "x": 1373,
+        "y": -2748
+    },
+    {
+        "id": "Seed516",
+        "loc": "Lurelin Village",
+        "x": 2941.5,
+        "y": -3430.5
+    },
+    {
+        "id": "Seed524",
+        "loc": "Guchini Plain",
+        "x": 963.5,
+        "y": -3371
+    },
+    {
+        "id": "Seed527",
+        "loc": "Sarjon Bridge",
+        "x": 1012,
+        "y": -3255
+    },
+    {
+        "id": "Seed553",
+        "loc": "Lake Hylia (Breath of the Wild)",
+        "x": -610,
+        "y": -2390.5
+    },
+    {
+        "id": "Seed570",
+        "loc": "Tobio's Hollow",
+        "x": 1188.5,
+        "y": -2476.5
+    },
+    {
+        "id": "Seed584",
+        "loc": "Spectacle Rock (Breath of the Wild)",
+        "x": -2066.5,
+        "y": -2397
+    },
+    {
+        "id": "Seed590",
+        "loc": "West Barrens",
+        "x": -4374,
+        "y": -2587
+    },
+    {
+        "id": "Seed594",
+        "loc": "Karusa Valley",
+        "x": -4353.5,
+        "y": -1837
+    },
+    {
+        "id": "Seed633",
+        "loc": "Lindor's Brow",
+        "x": -1856,
+        "y": 1192.5
+    },
+    {
+        "id": "Seed640",
+        "loc": "Akkala Ancient Tech Lab",
+        "x": 4344,
+        "y": 3178.5
+    },
+    {
+        "id": "Seed652",
+        "loc": "Exchange Ruins",
+        "x": -643,
+        "y": -877
+    },
+    {
+        "id": "Seed664",
+        "loc": "Hebra Great Skeleton",
+        "x": -4167,
+        "y": 3616
+    },
+    {
+        "id": "Seed676",
+        "loc": "Ancient Columns",
+        "x": -3675,
+        "y": 393.5
+    },
+    {
+        "id": "Seed691",
+        "loc": "Hebra Great Skeleton",
+        "x": -3961.5,
+        "y": 3721
+    },
+    {
+        "id": "Seed702",
+        "loc": "Goron City (Breath of the Wild)",
+        "x": 1725.5,
+        "y": 2554
+    },
+    {
+        "id": "Seed731",
+        "loc": "Goro Cove",
+        "x": 1868,
+        "y": 2400.5
+    },
+    {
+        "id": "Seed744",
+        "loc": "Royal Ancient Lab Ruins",
+        "x": -1226.5,
+        "y": 1001.5
+    },
+    {
+        "id": "Seed745",
+        "loc": "Tabantha Great Bridge",
+        "x": -3213,
+        "y": 574
+    },
+    {
+        "id": "Seed746",
+        "loc": "Tanagar Canyon",
+        "x": -3829,
+        "y": 118.5
+    },
+    {
+        "id": "Seed749",
+        "loc": "Tama Pond",
+        "x": -2826.5,
+        "y": 1580
+    },
+    {
+        "id": "Seed756",
+        "loc": "Ludfo's Bog",
+        "x": -2030.5,
+        "y": 545.5
+    },
+    {
+        "id": "Seed757",
+        "loc": "Ludfo's Bog",
+        "x": -1964.5,
+        "y": 584
+    },
+    {
+        "id": "Seed762",
+        "loc": "Seres Scablands",
+        "x": -2548,
+        "y": 306.5
+    },
+    {
+        "id": "Seed765",
+        "loc": "Carok Bridge",
+        "x": -1115.5,
+        "y": 528.5
+    },
+    {
+        "id": "Seed768",
+        "loc": "Nero Hill",
+        "x": -3661.5,
+        "y": 829
+    },
+    {
+        "id": "Seed777",
+        "loc": "Lake Kilsie",
+        "x": -4022,
+        "y": 2350
+    },
+    {
+        "id": "Seed778",
+        "loc": "Dragon Bone Mire",
+        "x": -4397,
+        "y": 2050
+    },
+    {
+        "id": "Seed780",
+        "loc": "Central Square",
+        "x": -254,
+        "y": 425.5
+    },
+    {
+        "id": "Seed790",
+        "loc": "Hyrule Castle (Breath of the Wild)",
+        "x": -230.5,
+        "y": 630.5
+    },
+    {
+        "id": "Seed805",
+        "loc": "Hebra Headspring",
+        "x": -2884,
+        "y": 2398
+    },
+    {
+        "id": "Seed819",
+        "loc": "Goronbi River",
+        "x": 1544.5,
+        "y": 1837.5
+    },
+    {
+        "id": "Seed821",
+        "loc": "Trilby Valley",
+        "x": 2275,
+        "y": 720
+    },
+    {
+        "id": "Seed837",
+        "loc": "Sturnida Secret Hot Spring",
+        "x": -4193.5,
+        "y": 2681
+    },
+    {
+        "id": "Seed838",
+        "loc": "Biron Snowshelf",
+        "x": -4228,
+        "y": 3135
+    },
+    {
+        "id": "Seed854",
+        "loc": "Tanagar Canyon",
+        "x": -2338,
+        "y": 1728
+    },
+    {
+        "id": "Seed878",
+        "loc": "Meadela's Mantle",
+        "x": -4210,
+        "y": -1133.5
+    },
+    {
+        "id": "Seed001",
+        "loc": "Great Plateau",
+        "x": -890.5,
+        "y": -1889.5
+    },
+    {
+        "id": "Seed002",
+        "loc": "Hickaly Woods",
+        "x": 1936,
+        "y": -2567.5
+    },
+    {
+        "id": "Seed003",
+        "loc": "Bonooru's Stand",
+        "x": 2059.5,
+        "y": -1212.5
+    },
+    {
+        "id": "Seed005",
+        "loc": "Squabble River",
+        "x": 867.5,
+        "y": -1903.5
+    },
+    {
+        "id": "Seed006",
+        "loc": "Hills of Baumer",
+        "x": 644,
+        "y": -1762.5
+    },
+    {
+        "id": "Seed008",
+        "loc": "Hills of Baumer",
+        "x": 315.5,
+        "y": -1765
+    },
+    {
+        "id": "Seed009",
+        "loc": "Forest of Spirits",
+        "x": -954.5,
+        "y": -1721.5
+    },
+    {
+        "id": "Seed010",
+        "loc": "River of the Dead",
+        "x": -1382,
+        "y": -1861.5
+    },
+    {
+        "id": "Seed011",
+        "loc": "Dueling Peaks",
+        "x": 1258,
+        "y": -1851
+    },
+    {
+        "id": "Seed012",
+        "loc": "Gerudo Canyon Pass",
+        "x": -1503.5,
+        "y": -1923.5
+    },
+    {
+        "id": "Seed013",
+        "loc": "Mount Hylia",
+        "x": -1362.5,
+        "y": -2219.5
+    },
+    {
+        "id": "Seed014",
+        "loc": "Mount Hylia",
+        "x": -1441.5,
+        "y": -2105
+    },
+    {
+        "id": "Seed015",
+        "loc": "River of the Dead",
+        "x": -1134,
+        "y": -1921
+    },
+    {
+        "id": "Seed016",
+        "loc": "Mount Hylia",
+        "x": -1173.5,
+        "y": -2319.5
+    },
+    {
+        "id": "Seed017",
+        "loc": "Mount Hylia",
+        "x": -1197,
+        "y": -2326.5
+    },
+    {
+        "id": "Seed018",
+        "loc": "Temple of Time (Breath of the Wild)",
+        "x": -809,
+        "y": -1966.5
+    },
+    {
+        "id": "Seed019",
+        "loc": "Temple of Time (Breath of the Wild)",
+        "x": -789,
+        "y": -2261
+    },
+    {
+        "id": "Seed020",
+        "loc": "Eastern Abbey",
+        "x": -428,
+        "y": -2022.5
+    },
+    {
+        "id": "Seed021",
+        "loc": "Eastern Abbey",
+        "x": -422,
+        "y": -1994.5
+    },
+    {
+        "id": "Seed022",
+        "loc": "Forest of Spirits",
+        "x": -848.5,
+        "y": -1669.5
+    },
+    {
+        "id": "Seed024",
+        "loc": "Forest of Spirits",
+        "x": -769.5,
+        "y": -1578.5
+    },
+    {
+        "id": "Seed025",
+        "loc": "Forest of Spirits",
+        "x": -820.5,
+        "y": -1550.5
+    },
+    {
+        "id": "Seed026",
+        "loc": "Hopper Pond",
+        "x": -1339,
+        "y": -1677.5
+    },
+    {
+        "id": "Seed027",
+        "loc": "Deepback Bay",
+        "x": 4209,
+        "y": -2269.5
+    },
+    {
+        "id": "Seed028",
+        "loc": "Kakariko Village (Breath of the Wild)",
+        "x": 1803,
+        "y": -991
+    },
+    {
+        "id": "Seed029",
+        "loc": "Ploymus Mountain",
+        "x": 3894.5,
+        "y": 705.5
+    },
+    {
+        "id": "Seed030",
+        "loc": "Pierre Plateau",
+        "x": 2163,
+        "y": -1039
+    },
+    {
+        "id": "Seed031",
+        "loc": "Mystathi's Shelf",
+        "x": -4066.5,
+        "y": -442.5
+    },
+    {
+        "id": "Seed032",
+        "loc": "Bank of Wishes",
+        "x": 2746,
+        "y": 180
+    },
+    {
+        "id": "Seed033",
+        "loc": "Risoka Snowfield",
+        "x": -4688.5,
+        "y": -842
+    },
+    {
+        "id": "Seed034",
+        "loc": "Ruto Mountain",
+        "x": 3304,
+        "y": -20.5
+    },
+    {
+        "id": "Seed035",
+        "loc": "Gatepost Town Ruins",
+        "x": -653,
+        "y": -1388.5
+    },
+    {
+        "id": "Seed036",
+        "loc": "Digdogg Suspension Bridge",
+        "x": -1674.5,
+        "y": -1400
+    },
+    {
+        "id": "Seed037",
+        "loc": "Aquame Lake",
+        "x": -1364.5,
+        "y": -1163.5
+    },
+    {
+        "id": "Seed038",
+        "loc": "Coliseum Ruins",
+        "x": -1223.5,
+        "y": -1357
+    },
+    {
+        "id": "Seed039",
+        "loc": "Great Cliffs",
+        "x": -3354.5,
+        "y": -2275
+    },
+    {
+        "id": "Seed040",
+        "loc": "Squabble River",
+        "x": 672,
+        "y": -1636.5
+    },
+    {
+        "id": "Seed041",
+        "loc": "South Nabi Lake",
+        "x": 852.5,
+        "y": -1627.5
+    },
+    {
+        "id": "Seed043",
+        "loc": "Gerudo Canyon Pass",
+        "x": -1494,
+        "y": -1830
+    },
+    {
+        "id": "Seed044",
+        "loc": "Zora's Domain (Breath of the Wild)",
+        "x": 3327,
+        "y": 525
+    },
+    {
+        "id": "Seed045",
+        "loc": "Lake Akkala",
+        "x": 3886.5,
+        "y": 1340.5
+    },
+    {
+        "id": "Seed047",
+        "loc": "Rist Peninsula",
+        "x": 4530.5,
+        "y": 2094.5
+    },
+    {
+        "id": "Seed048",
+        "loc": "Mount Daphnes",
+        "x": -1024.5,
+        "y": -560
+    },
+    {
+        "id": "Seed049",
+        "loc": "Kolomo Garrison Ruins",
+        "x": -460.5,
+        "y": -1275.5
+    },
+    {
+        "id": "Seed050",
+        "loc": "Robred Dropoff",
+        "x": 2511.5,
+        "y": -1571.5
+    },
+    {
+        "id": "Seed051",
+        "loc": "Rebonae Bridge",
+        "x": 627.5,
+        "y": -182.5
+    },
+    {
+        "id": "Seed052",
+        "loc": "Mabe Prairie",
+        "x": 386.5,
+        "y": -131
+    },
+    {
+        "id": "Seed053",
+        "loc": "Akkala Ancient Tech Lab",
+        "x": 4501.5,
+        "y": 3165.5
+    },
+    {
+        "id": "Seed054",
+        "loc": "Orsedd Bridge",
+        "x": 683.5,
+        "y": 636.5
+    },
+    {
+        "id": "Seed055",
+        "loc": "Crenel Hills",
+        "x": 838.5,
+        "y": 694
+    },
+    {
+        "id": "Seed056",
+        "loc": "Hateno Ancient Tech Lab",
+        "x": 3785,
+        "y": -2123.5
+    },
+    {
+        "id": "Seed057",
+        "loc": "Ovli Plain",
+        "x": 3166.5,
+        "y": -1833.5
+    },
+    {
+        "id": "Seed058",
+        "loc": "Firly Plateau",
+        "x": 3152.5,
+        "y": -2404.5
+    },
+    {
+        "id": "Seed060",
+        "loc": "Bubinga Forest",
+        "x": 2048,
+        "y": -2093.5
+    },
+    {
+        "id": "Seed061",
+        "loc": "Fort Hateno",
+        "x": 2327.5,
+        "y": -1829
+    },
+    {
+        "id": "Seed062",
+        "loc": "Oakle's Navel",
+        "x": 2482.5,
+        "y": -2103
+    },
+    {
+        "id": "Seed063",
+        "loc": "Kakariko Bridge",
+        "x": 1752,
+        "y": -1544.5
+    },
+    {
+        "id": "Seed064",
+        "loc": "Lake Hylia (Breath of the Wild)",
+        "x": -103,
+        "y": -2301
+    },
+    {
+        "id": "Seed065",
+        "loc": "Lake Hylia (Breath of the Wild)",
+        "x": 76.5,
+        "y": -2302
+    },
+    {
+        "id": "Seed066",
+        "loc": "Hylia River",
+        "x": 172,
+        "y": -1726.5
+    },
+    {
+        "id": "Seed067",
+        "loc": "Hylia River",
+        "x": 104.5,
+        "y": -1716
+    },
+    {
+        "id": "Seed068",
+        "loc": "Mount Floria",
+        "x": 1936,
+        "y": -2778.5
+    },
+    {
+        "id": "Seed069",
+        "loc": "Dueling Peaks",
+        "x": 1244,
+        "y": -1942
+    },
+    {
+        "id": "Seed070",
+        "loc": "Nabi Lake",
+        "x": 1040,
+        "y": -1318.5
+    },
+    {
+        "id": "Seed071",
+        "loc": "Scout's Hill",
+        "x": 2,
+        "y": -1895.5
+    },
+    {
+        "id": "Seed072",
+        "loc": "Scout's Hill",
+        "x": 161.5,
+        "y": -1949
+    },
+    {
+        "id": "Seed073",
+        "loc": "Bridge of Hylia (Breath of the Wild)",
+        "x": -39,
+        "y": -2514
+    },
+    {
+        "id": "Seed074",
+        "loc": "Princess Zelda's Study",
+        "x": -385,
+        "y": 995.5
+    },
+    {
+        "id": "Seed075",
+        "loc": "Gerudo Town",
+        "x": -3887,
+        "y": -2967.5
+    },
+    {
+        "id": "Seed076",
+        "loc": "Gerudo Canyon Pass",
+        "x": -1662,
+        "y": -2344
+    },
+    {
+        "id": "Seed077",
+        "loc": "Stalry Plateau",
+        "x": -1809.5,
+        "y": -2463
+    },
+    {
+        "id": "Seed078",
+        "loc": "Farosh Hills",
+        "x": 603,
+        "y": -2410.5
+    },
+    {
+        "id": "Seed079",
+        "loc": "Spring of Wisdom",
+        "x": 3742,
+        "y": -1154.5
+    },
+    {
+        "id": "Seed080",
+        "loc": "Spring of Wisdom",
+        "x": 3798,
+        "y": -1271
+    },
+    {
+        "id": "Seed081",
+        "loc": "Nette Plateau",
+        "x": 215,
+        "y": -3496.5
+    },
+    {
+        "id": "Seed082",
+        "loc": "Toto Lake",
+        "x": 3566,
+        "y": 916.5
+    },
+    {
+        "id": "Seed083",
+        "loc": "Pierre Plateau",
+        "x": 2148,
+        "y": -796.5
+    },
+    {
+        "id": "Seed086",
+        "loc": "Nette Plateau",
+        "x": 269,
+        "y": -3666.5
+    },
+    {
+        "id": "Seed087",
+        "loc": "Moor Garrison Ruins",
+        "x": 1388.5,
+        "y": 112.5
+    },
+    {
+        "id": "Seed088",
+        "loc": "Wintre Island",
+        "x": 4537.5,
+        "y": -1017
+    },
+    {
+        "id": "Seed091",
+        "loc": "Kitano Bay",
+        "x": 3675.5,
+        "y": -2419.5
+    },
+    {
+        "id": "Seed092",
+        "loc": "Firly Pond",
+        "x": 3350.5,
+        "y": -2255.5
+    },
+    {
+        "id": "Seed093",
+        "loc": "Outpost Ruins",
+        "x": -191.5,
+        "y": -1833.5
+    },
+    {
+        "id": "Seed094",
+        "loc": "Whistling Hill",
+        "x": -106.5,
+        "y": -1049.5
+    },
+    {
+        "id": "Seed095",
+        "loc": "Hylia River",
+        "x": 55.5,
+        "y": -1760
+    },
+    {
+        "id": "Seed096",
+        "loc": "Proxim Bridge",
+        "x": 224.5,
+        "y": -1705.5
+    },
+    {
+        "id": "Seed097",
+        "loc": "Exchange Ruins",
+        "x": -750.5,
+        "y": -893.5
+    },
+    {
+        "id": "Seed098",
+        "loc": "Proxim Bridge",
+        "x": 231.5,
+        "y": -1600.5
+    },
+    {
+        "id": "Seed099",
+        "loc": "Rito Village",
+        "x": -3561,
+        "y": 1759
+    },
+    {
+        "id": "Seed100",
+        "loc": "East Post Ruins",
+        "x": 87,
+        "y": -1587.5
+    },
+    {
+        "id": "Seed102",
+        "loc": "Owlan Bridge",
+        "x": 314,
+        "y": -1400
+    },
+    {
+        "id": "Seed103",
+        "loc": "Owlan Bridge",
+        "x": 334,
+        "y": -1275.5
+    },
+    {
+        "id": "Seed104",
+        "loc": "Tabantha Village Ruins",
+        "x": -2361,
+        "y": 1872
+    },
+    {
+        "id": "Seed105",
+        "loc": "Squabble River",
+        "x": 516,
+        "y": -1484
+    },
+    {
+        "id": "Seed106",
+        "loc": "Squabble River",
+        "x": 668.5,
+        "y": -1467.5
+    },
+    {
+        "id": "Seed107",
+        "loc": "Davdi Island",
+        "x": 4697.5,
+        "y": 546
+    },
+    {
+        "id": "Seed108",
+        "loc": "South Nabi Lake",
+        "x": 786,
+        "y": -1470
+    },
+    {
+        "id": "Seed110",
+        "loc": "Owlan Bridge",
+        "x": 293.5,
+        "y": -1212.5
+    },
+    {
+        "id": "Seed111",
+        "loc": "Abandoned North Mine",
+        "x": 1631,
+        "y": 2933.5
+    },
+    {
+        "id": "Seed112",
+        "loc": "Mount Nabooru",
+        "x": -1735,
+        "y": -1822
+    },
+    {
+        "id": "Seed113",
+        "loc": "Digdogg Suspension Bridge",
+        "x": -1743.5,
+        "y": -1470
+    },
+    {
+        "id": "Seed114",
+        "loc": "Coliseum Ruins",
+        "x": -1292.5,
+        "y": -1388.5
+    },
+    {
+        "id": "Seed115",
+        "loc": "Outskirt Stable",
+        "x": -1317,
+        "y": -1262.5
+    },
+    {
+        "id": "Seed116",
+        "loc": "Coliseum Ruins",
+        "x": -1152.5,
+        "y": -1220.5
+    },
+    {
+        "id": "Seed117",
+        "loc": "Coliseum Ruins",
+        "x": -1057,
+        "y": -1335
+    },
+    {
+        "id": "Seed119",
+        "loc": "Aquame Bridge",
+        "x": -1136.5,
+        "y": -1031
+    },
+    {
+        "id": "Seed120",
+        "loc": "Soka Point",
+        "x": 3794.5,
+        "y": -3624.5
+    },
+    {
+        "id": "Seed121",
+        "loc": "Aquame Bridge",
+        "x": -1157.5,
+        "y": -963
+    },
+    {
+        "id": "Seed122",
+        "loc": "Aquame Bridge",
+        "x": -1106,
+        "y": -902.5
+    },
+    {
+        "id": "Seed123",
+        "loc": "Aquame Bridge",
+        "x": -1010.5,
+        "y": -933
+    },
+    {
+        "id": "Seed124",
+        "loc": "Digdogg Suspension Bridge",
+        "x": -1575.5,
+        "y": -1590
+    },
+    {
+        "id": "Seed125",
+        "loc": "Regencia River",
+        "x": -1504.5,
+        "y": -922.5
+    },
+    {
+        "id": "Seed126",
+        "loc": "Regencia River",
+        "x": -1441.5,
+        "y": -845.5
+    },
+    {
+        "id": "Seed127",
+        "loc": "Gleeok Bridge",
+        "x": -1249.5,
+        "y": -718.5
+    },
+    {
+        "id": "Seed128",
+        "loc": "Regencia River",
+        "x": -1313.5,
+        "y": -624
+    },
+    {
+        "id": "Seed129",
+        "loc": "Ancient Tree Stump",
+        "x": -1120,
+        "y": -419
+    },
+    {
+        "id": "Seed130",
+        "loc": "Regencia River",
+        "x": -1336.5,
+        "y": -366.5
+    },
+    {
+        "id": "Seed131",
+        "loc": "Sage Temple Ruins",
+        "x": -1336.5,
+        "y": -249
+    },
+    {
+        "id": "Seed133",
+        "loc": "Batrea Lake",
+        "x": 711.5,
+        "y": -1331.5
+    },
+    {
+        "id": "Seed134",
+        "loc": "Batrea Lake",
+        "x": 513.5,
+        "y": -1169.5
+    },
+    {
+        "id": "Seed135",
+        "loc": "Mable Ridge",
+        "x": 1294,
+        "y": -1332.5
+    },
+    {
+        "id": "Seed136",
+        "loc": "Dueling Peaks",
+        "x": 1378,
+        "y": -1682
+    },
+    {
+        "id": "Seed137",
+        "loc": "Squabble River",
+        "x": 1099.5,
+        "y": -1890.5
+    },
+    {
+        "id": "Seed138",
+        "loc": "Docks",
+        "x": -305.5,
+        "y": 1167
+    },
+    {
+        "id": "Seed139",
+        "loc": "Popla Foothills",
+        "x": 811.5,
+        "y": -2091
+    },
+    {
+        "id": "Seed140",
+        "loc": "East Akkala Stable",
+        "x": 4396.5,
+        "y": 2721.5
+    },
+    {
+        "id": "Seed141",
+        "loc": "Squabble River",
+        "x": 704.5,
+        "y": -1794
+    },
+    {
+        "id": "Seed142",
+        "loc": "Yambi Lake",
+        "x": 2560.5,
+        "y": -3602.5
+    },
+    {
+        "id": "Seed143",
+        "loc": "Deya Lake",
+        "x": 550.5,
+        "y": -1897.5
+    },
+    {
+        "id": "Seed144",
+        "loc": "Peak of Awakening",
+        "x": 2925,
+        "y": -1394.5
+    },
+    {
+        "id": "Seed145",
+        "loc": "Digdogg Suspension Bridge",
+        "x": -1794.5,
+        "y": -1625
+    },
+    {
+        "id": "Seed146",
+        "loc": "Lakeside Stable",
+        "x": 1449,
+        "y": -3531.5
+    },
+    {
+        "id": "Seed147",
+        "loc": "Lakeside Stable",
+        "x": 1375.5,
+        "y": -3501
+    },
+    {
+        "id": "Seed148",
+        "loc": "Regencia River",
+        "x": -1151.5,
+        "y": 283.5
+    },
+    {
+        "id": "Seed149",
+        "loc": "Regencia River",
+        "x": -1255,
+        "y": 239.5
+    },
+    {
+        "id": "Seed150",
+        "loc": "Mount Gustaf",
+        "x": -891.5,
+        "y": 285
+    },
+    {
+        "id": "Seed151",
+        "loc": "Spring of Courage",
+        "x": 835,
+        "y": -2425.5
+    },
+    {
+        "id": "Seed152",
+        "loc": "Farosh Hills",
+        "x": 516,
+        "y": -2492
+    },
+    {
+        "id": "Seed153",
+        "loc": "Quarry Ruins",
+        "x": -661,
+        "y": 437.5
+    },
+    {
+        "id": "Seed154",
+        "loc": "Quarry Ruins",
+        "x": -806.5,
+        "y": 401.5
+    },
+    {
+        "id": "Seed155",
+        "loc": "West Castle Town",
+        "x": -548,
+        "y": 229
+    },
+    {
+        "id": "Seed156",
+        "loc": "Water Reservoir",
+        "x": -664.5,
+        "y": 544.5
+    },
+    {
+        "id": "Seed157",
+        "loc": "Moat Bridge",
+        "x": -764.5,
+        "y": 607.5
+    },
+    {
+        "id": "Seed158",
+        "loc": "Quarry Ruins",
+        "x": -798.5,
+        "y": 560
+    },
+    {
+        "id": "Seed159",
+        "loc": "Temto Hill",
+        "x": 2140,
+        "y": -3531.5
+    },
+    {
+        "id": "Seed160",
+        "loc": "Lake Hylia (Breath of the Wild)",
+        "x": -65.5,
+        "y": -2332.5
+    },
+    {
+        "id": "Seed162",
+        "loc": "Floria River",
+        "x": 807,
+        "y": -3116.5
+    },
+    {
+        "id": "Seed163",
+        "loc": "Zonai Ruins",
+        "x": 823.5,
+        "y": -3008
+    },
+    {
+        "id": "Seed164",
+        "loc": "Farosh Hills",
+        "x": 588,
+        "y": -2675
+    },
+    {
+        "id": "Seed165",
+        "loc": "Lake Siela",
+        "x": 1638,
+        "y": -1375.5
+    },
+    {
+        "id": "Seed166",
+        "loc": "Arbiter's Grounds (Breath of the Wild)",
+        "x": -4306.5,
+        "y": -3461.5
+    },
+    {
+        "id": "Seed167",
+        "loc": "Rutala River",
+        "x": 2923,
+        "y": -333
+    },
+    {
+        "id": "Seed168",
+        "loc": "Arbiter's Grounds (Breath of the Wild)",
+        "x": -4345,
+        "y": -3714
+    },
+    {
+        "id": "Seed169",
+        "loc": "Ruto Mountain",
+        "x": 3208.5,
+        "y": -24
+    },
+    {
+        "id": "Seed170",
+        "loc": "Gerudo Great Skeleton",
+        "x": -4861,
+        "y": -3833
+    },
+    {
+        "id": "Seed171",
+        "loc": "East Barrens",
+        "x": -2549.5,
+        "y": -3952
+    },
+    {
+        "id": "Seed173",
+        "loc": "East Barrens",
+        "x": -3030.5,
+        "y": -3755
+    },
+    {
+        "id": "Seed174",
+        "loc": "Southern Oasis",
+        "x": -3287,
+        "y": -3785.5
+    },
+    {
+        "id": "Seed175",
+        "loc": "East Barrens",
+        "x": -2632.5,
+        "y": -3303
+    },
+    {
+        "id": "Seed176",
+        "loc": "Palu Wasteland",
+        "x": -2919,
+        "y": -3061.5
+    },
+    {
+        "id": "Seed177",
+        "loc": "East Gerudo Ruins",
+        "x": -2684.5,
+        "y": -2930
+    },
+    {
+        "id": "Seed178",
+        "loc": "East Gerudo Ruins",
+        "x": -2629,
+        "y": -2749.5
+    },
+    {
+        "id": "Seed179",
+        "loc": "Spectacle Rock (Breath of the Wild)",
+        "x": -2300,
+        "y": -2848.5
+    },
+    {
+        "id": "Seed180",
+        "loc": "Great Zora Bridge",
+        "x": 3293.5,
+        "y": 260.5
+    },
+    {
+        "id": "Seed181",
+        "loc": "Corvash Peak",
+        "x": -3331.5,
+        "y": 2299.5
+    },
+    {
+        "id": "Seed182",
+        "loc": "Yarna Valley",
+        "x": -2023,
+        "y": -2880
+    },
+    {
+        "id": "Seed183",
+        "loc": "Yarna Valley",
+        "x": -1936.5,
+        "y": -2671.5
+    },
+    {
+        "id": "Seed184",
+        "loc": "East Gerudo Mesa",
+        "x": -1461.5,
+        "y": -2953.5
+    },
+    {
+        "id": "Seed185",
+        "loc": "East Gerudo Mesa",
+        "x": -1539.5,
+        "y": -3071
+    },
+    {
+        "id": "Seed186",
+        "loc": "East Gerudo Mesa",
+        "x": -1599,
+        "y": -3099
+    },
+    {
+        "id": "Seed187",
+        "loc": "Champion's Gate",
+        "x": -2172,
+        "y": -3201.5
+    },
+    {
+        "id": "Seed188",
+        "loc": "Champion's Gate",
+        "x": -1925,
+        "y": -3279.5
+    },
+    {
+        "id": "Seed189",
+        "loc": "Lanayru Promenade",
+        "x": 2705,
+        "y": -1167
+    },
+    {
+        "id": "Seed190",
+        "loc": "Nirvata Lake",
+        "x": 3179,
+        "y": -1605
+    },
+    {
+        "id": "Seed191",
+        "loc": "Nirvata Plateau",
+        "x": 3173.5,
+        "y": -1488.5
+    },
+    {
+        "id": "Seed192",
+        "loc": "Afromsia Coast",
+        "x": 4442,
+        "y": -1437.5
+    },
+    {
+        "id": "Seed193",
+        "loc": "Afromsia Coast",
+        "x": 4617,
+        "y": -1921
+    },
+    {
+        "id": "Seed194",
+        "loc": "Mapla Point",
+        "x": 4513,
+        "y": -2311.5
+    },
+    {
+        "id": "Seed195",
+        "loc": "Eagus Bridge",
+        "x": 961,
+        "y": -941
+    },
+    {
+        "id": "Seed196",
+        "loc": "Mapla Point",
+        "x": 4535.5,
+        "y": -2521
+    },
+    {
+        "id": "Seed197",
+        "loc": "Telta Lake",
+        "x": 1600.5,
+        "y": -810.5
+    },
+    {
+        "id": "Seed199",
+        "loc": "Kakariko Village (Breath of the Wild)",
+        "x": 1775,
+        "y": -963
+    },
+    {
+        "id": "Seed200",
+        "loc": "Kakariko Village (Breath of the Wild)",
+        "x": 1794,
+        "y": -1051.5
+    },
+    {
+        "id": "Seed201",
+        "loc": "Kakariko Village (Breath of the Wild)",
+        "x": 1799.5,
+        "y": -1076
+    },
+    {
+        "id": "Seed202",
+        "loc": "Kakariko Village (Breath of the Wild)",
+        "x": 1957,
+        "y": -1060
+    },
+    {
+        "id": "Seed203",
+        "loc": "Pillars of Levia",
+        "x": 1938.5,
+        "y": -1112.5
+    },
+    {
+        "id": "Seed204",
+        "loc": "Lake Totori",
+        "x": -3778.5,
+        "y": 1865
+    },
+    {
+        "id": "Seed205",
+        "loc": "Rito Village",
+        "x": -3628.5,
+        "y": 1804.5
+    },
+    {
+        "id": "Seed206",
+        "loc": "Lake Siela",
+        "x": 2207.5,
+        "y": -1374.5
+    },
+    {
+        "id": "Seed207",
+        "loc": "Pillars of Levia",
+        "x": 1933.5,
+        "y": -1220.5
+    },
+    {
+        "id": "Seed208",
+        "loc": "Pillars of Levia",
+        "x": 1739,
+        "y": -1185.5
+    },
+    {
+        "id": "Seed209",
+        "loc": "Pillars of Levia",
+        "x": 1672.5,
+        "y": -1159
+    },
+    {
+        "id": "Seed210",
+        "loc": "Lake Siela",
+        "x": 1552.5,
+        "y": -1299
+    },
+    {
+        "id": "Seed212",
+        "loc": "Gerudo Canyon",
+        "x": -2258.5,
+        "y": -2224
+    },
+    {
+        "id": "Seed213",
+        "loc": "Dueling Peaks Stable",
+        "x": 1754.5,
+        "y": -1920
+    },
+    {
+        "id": "Seed214",
+        "loc": "Dueling Peaks Stable",
+        "x": 1875.5,
+        "y": -2051.5
+    },
+    {
+        "id": "Seed215",
+        "loc": "Cliffs of Quince",
+        "x": 2497.5,
+        "y": -1804.5
+    },
+    {
+        "id": "Seed216",
+        "loc": "Mount Rozudo",
+        "x": 2367,
+        "y": -2301
+    },
+    {
+        "id": "Seed217",
+        "loc": "Hickaly Woods",
+        "x": 1887,
+        "y": -2418.5
+    },
+    {
+        "id": "Seed218",
+        "loc": "Little Twin Bridge",
+        "x": 1682,
+        "y": -2329
+    },
+    {
+        "id": "Seed219",
+        "loc": "Mount Floria",
+        "x": 1967.5,
+        "y": -2635.5
+    },
+    {
+        "id": "Seed220",
+        "loc": "Dueling Peaks",
+        "x": 1518,
+        "y": -1850
+    },
+    {
+        "id": "Seed221",
+        "loc": "Nirvata Plateau",
+        "x": 3279.5,
+        "y": -1438.5
+    },
+    {
+        "id": "Seed222",
+        "loc": "Breman Peak",
+        "x": 2104,
+        "y": -2628.5
+    },
+    {
+        "id": "Seed223",
+        "loc": "Jia Highlands",
+        "x": 1385,
+        "y": -2274
+    },
+    {
+        "id": "Seed224",
+        "loc": "Laverra Beach",
+        "x": -133,
+        "y": -3804
+    },
+    {
+        "id": "Seed225",
+        "loc": "Laverra Beach",
+        "x": 10,
+        "y": -3790
+    },
+    {
+        "id": "Seed226",
+        "loc": "Puffer Beach",
+        "x": 260.5,
+        "y": -3832
+    },
+    {
+        "id": "Seed227",
+        "loc": "Puffer Beach",
+        "x": 418,
+        "y": -3850.5
+    },
+    {
+        "id": "Seed228",
+        "loc": "Oseira Plains",
+        "x": -877.5,
+        "y": -3567.5
+    },
+    {
+        "id": "Seed229",
+        "loc": "Daval Peak",
+        "x": -1173.5,
+        "y": -3579
+    },
+    {
+        "id": "Seed231",
+        "loc": "Parache Plains",
+        "x": -421,
+        "y": -3369.5
+    },
+    {
+        "id": "Seed232",
+        "loc": "Cora Lake",
+        "x": -94.5,
+        "y": -3130.5
+    },
+    {
+        "id": "Seed233",
+        "loc": "Lake Hylia (Breath of the Wild)",
+        "x": 220,
+        "y": -2865
+    },
+    {
+        "id": "Seed234",
+        "loc": "Lake Hylia (Breath of the Wild)",
+        "x": 174.5,
+        "y": -2903.5
+    },
+    {
+        "id": "Seed235",
+        "loc": "Lake Hylia (Breath of the Wild)",
+        "x": 201,
+        "y": -2606
+    },
+    {
+        "id": "Seed236",
+        "loc": "Bridge of Hylia (Breath of the Wild)",
+        "x": -2.5,
+        "y": -2613
+    },
+    {
+        "id": "Seed240",
+        "loc": "North Akkala Valley",
+        "x": 3737,
+        "y": 2883.5
+    },
+    {
+        "id": "Seed243",
+        "loc": "Nephra Hill",
+        "x": -2080,
+        "y": -1480.5
+    },
+    {
+        "id": "Seed244",
+        "loc": "Tal Tal Peak",
+        "x": 4236,
+        "y": 211.5
+    },
+    {
+        "id": "Seed245",
+        "loc": "Gerudo Canyon Pass",
+        "x": -1720,
+        "y": -2240.5
+    },
+    {
+        "id": "Seed246",
+        "loc": "Rabia Plain",
+        "x": 2685,
+        "y": -567
+    },
+    {
+        "id": "Seed247",
+        "loc": "Risoka Snowfield",
+        "x": -4353,
+        "y": -711.5
+    },
+    {
+        "id": "Seed248",
+        "loc": "Champion's Gate",
+        "x": -1931,
+        "y": -3244.5
+    },
+    {
+        "id": "Seed250",
+        "loc": "Mount Granajh",
+        "x": -1525.5,
+        "y": -3406.5
+    },
+    {
+        "id": "Seed251",
+        "loc": "South Lomei Labyrinth",
+        "x": -1611.5,
+        "y": -3677
+    },
+    {
+        "id": "Seed254",
+        "loc": "West Barrens",
+        "x": -4226,
+        "y": -2740
+    },
+    {
+        "id": "Seed256",
+        "loc": "Arbiter's Grounds (Breath of the Wild)",
+        "x": -4159.5,
+        "y": -3825
+    },
+    {
+        "id": "Seed257",
+        "loc": "Dragon's Exile",
+        "x": -4864.5,
+        "y": -3262
+    },
+    {
+        "id": "Seed258",
+        "loc": "Fort Hateno",
+        "x": 2320.5,
+        "y": -1725
+    },
+    {
+        "id": "Seed259",
+        "loc": "Forgotten Temple",
+        "x": -1410,
+        "y": 2305.5
+    },
+    {
+        "id": "Seed260",
+        "loc": "Forgotten Temple",
+        "x": -1415,
+        "y": 2220.5
+    },
+    {
+        "id": "Seed261",
+        "loc": "Forgotten Temple",
+        "x": -1581.5,
+        "y": 2128.5
+    },
+    {
+        "id": "Seed262",
+        "loc": "Koto Pond",
+        "x": 2408,
+        "y": -2513
+    },
+    {
+        "id": "Seed263",
+        "loc": "Floria Bridge",
+        "x": 1739,
+        "y": -3453
+    },
+    {
+        "id": "Seed264",
+        "loc": "Koto Pond",
+        "x": 2303,
+        "y": -2380
+    },
+    {
+        "id": "Seed265",
+        "loc": "Rassla Lake",
+        "x": 1815,
+        "y": -3743.5
+    },
+    {
+        "id": "Seed266",
+        "loc": "Kaepora Pass",
+        "x": 4109,
+        "y": 1351
+    },
+    {
+        "id": "Seed267",
+        "loc": "Nirvata Plateau",
+        "x": 3231.5,
+        "y": -1547
+    },
+    {
+        "id": "Seed268",
+        "loc": "Riola Spring",
+        "x": 1774,
+        "y": -2933.5
+    },
+    {
+        "id": "Seed269",
+        "loc": "Rodai Lake",
+        "x": 1801,
+        "y": -3157.5
+    },
+    {
+        "id": "Seed270",
+        "loc": "Daval Peak",
+        "x": -1356.5,
+        "y": -3672.5
+    },
+    {
+        "id": "Seed271",
+        "loc": "Mount Granajh",
+        "x": -1376.5,
+        "y": -3328.5
+    },
+    {
+        "id": "Seed272",
+        "loc": "Passeri Greenbelt",
+        "x": -725,
+        "y": -133.5
+    },
+    {
+        "id": "Seed275",
+        "loc": "Courage Steppe",
+        "x": 2293.5,
+        "y": -3028
+    },
+    {
+        "id": "Seed276",
+        "loc": "Calora Lake",
+        "x": 2031.5,
+        "y": -3168
+    },
+    {
+        "id": "Seed277",
+        "loc": "Strock Lake",
+        "x": -3152,
+        "y": 1563
+    },
+    {
+        "id": "Seed279",
+        "loc": "Deya Lake",
+        "x": 476,
+        "y": -2148
+    },
+    {
+        "id": "Seed281",
+        "loc": "Dragon Bone Mire",
+        "x": -4224,
+        "y": 1744
+    },
+    {
+        "id": "Seed282",
+        "loc": "Warbler's Nest",
+        "x": -4036,
+        "y": 1746
+    },
+    {
+        "id": "Seed283",
+        "loc": "Tama Pond",
+        "x": -2976,
+        "y": 1875.5
+    },
+    {
+        "id": "Seed285",
+        "loc": "Thundra Plateau",
+        "x": -2317.5,
+        "y": 805.5
+    },
+    {
+        "id": "Seed286",
+        "loc": "Vatorsa Snowfield",
+        "x": -3225.5,
+        "y": -1020.5
+    },
+    {
+        "id": "Seed287",
+        "loc": "Rutile Lake",
+        "x": -2543.5,
+        "y": -640.5
+    },
+    {
+        "id": "Seed288",
+        "loc": "Rutile Lake",
+        "x": -2493.5,
+        "y": -591.5
+    },
+    {
+        "id": "Seed289",
+        "loc": "Rutile Lake",
+        "x": -2478.5,
+        "y": -547
+    },
+    {
+        "id": "Seed290",
+        "loc": "Rutile Lake",
+        "x": -2482,
+        "y": -504
+    },
+    {
+        "id": "Seed291",
+        "loc": "Tamio River",
+        "x": -2450.5,
+        "y": -372.5
+    },
+    {
+        "id": "Seed292",
+        "loc": "Crenel Hills",
+        "x": 703.5,
+        "y": 811.5
+    },
+    {
+        "id": "Seed293",
+        "loc": "Goronbi River",
+        "x": 1414,
+        "y": 1762.5
+    },
+    {
+        "id": "Seed294",
+        "loc": "Luto's Crossing",
+        "x": 3123,
+        "y": 19
+    },
+    {
+        "id": "Seed295",
+        "loc": "Broca Island",
+        "x": 2751.5,
+        "y": 1676
+    },
+    {
+        "id": "Seed297",
+        "loc": "Lake Ferona",
+        "x": 1939.5,
+        "y": 1217
+    },
+    {
+        "id": "Seed298",
+        "loc": "Trilby Plain",
+        "x": 1695,
+        "y": 860.5
+    },
+    {
+        "id": "Seed299",
+        "loc": "Nero Hill",
+        "x": -3716,
+        "y": 1039
+    },
+    {
+        "id": "Seed300",
+        "loc": "Regencia River",
+        "x": -1501,
+        "y": -154.5
+    },
+    {
+        "id": "Seed301",
+        "loc": "Spectacle Rock (Breath of the Wild)",
+        "x": -2302.5,
+        "y": -2560.5
+    },
+    {
+        "id": "Seed302",
+        "loc": "East Gerudo Ruins",
+        "x": -2594,
+        "y": -2541
+    },
+    {
+        "id": "Seed303",
+        "loc": "Gerudo Canyon Stable",
+        "x": -2814,
+        "y": -2248.5
+    },
+    {
+        "id": "Seed304",
+        "loc": "Mount Nabooru",
+        "x": -2018.5,
+        "y": -2186.5
+    },
+    {
+        "id": "Seed305",
+        "loc": "Linebeck Island",
+        "x": 1737,
+        "y": -85.5
+    },
+    {
+        "id": "Seed306",
+        "loc": "Gisa Crater",
+        "x": -4010.5,
+        "y": 1162.5
+    },
+    {
+        "id": "Seed307",
+        "loc": "Gisa Crater",
+        "x": -3971,
+        "y": 921
+    },
+    {
+        "id": "Seed308",
+        "loc": "Rayne Highlands",
+        "x": -4058.5,
+        "y": 774.5
+    },
+    {
+        "id": "Seed309",
+        "loc": "Rayne Highlands",
+        "x": -3966.5,
+        "y": 625
+    },
+    {
+        "id": "Seed310",
+        "loc": "Tanagar Canyon",
+        "x": -4037.5,
+        "y": 348
+    },
+    {
+        "id": "Seed311",
+        "loc": "Tanagar Canyon",
+        "x": -4027,
+        "y": 232.5
+    },
+    {
+        "id": "Seed312",
+        "loc": "Lake Totori",
+        "x": -3421,
+        "y": 2068
+    },
+    {
+        "id": "Seed313",
+        "loc": "Ancient Columns",
+        "x": -3519,
+        "y": 450.5
+    },
+    {
+        "id": "Seed314",
+        "loc": "Piper Ridge",
+        "x": -3444.5,
+        "y": 663.5
+    },
+    {
+        "id": "Seed315",
+        "loc": "Piper Ridge",
+        "x": -3430.5,
+        "y": 710
+    },
+    {
+        "id": "Seed316",
+        "loc": "Cape Cales",
+        "x": 3442.5,
+        "y": -3123.5
+    },
+    {
+        "id": "Seed317",
+        "loc": "First Gatehouse",
+        "x": -389.5,
+        "y": 783.5
+    },
+    {
+        "id": "Seed318",
+        "loc": "Princess Zelda's Room",
+        "x": -327.5,
+        "y": 1008.5
+    },
+    {
+        "id": "Seed319",
+        "loc": "Irch Plain",
+        "x": -919.5,
+        "y": 1622.5
+    },
+    {
+        "id": "Seed320",
+        "loc": "Strock Lake",
+        "x": -3443,
+        "y": 1324.5
+    },
+    {
+        "id": "Seed322",
+        "loc": "Horse God Bridge",
+        "x": 525,
+        "y": -3679.5
+    },
+    {
+        "id": "Seed323",
+        "loc": "Millennio Sandbar",
+        "x": 1981.5,
+        "y": -454
+    },
+    {
+        "id": "Seed324",
+        "loc": "Horon Lagoon",
+        "x": 4197.5,
+        "y": -461
+    },
+    {
+        "id": "Seed325",
+        "loc": "Rutala River",
+        "x": 2379,
+        "y": -376
+    },
+    {
+        "id": "Seed326",
+        "loc": "Rabia Plain",
+        "x": 2471,
+        "y": -463.5
+    },
+    {
+        "id": "Seed327",
+        "loc": "Rutala River",
+        "x": 2637.5,
+        "y": -373.5
+    },
+    {
+        "id": "Seed328",
+        "loc": "Rabia Plain",
+        "x": 2890,
+        "y": -517
+    },
+    {
+        "id": "Seed329",
+        "loc": "Quatta's Shelf",
+        "x": 2129.5,
+        "y": -679
+    },
+    {
+        "id": "Seed330",
+        "loc": "Satori Mountain",
+        "x": -2286,
+        "y": -469
+    },
+    {
+        "id": "Seed331",
+        "loc": "Lanayru Road - West Gate",
+        "x": 2240,
+        "y": -725.5
+    },
+    {
+        "id": "Seed332",
+        "loc": "Lanayru Road - West Gate",
+        "x": 2411.5,
+        "y": -851.5
+    },
+    {
+        "id": "Seed333",
+        "loc": "Lanayru Range",
+        "x": 3899,
+        "y": -1557.5
+    },
+    {
+        "id": "Seed334",
+        "loc": "Lanayru Heights",
+        "x": 2727,
+        "y": -906
+    },
+    {
+        "id": "Seed336",
+        "loc": "Lanayru Bay",
+        "x": 3383,
+        "y": -983
+    },
+    {
+        "id": "Seed337",
+        "loc": "Flight Range",
+        "x": -3792.5,
+        "y": 2319.5
+    },
+    {
+        "id": "Seed338",
+        "loc": "Lake Sumac",
+        "x": 3708,
+        "y": -1941
+    },
+    {
+        "id": "Seed340",
+        "loc": "Lanayru Promenade",
+        "x": 2632.5,
+        "y": -1113.5
+    },
+    {
+        "id": "Seed341",
+        "loc": "Phalian Highlands",
+        "x": 2525.5,
+        "y": -1258
+    },
+    {
+        "id": "Seed342",
+        "loc": "Bronas Forest",
+        "x": 1410.5,
+        "y": -3201.5
+    },
+    {
+        "id": "Seed343",
+        "loc": "Akkala Ancient Tech Lab",
+        "x": 4429.5,
+        "y": 3182
+    },
+    {
+        "id": "Seed344",
+        "loc": "Ludfo's Bog",
+        "x": -2008,
+        "y": 514.5
+    },
+    {
+        "id": "Seed345",
+        "loc": "Maw of Death Mountain",
+        "x": 2505.5,
+        "y": 1303.5
+    },
+    {
+        "id": "Seed346",
+        "loc": "Naydra Snowfield",
+        "x": 3539,
+        "y": -1374.5
+    },
+    {
+        "id": "Seed347",
+        "loc": "Davdi Island",
+        "x": 4625,
+        "y": 635.5
+    },
+    {
+        "id": "Seed348",
+        "loc": "Ankel Island",
+        "x": 4699.5,
+        "y": 1001.5
+    },
+    {
+        "id": "Seed349",
+        "loc": "Ankel Island",
+        "x": 4704.5,
+        "y": 1036.5
+    },
+    {
+        "id": "Seed352",
+        "loc": "Malin Bay",
+        "x": 4695,
+        "y": 1776.5
+    },
+    {
+        "id": "Seed354",
+        "loc": "Lockup",
+        "x": -382.5,
+        "y": 1108.5
+    },
+    {
+        "id": "Seed356",
+        "loc": "Sanctum",
+        "x": -255.5,
+        "y": 1055
+    },
+    {
+        "id": "Seed357",
+        "loc": "Sanctum",
+        "x": -251,
+        "y": 1064.5
+    },
+    {
+        "id": "Seed358",
+        "loc": "Second Gatehouse",
+        "x": -157.5,
+        "y": 872
+    },
+    {
+        "id": "Seed359",
+        "loc": "Second Gatehouse",
+        "x": -166,
+        "y": 859.5
+    },
+    {
+        "id": "Seed360",
+        "loc": "Akkala Ancient Tech Lab",
+        "x": 4426,
+        "y": 3332
+    },
+    {
+        "id": "Seed361",
+        "loc": "North Akkala Beach",
+        "x": 4818.5,
+        "y": 3094.5
+    },
+    {
+        "id": "Seed362",
+        "loc": "East Akkala Beach",
+        "x": 4509.5,
+        "y": 2643.5
+    },
+    {
+        "id": "Seed363",
+        "loc": "Spring of Wisdom",
+        "x": 4088,
+        "y": -1142.5
+    },
+    {
+        "id": "Seed364",
+        "loc": "Maw of Death Mountain",
+        "x": 2409,
+        "y": 1226.5
+    },
+    {
+        "id": "Seed365",
+        "loc": "Akkala Wilds",
+        "x": 3815.5,
+        "y": 3418.5
+    },
+    {
+        "id": "Seed366",
+        "loc": "Lanayru Bay",
+        "x": 3951.5,
+        "y": -695
+    },
+    {
+        "id": "Seed368",
+        "loc": "Zelkoa Pond",
+        "x": 3474,
+        "y": -1917.5
+    },
+    {
+        "id": "Seed369",
+        "loc": "Mapla Point",
+        "x": 4543.5,
+        "y": -2405.5
+    },
+    {
+        "id": "Seed370",
+        "loc": "Finra Woods",
+        "x": 581,
+        "y": -3007
+    },
+    {
+        "id": "Seed371",
+        "loc": "Retsam Forest",
+        "x": 3901.5,
+        "y": -2098
+    },
+    {
+        "id": "Seed372",
+        "loc": "Lake Kilsie",
+        "x": -4340.5,
+        "y": 2354.5
+    },
+    {
+        "id": "Seed373",
+        "loc": "Deya Lake",
+        "x": 285,
+        "y": -2256.5
+    },
+    {
+        "id": "Seed374",
+        "loc": "Lake Jarrah",
+        "x": 2863.5,
+        "y": -2183
+    },
+    {
+        "id": "Seed376",
+        "loc": "Gama Cove",
+        "x": 3291,
+        "y": -3345
+    },
+    {
+        "id": "Seed378",
+        "loc": "Cape Cresia",
+        "x": 3363.5,
+        "y": -3656
+    },
+    {
+        "id": "Seed379",
+        "loc": "Ebon Mountain",
+        "x": 3516,
+        "y": -2629.5
+    },
+    {
+        "id": "Seed380",
+        "loc": "Cape Cales",
+        "x": 3641.5,
+        "y": -3261
+    },
+    {
+        "id": "Seed381",
+        "loc": "Rikoka Hills",
+        "x": 1690,
+        "y": -667
+    },
+    {
+        "id": "Seed382",
+        "loc": "Lake Kilsie",
+        "x": -4072.5,
+        "y": 2545.5
+    },
+    {
+        "id": "Seed383",
+        "loc": "Forgotten Temple",
+        "x": -1416,
+        "y": 2395
+    },
+    {
+        "id": "Seed384",
+        "loc": "Keya Pond",
+        "x": 3233,
+        "y": -2848.5
+    },
+    {
+        "id": "Seed385",
+        "loc": "Sturnida Secret Hot Spring",
+        "x": -4155,
+        "y": 2613
+    },
+    {
+        "id": "Seed386",
+        "loc": "Midla Woods",
+        "x": 3145.5,
+        "y": -2238
+    },
+    {
+        "id": "Seed387",
+        "loc": "Lake Jarrah",
+        "x": 2990.5,
+        "y": -2274
+    },
+    {
+        "id": "Seed388",
+        "loc": "Hebra West Summit",
+        "x": -4424,
+        "y": 3218
+    },
+    {
+        "id": "Seed389",
+        "loc": "Camphor Pond",
+        "x": 3033.5,
+        "y": -2024.5
+    },
+    {
+        "id": "Seed390",
+        "loc": "Hebra Tundra",
+        "x": -3352.5,
+        "y": 2992
+    },
+    {
+        "id": "Seed391",
+        "loc": "Marblod Plain",
+        "x": 2810,
+        "y": -2390.5
+    },
+    {
+        "id": "Seed392",
+        "loc": "Marblod Plain",
+        "x": 2715.5,
+        "y": -2343
+    },
+    {
+        "id": "Seed393",
+        "loc": "Lake Jarrah",
+        "x": 2835.5,
+        "y": -2120
+    },
+    {
+        "id": "Seed394",
+        "loc": "Hebra Peak",
+        "x": -2785,
+        "y": 2894
+    },
+    {
+        "id": "Seed395",
+        "loc": "Hebra Peak",
+        "x": -2835,
+        "y": 2832
+    },
+    {
+        "id": "Seed396",
+        "loc": "Lake Siela",
+        "x": 2279.5,
+        "y": -1502.5
+    },
+    {
+        "id": "Seed397",
+        "loc": "Deya Village Ruins",
+        "x": 323.5,
+        "y": -1924.5
+    },
+    {
+        "id": "Seed398",
+        "loc": "Lake Akkala",
+        "x": 4098.5,
+        "y": 1755.5
+    },
+    {
+        "id": "Seed399",
+        "loc": "Lake Siela",
+        "x": 2274,
+        "y": -1604
+    },
+    {
+        "id": "Seed400",
+        "loc": "Fir River",
+        "x": 2884.5,
+        "y": -1762.5
+    },
+    {
+        "id": "Seed401",
+        "loc": "West Hyrule Plains",
+        "x": -1692,
+        "y": 168.5
+    },
+    {
+        "id": "Seed405",
+        "loc": "Clarnet Coast",
+        "x": 2505.5,
+        "y": -3827.5
+    },
+    {
+        "id": "Seed406",
+        "loc": "Rok Woods",
+        "x": 3353,
+        "y": 3080.5
+    },
+    {
+        "id": "Seed407",
+        "loc": "Skull Lake",
+        "x": 3327,
+        "y": 3588.5
+    },
+    {
+        "id": "Seed408",
+        "loc": "Haran Lake",
+        "x": 278,
+        "y": -3503.5
+    },
+    {
+        "id": "Seed409",
+        "loc": "Korne Beach",
+        "x": 2856.5,
+        "y": -3652.5
+    },
+    {
+        "id": "Seed410",
+        "loc": "Ubota Point",
+        "x": 1514.5,
+        "y": -3723.5
+    },
+    {
+        "id": "Seed411",
+        "loc": "Yiga Clan Hideout",
+        "x": -3846.5,
+        "y": -1469
+    },
+    {
+        "id": "Seed412",
+        "loc": "Karusa Valley",
+        "x": -4134,
+        "y": -1720.5
+    },
+    {
+        "id": "Seed413",
+        "loc": "Horse God Bridge",
+        "x": 517,
+        "y": -3765.5
+    },
+    {
+        "id": "Seed414",
+        "loc": "Martha's Landing",
+        "x": 1373.5,
+        "y": -3755
+    },
+    {
+        "id": "Seed415",
+        "loc": "Hebra North Summit",
+        "x": -4001,
+        "y": 3623.5
+    },
+    {
+        "id": "Seed416",
+        "loc": "Hebra Great Skeleton",
+        "x": -4030.5,
+        "y": 3756.5
+    },
+    {
+        "id": "Seed417",
+        "loc": "Hebra North Crest",
+        "x": -3756.5,
+        "y": 3847.5
+    },
+    {
+        "id": "Seed418",
+        "loc": "N. Tabantha Snowfield",
+        "x": -1969.5,
+        "y": 3795
+    },
+    {
+        "id": "Seed419",
+        "loc": "Satori Mountain",
+        "x": -2040.5,
+        "y": -296.5
+    },
+    {
+        "id": "Seed421",
+        "loc": "Millennio Sandbar",
+        "x": 1107.5,
+        "y": -553
+    },
+    {
+        "id": "Seed422",
+        "loc": "Birida Lookout",
+        "x": -3844,
+        "y": -1902.5
+    },
+    {
+        "id": "Seed423",
+        "loc": "Millennio Sandbar",
+        "x": 1312.5,
+        "y": -504
+    },
+    {
+        "id": "Seed424",
+        "loc": "Spring of Power",
+        "x": 3730.5,
+        "y": 2674
+    },
+    {
+        "id": "Seed425",
+        "loc": "Millennio Sandbar",
+        "x": 1446.5,
+        "y": -562.5
+    },
+    {
+        "id": "Seed426",
+        "loc": "Meadela's Mantle",
+        "x": -4179.5,
+        "y": -1483
+    },
+    {
+        "id": "Seed427",
+        "loc": "Zauz Island",
+        "x": 1435,
+        "y": -137
+    },
+    {
+        "id": "Seed428",
+        "loc": "Wetland Stable",
+        "x": 881.5,
+        "y": -273.5
+    },
+    {
+        "id": "Seed429",
+        "loc": "Linebeck Island",
+        "x": 1593.5,
+        "y": -115
+    },
+    {
+        "id": "Seed430",
+        "loc": "Aquame Lake",
+        "x": -1355.5,
+        "y": -998
+    },
+    {
+        "id": "Seed431",
+        "loc": "Kincean Island",
+        "x": 2086.5,
+        "y": -183.5
+    },
+    {
+        "id": "Seed432",
+        "loc": "Laparoh Mesa",
+        "x": -3064.5,
+        "y": -1288.5
+    },
+    {
+        "id": "Seed433",
+        "loc": "Crenel Peak",
+        "x": 1185.5,
+        "y": 66
+    },
+    {
+        "id": "Seed434",
+        "loc": "Crenel Peak",
+        "x": 1089,
+        "y": 215
+    },
+    {
+        "id": "Seed435",
+        "loc": "Cliffs of Ruvara",
+        "x": -3700.5,
+        "y": -804.5
+    },
+    {
+        "id": "Seed436",
+        "loc": "Crenel Peak",
+        "x": 1104,
+        "y": 444.5
+    },
+    {
+        "id": "Seed437",
+        "loc": "Pico Pond",
+        "x": 1198.5,
+        "y": 1149.5
+    },
+    {
+        "id": "Seed438",
+        "loc": "Akkala Ancient Tech Lab",
+        "x": 4818.5,
+        "y": 3303
+    },
+    {
+        "id": "Seed439",
+        "loc": "Tumlea Heights",
+        "x": 3997,
+        "y": 3145.5
+    },
+    {
+        "id": "Seed440",
+        "loc": "Zelo Pond",
+        "x": 1629.5,
+        "y": 550.5
+    },
+    {
+        "id": "Seed441",
+        "loc": "Pico Pond",
+        "x": 1284.5,
+        "y": 1121.5
+    },
+    {
+        "id": "Seed443",
+        "loc": "Thims Bridge",
+        "x": 1267.5,
+        "y": 699.5
+    },
+    {
+        "id": "Seed444",
+        "loc": "Inogo Bridge",
+        "x": 2426.5,
+        "y": 410.5
+    },
+    {
+        "id": "Seed445",
+        "loc": "Rimba Beach",
+        "x": 3174.5,
+        "y": -3822.5
+    },
+    {
+        "id": "Seed446",
+        "loc": "Lurelin Village",
+        "x": 2966,
+        "y": -3381
+    },
+    {
+        "id": "Seed447",
+        "loc": "Atun Valley",
+        "x": 2635,
+        "y": -3198
+    },
+    {
+        "id": "Seed448",
+        "loc": "Stinger Cliffs",
+        "x": 2877.5,
+        "y": -2687.5
+    },
+    {
+        "id": "Seed449",
+        "loc": "Breman Peak",
+        "x": 2182,
+        "y": -2535
+    },
+    {
+        "id": "Seed450",
+        "loc": "Breman Peak",
+        "x": 2286.5,
+        "y": -2658.5
+    },
+    {
+        "id": "Seed451",
+        "loc": "Rodai Lake",
+        "x": 1945.5,
+        "y": -3008
+    },
+    {
+        "id": "Seed453",
+        "loc": "Corta Lake",
+        "x": 1658.5,
+        "y": -3163
+    },
+    {
+        "id": "Seed454",
+        "loc": "Bronas Forest",
+        "x": 1494.5,
+        "y": -3373
+    },
+    {
+        "id": "Seed455",
+        "loc": "Tabahl Woods",
+        "x": 2517.5,
+        "y": 212.5
+    },
+    {
+        "id": "Seed456",
+        "loc": "Zora River",
+        "x": 2796,
+        "y": 499
+    },
+    {
+        "id": "Seed457",
+        "loc": "Bank of Wishes",
+        "x": 2664,
+        "y": 0.5
+    },
+    {
+        "id": "Seed458",
+        "loc": "Zodobon Highlands",
+        "x": 2772.5,
+        "y": -351.5
+    },
+    {
+        "id": "Seed459",
+        "loc": "Gerudo Canyon",
+        "x": -2263,
+        "y": -2164.5
+    },
+    {
+        "id": "Seed460",
+        "loc": "Kaepora Pass",
+        "x": 4038,
+        "y": 1258
+    },
+    {
+        "id": "Seed461",
+        "loc": "Rutala River",
+        "x": 3140.5,
+        "y": -326
+    },
+    {
+        "id": "Seed462",
+        "loc": "Cora Lake",
+        "x": -152,
+        "y": -3070
+    },
+    {
+        "id": "Seed464",
+        "loc": "Carok Bridge",
+        "x": -1036,
+        "y": 445.5
+    },
+    {
+        "id": "Seed466",
+        "loc": "Zora's Domain (Breath of the Wild)",
+        "x": 3321.5,
+        "y": 512
+    },
+    {
+        "id": "Seed467",
+        "loc": "Rok Woods",
+        "x": 3181.5,
+        "y": 3073.5
+    },
+    {
+        "id": "Seed468",
+        "loc": "Ordorac Quarry",
+        "x": 3439,
+        "y": 2528
+    },
+    {
+        "id": "Seed469",
+        "loc": "Ruto Precipice",
+        "x": 3520.5,
+        "y": 382.5
+    },
+    {
+        "id": "Seed470",
+        "loc": "Ubota Point",
+        "x": 1633,
+        "y": -3886.5
+    },
+    {
+        "id": "Seed471",
+        "loc": "Upland Zorana",
+        "x": 3208.5,
+        "y": 1012
+    },
+    {
+        "id": "Seed472",
+        "loc": "Passeri Greenbelt",
+        "x": -868.5,
+        "y": -219.5
+    },
+    {
+        "id": "Seed473",
+        "loc": "Tal Tal Peak",
+        "x": 4075,
+        "y": 463
+    },
+    {
+        "id": "Seed475",
+        "loc": "Ruto Precipice",
+        "x": 3526.5,
+        "y": 275.5
+    },
+    {
+        "id": "Seed476",
+        "loc": "Passeri Greenbelt",
+        "x": -424.5,
+        "y": -151
+    },
+    {
+        "id": "Seed477",
+        "loc": "Tal Tal Peak",
+        "x": 4081,
+        "y": 215
+    },
+    {
+        "id": "Seed478",
+        "loc": "Ja'Abu Ridge",
+        "x": 4133.5,
+        "y": -61.5
+    },
+    {
+        "id": "Seed479",
+        "loc": "Horon Lagoon",
+        "x": 4294,
+        "y": -77.5
+    },
+    {
+        "id": "Seed480",
+        "loc": "Horon Lagoon",
+        "x": 4140.5,
+        "y": -199
+    },
+    {
+        "id": "Seed481",
+        "loc": "Brynna Plain",
+        "x": 3855,
+        "y": -352.5
+    },
+    {
+        "id": "Seed483",
+        "loc": "Samasa Plain",
+        "x": 3432,
+        "y": -525
+    },
+    {
+        "id": "Seed484",
+        "loc": "Samasa Plain",
+        "x": 3271,
+        "y": -656.5
+    },
+    {
+        "id": "Seed485",
+        "loc": "Lanayru Bay",
+        "x": 3560,
+        "y": -627.5
+    },
+    {
+        "id": "Seed486",
+        "loc": "Satori Mountain",
+        "x": -2296.5,
+        "y": -344.5
+    },
+    {
+        "id": "Seed487",
+        "loc": "Lanayru Bay",
+        "x": 3721,
+        "y": -619.5
+    },
+    {
+        "id": "Seed488",
+        "loc": "West Hyrule Plains",
+        "x": -1881,
+        "y": 28.5
+    },
+    {
+        "id": "Seed489",
+        "loc": "Lodrum Headland",
+        "x": 4265,
+        "y": -628.5
+    },
+    {
+        "id": "Seed490",
+        "loc": "Talus Plateau",
+        "x": 4451.5,
+        "y": -484.5
+    },
+    {
+        "id": "Seed493",
+        "loc": "Nima Plain",
+        "x": -2200,
+        "y": -733.5
+    },
+    {
+        "id": "Seed494",
+        "loc": "Satori Mountain",
+        "x": -1962.5,
+        "y": -407.5
+    },
+    {
+        "id": "Seed495",
+        "loc": "West Hyrule Plains",
+        "x": -1997.5,
+        "y": -162.5
+    },
+    {
+        "id": "Seed496",
+        "loc": "Akkala Parade Ground Ruins",
+        "x": 3408.5,
+        "y": 1277.5
+    },
+    {
+        "id": "Seed497",
+        "loc": "Akkala Falls",
+        "x": 3724.5,
+        "y": 1132
+    },
+    {
+        "id": "Seed498",
+        "loc": "Daval Peak",
+        "x": -1126,
+        "y": -3627
+    },
+    {
+        "id": "Seed499",
+        "loc": "Rassla Lake",
+        "x": 1841.5,
+        "y": -3599
+    },
+    {
+        "id": "Seed500",
+        "loc": "Hylia River",
+        "x": 396,
+        "y": 626.5
+    },
+    {
+        "id": "Seed501",
+        "loc": "Rowan Plain",
+        "x": -1060.5,
+        "y": 1928
+    },
+    {
+        "id": "Seed502",
+        "loc": "Akkala Citadel Ruins",
+        "x": 3287.5,
+        "y": 1573.5
+    },
+    {
+        "id": "Seed503",
+        "loc": "Crenel Hills",
+        "x": 506.5,
+        "y": 881.5
+    },
+    {
+        "id": "Seed504",
+        "loc": "West Gerudo Ruins",
+        "x": -4608.5,
+        "y": -2340.5
+    },
+    {
+        "id": "Seed505",
+        "loc": "Goronbi Lake",
+        "x": 1427,
+        "y": 1545.5
+    },
+    {
+        "id": "Seed506",
+        "loc": "Gerudo Canyon",
+        "x": -2548.5,
+        "y": -2041
+    },
+    {
+        "id": "Seed508",
+        "loc": "Koukot Plateau",
+        "x": -2415.5,
+        "y": -1928
+    },
+    {
+        "id": "Seed511",
+        "loc": "Statue of the Eighth Heroine",
+        "x": -4411.5,
+        "y": -333
+    },
+    {
+        "id": "Seed513",
+        "loc": "Tobio's Hollow",
+        "x": 1307,
+        "y": -2436
+    },
+    {
+        "id": "Seed515",
+        "loc": "Dronoc's Pass",
+        "x": -3834.5,
+        "y": 2112
+    },
+    {
+        "id": "Seed517",
+        "loc": "Lurelin Village",
+        "x": 2838,
+        "y": -3454.5
+    },
+    {
+        "id": "Seed518",
+        "loc": "Calora Lake",
+        "x": 2170,
+        "y": -3272.5
+    },
+    {
+        "id": "Seed519",
+        "loc": "Rassla Lake",
+        "x": 1759,
+        "y": -3688.5
+    },
+    {
+        "id": "Seed520",
+        "loc": "Lakeside Stable",
+        "x": 1554,
+        "y": -3529
+    },
+    {
+        "id": "Seed521",
+        "loc": "Ebara Forest",
+        "x": 1859,
+        "y": -3354
+    },
+    {
+        "id": "Seed522",
+        "loc": "Herin Lake",
+        "x": 1217,
+        "y": -3525.5
+    },
+    {
+        "id": "Seed523",
+        "loc": "Herin Lake",
+        "x": 1072.5,
+        "y": -3624.5
+    },
+    {
+        "id": "Seed525",
+        "loc": "Pagos Woods",
+        "x": 742,
+        "y": -3243.5
+    },
+    {
+        "id": "Seed526",
+        "loc": "Pagos Woods",
+        "x": 701,
+        "y": -3278.5
+    },
+    {
+        "id": "Seed528",
+        "loc": "Sarjon Bridge",
+        "x": 1055,
+        "y": -3255
+    },
+    {
+        "id": "Seed529",
+        "loc": "Zonai Ruins",
+        "x": 704.5,
+        "y": -2960.5
+    },
+    {
+        "id": "Seed530",
+        "loc": "Nette Plateau",
+        "x": 369,
+        "y": -3645.5
+    },
+    {
+        "id": "Seed531",
+        "loc": "Horse God Bridge",
+        "x": 640.5,
+        "y": -3712
+    },
+    {
+        "id": "Seed532",
+        "loc": "Lake of the Horse God",
+        "x": 646.5,
+        "y": -3616.5
+    },
+    {
+        "id": "Seed533",
+        "loc": "Malanya Spring",
+        "x": 890,
+        "y": -3694.5
+    },
+    {
+        "id": "Seed534",
+        "loc": "Ibara Butte",
+        "x": 913,
+        "y": -3836.5
+    },
+    {
+        "id": "Seed535",
+        "loc": "Puffer Beach",
+        "x": 286.5,
+        "y": -3903
+    },
+    {
+        "id": "Seed536",
+        "loc": "Puffer Beach",
+        "x": 98.5,
+        "y": -3821.5
+    },
+    {
+        "id": "Seed537",
+        "loc": "Laverra Beach",
+        "x": -249.5,
+        "y": -3831
+    },
+    {
+        "id": "Seed538",
+        "loc": "Laverra Beach",
+        "x": -241.5,
+        "y": -3883
+    },
+    {
+        "id": "Seed539",
+        "loc": "Laverra Beach",
+        "x": -266,
+        "y": -3889
+    },
+    {
+        "id": "Seed540",
+        "loc": "Laverra Beach",
+        "x": -352,
+        "y": -3898.5
+    },
+    {
+        "id": "Seed541",
+        "loc": "Cora Lake",
+        "x": -28.5,
+        "y": -3044.5
+    },
+    {
+        "id": "Seed542",
+        "loc": "Menoat River",
+        "x": 65,
+        "y": -3221.5
+    },
+    {
+        "id": "Seed543",
+        "loc": "Finra Woods",
+        "x": 609,
+        "y": -2872
+    },
+    {
+        "id": "Seed544",
+        "loc": "Finra Woods",
+        "x": 415.5,
+        "y": -2877.5
+    },
+    {
+        "id": "Seed545",
+        "loc": "Lake Hylia (Breath of the Wild)",
+        "x": 338.5,
+        "y": -2831
+    },
+    {
+        "id": "Seed546",
+        "loc": "Lake Hylia (Breath of the Wild)",
+        "x": 165,
+        "y": -2783
+    },
+    {
+        "id": "Seed547",
+        "loc": "Bridge of Hylia (Breath of the Wild)",
+        "x": -68,
+        "y": -2439.5
+    },
+    {
+        "id": "Seed548",
+        "loc": "Bridge of Hylia (Breath of the Wild)",
+        "x": -73.5,
+        "y": -2416
+    },
+    {
+        "id": "Seed549",
+        "loc": "Bridge of Hylia (Breath of the Wild)",
+        "x": -54,
+        "y": -2492
+    },
+    {
+        "id": "Seed550",
+        "loc": "Hylia Island",
+        "x": -400,
+        "y": -2559.5
+    },
+    {
+        "id": "Seed551",
+        "loc": "Lake Hylia (Breath of the Wild)",
+        "x": -466.5,
+        "y": -2907
+    },
+    {
+        "id": "Seed552",
+        "loc": "Hylia Island",
+        "x": -602.5,
+        "y": -2659.5
+    },
+    {
+        "id": "Seed554",
+        "loc": "Lake Hylia (Breath of the Wild)",
+        "x": 34.5,
+        "y": -2101.5
+    },
+    {
+        "id": "Seed555",
+        "loc": "Deya Village Ruins",
+        "x": 215,
+        "y": -2072.5
+    },
+    {
+        "id": "Seed556",
+        "loc": "Deya Village Ruins",
+        "x": 355,
+        "y": -1998
+    },
+    {
+        "id": "Seed557",
+        "loc": "Deya Lake",
+        "x": 624,
+        "y": -2301
+    },
+    {
+        "id": "Seed558",
+        "loc": "Farosh Hills",
+        "x": 615,
+        "y": -2418.5
+    },
+    {
+        "id": "Seed559",
+        "loc": "Farosh Hills",
+        "x": 679,
+        "y": -2502.5
+    },
+    {
+        "id": "Seed560",
+        "loc": "Lake Hylia (Breath of the Wild)",
+        "x": 371.5,
+        "y": -2564
+    },
+    {
+        "id": "Seed561",
+        "loc": "Lake Hylia (Breath of the Wild)",
+        "x": 283,
+        "y": -2404.5
+    },
+    {
+        "id": "Seed562",
+        "loc": "Spring of Courage",
+        "x": 756,
+        "y": -2348.5
+    },
+    {
+        "id": "Seed563",
+        "loc": "Spring of Courage",
+        "x": 890,
+        "y": -2391.5
+    },
+    {
+        "id": "Seed564",
+        "loc": "Dracozu Lake",
+        "x": 789.5,
+        "y": -2565.5
+    },
+    {
+        "id": "Seed565",
+        "loc": "Dracozu River",
+        "x": 1171.5,
+        "y": -2851
+    },
+    {
+        "id": "Seed566",
+        "loc": "Sarjon Woods",
+        "x": 1198.5,
+        "y": -3056
+    },
+    {
+        "id": "Seed567",
+        "loc": "Kamah Plateau",
+        "x": 1324.5,
+        "y": -3009.5
+    },
+    {
+        "id": "Seed568",
+        "loc": "Jia Highlands",
+        "x": 1462,
+        "y": -2367.5
+    },
+    {
+        "id": "Seed569",
+        "loc": "Tobio's Hollow",
+        "x": 1323,
+        "y": -2453.5
+    },
+    {
+        "id": "Seed571",
+        "loc": "Oseira Plains",
+        "x": -925.5,
+        "y": -3438
+    },
+    {
+        "id": "Seed572",
+        "loc": "Mount Granajh",
+        "x": -1257.5,
+        "y": -3134
+    },
+    {
+        "id": "Seed573",
+        "loc": "Taobab Grassland",
+        "x": -1065,
+        "y": -2911.5
+    },
+    {
+        "id": "Seed574",
+        "loc": "Grinnden Plains",
+        "x": -924.5,
+        "y": -2939.5
+    },
+    {
+        "id": "Seed575",
+        "loc": "Mount Faloraa",
+        "x": -1011.5,
+        "y": -2640
+    },
+    {
+        "id": "Seed576",
+        "loc": "Taobab Grassland",
+        "x": -1213,
+        "y": -2704
+    },
+    {
+        "id": "Seed577",
+        "loc": "Taobab Grassland",
+        "x": -1378.5,
+        "y": -2743.5
+    },
+    {
+        "id": "Seed578",
+        "loc": "Mount Hylia",
+        "x": -1399.5,
+        "y": -2376.5
+    },
+    {
+        "id": "Seed579",
+        "loc": "Gerudo Canyon Pass",
+        "x": -1656,
+        "y": -2309
+    },
+    {
+        "id": "Seed580",
+        "loc": "Stalry Plateau",
+        "x": -1617.5,
+        "y": -2446.5
+    },
+    {
+        "id": "Seed581",
+        "loc": "Spectacle Rock (Breath of the Wild)",
+        "x": -2207,
+        "y": -2550
+    },
+    {
+        "id": "Seed582",
+        "loc": "Spectacle Rock (Breath of the Wild)",
+        "x": -2357.5,
+        "y": -2557
+    },
+    {
+        "id": "Seed583",
+        "loc": "Spectacle Rock (Breath of the Wild)",
+        "x": -2059,
+        "y": -2416
+    },
+    {
+        "id": "Seed585",
+        "loc": "Gerudo Desert Gateway",
+        "x": -2852.5,
+        "y": -2320.5
+    },
+    {
+        "id": "Seed586",
+        "loc": "Zirco Mesa",
+        "x": -2462,
+        "y": -1711.5
+    },
+    {
+        "id": "Seed587",
+        "loc": "Gerudo Canyon",
+        "x": -2169.5,
+        "y": -2078.5
+    },
+    {
+        "id": "Seed588",
+        "loc": "Koukot Plateau",
+        "x": -2062.5,
+        "y": -1851
+    },
+    {
+        "id": "Seed589",
+        "loc": "Southern Oasis",
+        "x": -3728.5,
+        "y": -3613
+    },
+    {
+        "id": "Seed591",
+        "loc": "West Gerudo Ruins",
+        "x": -4709.5,
+        "y": -2177.5
+    },
+    {
+        "id": "Seed592",
+        "loc": "West Gerudo Ruins",
+        "x": -4686.5,
+        "y": -1972.5
+    },
+    {
+        "id": "Seed593",
+        "loc": "Karusa Valley",
+        "x": -4172.5,
+        "y": -1991
+    },
+    {
+        "id": "Seed595",
+        "loc": "Karusa Valley",
+        "x": -4314.5,
+        "y": -1628.5
+    },
+    {
+        "id": "Seed596",
+        "loc": "Karusa Valley",
+        "x": -4264.5,
+        "y": -1694
+    },
+    {
+        "id": "Seed597",
+        "loc": "Karusa Valley",
+        "x": -4222.5,
+        "y": -1667
+    },
+    {
+        "id": "Seed598",
+        "loc": "Meadela's Mantle",
+        "x": -4076,
+        "y": -1596
+    },
+    {
+        "id": "Seed599",
+        "loc": "Meadela's Mantle",
+        "x": -3999,
+        "y": -1568
+    },
+    {
+        "id": "Seed600",
+        "loc": "Yiga Clan Hideout",
+        "x": -3713.5,
+        "y": -1556.5
+    },
+    {
+        "id": "Seed601",
+        "loc": "Great Cliffs",
+        "x": -3075,
+        "y": -2043.5
+    },
+    {
+        "id": "Seed602",
+        "loc": "Sapphia's Table",
+        "x": -3130,
+        "y": -1469
+    },
+    {
+        "id": "Seed603",
+        "loc": "Taafei Hill",
+        "x": -2815,
+        "y": -1649.5
+    },
+    {
+        "id": "Seed604",
+        "loc": "Zirco Mesa",
+        "x": -2647.5,
+        "y": -1536.5
+    },
+    {
+        "id": "Seed605",
+        "loc": "Zirco Mesa",
+        "x": -2521.5,
+        "y": -1319.5
+    },
+    {
+        "id": "Seed606",
+        "loc": "Laparoh Mesa",
+        "x": -2849,
+        "y": -1229
+    },
+    {
+        "id": "Seed607",
+        "loc": "Laparoh Mesa",
+        "x": -2869,
+        "y": -1126.5
+    },
+    {
+        "id": "Seed608",
+        "loc": "Laparoh Mesa",
+        "x": -3070.5,
+        "y": -913
+    },
+    {
+        "id": "Seed609",
+        "loc": "Eldin's Flank",
+        "x": 2087.5,
+        "y": 3571
+    },
+    {
+        "id": "Seed610",
+        "loc": "Eldin's Flank",
+        "x": 2232,
+        "y": 3670
+    },
+    {
+        "id": "Seed611",
+        "loc": "East Deplian Badlands",
+        "x": 1619,
+        "y": 3657.5
+    },
+    {
+        "id": "Seed612",
+        "loc": "East Deplian Badlands",
+        "x": 1144,
+        "y": 3743.5
+    },
+    {
+        "id": "Seed613",
+        "loc": "Deplian Badlands",
+        "x": 605.5,
+        "y": 3634
+    },
+    {
+        "id": "Seed614",
+        "loc": "Deplian Badlands",
+        "x": 210.5,
+        "y": 3559.5
+    },
+    {
+        "id": "Seed615",
+        "loc": "Drenan Highlands",
+        "x": -485,
+        "y": 3140
+    },
+    {
+        "id": "Seed616",
+        "loc": "Pico Pond",
+        "x": 1378,
+        "y": 1262.5
+    },
+    {
+        "id": "Seed617",
+        "loc": "King's Study",
+        "x": -141.5,
+        "y": 1167
+    },
+    {
+        "id": "Seed618",
+        "loc": "Rospro Pass",
+        "x": -3677.5,
+        "y": 2467.5
+    },
+    {
+        "id": "Seed619",
+        "loc": "Isle of Rabac",
+        "x": 1551.5,
+        "y": 3108.5
+    },
+    {
+        "id": "Seed620",
+        "loc": "Rok Woods",
+        "x": 3573,
+        "y": 3046.5
+    },
+    {
+        "id": "Seed621",
+        "loc": "Rok Woods",
+        "x": 3322.5,
+        "y": 2802
+    },
+    {
+        "id": "Seed622",
+        "loc": "Hebra Falls",
+        "x": -3042.5,
+        "y": 2520
+    },
+    {
+        "id": "Seed623",
+        "loc": "Coldsnap Hollow",
+        "x": -3061,
+        "y": 2815
+    },
+    {
+        "id": "Seed624",
+        "loc": "Talonto Peak",
+        "x": -3117,
+        "y": 2805.5
+    },
+    {
+        "id": "Seed625",
+        "loc": "Akkala Wilds",
+        "x": 3781.5,
+        "y": 3359
+    },
+    {
+        "id": "Seed626",
+        "loc": "Jeddo Bridge",
+        "x": -1861,
+        "y": -335
+    },
+    {
+        "id": "Seed627",
+        "loc": "Nima Plain",
+        "x": -1968,
+        "y": -598.5
+    },
+    {
+        "id": "Seed628",
+        "loc": "Nima Plain",
+        "x": -1730.5,
+        "y": -377
+    },
+    {
+        "id": "Seed629",
+        "loc": "Nima Plain",
+        "x": -2053,
+        "y": -635.5
+    },
+    {
+        "id": "Seed630",
+        "loc": "Rutile Lake",
+        "x": -2732.5,
+        "y": -759.5
+    },
+    {
+        "id": "Seed631",
+        "loc": "Rutile Lake",
+        "x": -2349,
+        "y": -846.5
+    },
+    {
+        "id": "Seed632",
+        "loc": "Rutile Lake",
+        "x": -2647.5,
+        "y": -548.5
+    },
+    {
+        "id": "Seed634",
+        "loc": "Salari Plain",
+        "x": -1093,
+        "y": 1734.5
+    },
+    {
+        "id": "Seed635",
+        "loc": "Gatepost Town Ruins",
+        "x": -770.5,
+        "y": -1380.5
+    },
+    {
+        "id": "Seed636",
+        "loc": "Rayne Highlands",
+        "x": -3840.5,
+        "y": 803.5
+    },
+    {
+        "id": "Seed637",
+        "loc": "Hyrule Castle Town Ruins",
+        "x": -163.5,
+        "y": 260.5
+    },
+    {
+        "id": "Seed638",
+        "loc": "Castle Town Watchtower",
+        "x": 97.5,
+        "y": 433
+    },
+    {
+        "id": "Seed639",
+        "loc": "Mount Drena",
+        "x": -567.5,
+        "y": 2598
+    },
+    {
+        "id": "Seed641",
+        "loc": "Akkala Citadel Ruins",
+        "x": 3290,
+        "y": 1427
+    },
+    {
+        "id": "Seed642",
+        "loc": "Selmie's Spot",
+        "x": -2945.5,
+        "y": 3147
+    },
+    {
+        "id": "Seed643",
+        "loc": "Kopeeki Drifts",
+        "x": -2468,
+        "y": 2764.5
+    },
+    {
+        "id": "Seed644",
+        "loc": "Goron Hot Springs",
+        "x": 1647,
+        "y": 2245
+    },
+    {
+        "id": "Seed645",
+        "loc": "Gorko Lake",
+        "x": 2017.5,
+        "y": 2165.5
+    },
+    {
+        "id": "Seed646",
+        "loc": "Lake Darman",
+        "x": 1887,
+        "y": 2748.5
+    },
+    {
+        "id": "Seed647",
+        "loc": "Pikida Stonegrove",
+        "x": -2211.5,
+        "y": 2908
+    },
+    {
+        "id": "Seed648",
+        "loc": "Dalite Forest",
+        "x": -2343.5,
+        "y": -1105.5
+    },
+    {
+        "id": "Seed649",
+        "loc": "Dalite Forest",
+        "x": -2098.5,
+        "y": -1106.5
+    },
+    {
+        "id": "Seed650",
+        "loc": "Safula Hill",
+        "x": -1819,
+        "y": -976
+    },
+    {
+        "id": "Seed651",
+        "loc": "Regencia River",
+        "x": -1405.5,
+        "y": -453
+    },
+    {
+        "id": "Seed653",
+        "loc": "Castle Town Watchtower",
+        "x": 80,
+        "y": 409.5
+    },
+    {
+        "id": "Seed654",
+        "loc": "Observation Room",
+        "x": -237,
+        "y": 743
+    },
+    {
+        "id": "Seed655",
+        "loc": "Observation Room",
+        "x": -248.5,
+        "y": 741.5
+    },
+    {
+        "id": "Seed656",
+        "loc": "Lake Kolomo",
+        "x": -427,
+        "y": -1192.5
+    },
+    {
+        "id": "Seed657",
+        "loc": "Lake Kolomo",
+        "x": -601.5,
+        "y": -1072.5
+    },
+    {
+        "id": "Seed658",
+        "loc": "Mount Dunsel",
+        "x": 3178,
+        "y": -3202.5
+    },
+    {
+        "id": "Seed659",
+        "loc": "Popla Foothills",
+        "x": 910.5,
+        "y": -2196
+    },
+    {
+        "id": "Seed660",
+        "loc": "Hemaar's Descent",
+        "x": -4256.5,
+        "y": 78.5
+    },
+    {
+        "id": "Seed661",
+        "loc": "Tanagar Canyon",
+        "x": -3328,
+        "y": 337.5
+    },
+    {
+        "id": "Seed662",
+        "loc": "Dragon Bone Mire",
+        "x": -4327.5,
+        "y": 2052.5
+    },
+    {
+        "id": "Seed663",
+        "loc": "Sherfin's Secret Hot Spring",
+        "x": -4157.5,
+        "y": 3403.5
+    },
+    {
+        "id": "Seed665",
+        "loc": "Icefall Foothills",
+        "x": -4397.5,
+        "y": 3771.5
+    },
+    {
+        "id": "Seed666",
+        "loc": "Hebra Tundra",
+        "x": -3575,
+        "y": 3271.5
+    },
+    {
+        "id": "Seed667",
+        "loc": "Biron Snowshelf",
+        "x": -3796,
+        "y": 3035
+    },
+    {
+        "id": "Seed668",
+        "loc": "Tabantha Hills",
+        "x": -2524,
+        "y": 1734.5
+    },
+    {
+        "id": "Seed669",
+        "loc": "Tanagar Canyon",
+        "x": -3206.5,
+        "y": 329
+    },
+    {
+        "id": "Seed670",
+        "loc": "Bottomless Swamp",
+        "x": 316.5,
+        "y": -527.5
+    },
+    {
+        "id": "Seed671",
+        "loc": "Upland Lindor",
+        "x": -2516,
+        "y": 1436
+    },
+    {
+        "id": "Seed672",
+        "loc": "Maritta Exchange Ruins",
+        "x": -2036,
+        "y": 1620.5
+    },
+    {
+        "id": "Seed673",
+        "loc": "Maritta Exchange Ruins",
+        "x": -1885.5,
+        "y": 1812.5
+    },
+    {
+        "id": "Seed674",
+        "loc": "Mount Drena",
+        "x": -1050,
+        "y": 2614.5
+    },
+    {
+        "id": "Seed675",
+        "loc": "Tanagar Canyon",
+        "x": -3209,
+        "y": 493.5
+    },
+    {
+        "id": "Seed677",
+        "loc": "Tanagar Canyon Course",
+        "x": -3107.5,
+        "y": 915.5
+    },
+    {
+        "id": "Seed678",
+        "loc": "Tanagar Canyon Course",
+        "x": -3086.5,
+        "y": 1112
+    },
+    {
+        "id": "Seed679",
+        "loc": "East Akkala Beach",
+        "x": 4336,
+        "y": 2438.5
+    },
+    {
+        "id": "Seed680",
+        "loc": "Tanagar Canyon",
+        "x": -2214,
+        "y": 1620.5
+    },
+    {
+        "id": "Seed681",
+        "loc": "Mount Drena",
+        "x": -1096.5,
+        "y": 3397.5
+    },
+    {
+        "id": "Seed682",
+        "loc": "Mount Drena",
+        "x": -1113,
+        "y": 3042
+    },
+    {
+        "id": "Seed683",
+        "loc": "Forgotten Temple",
+        "x": -1684,
+        "y": 2183
+    },
+    {
+        "id": "Seed684",
+        "loc": "Tamio River",
+        "x": -3019,
+        "y": -374.5
+    },
+    {
+        "id": "Seed685",
+        "loc": "Goflam's Secret Hot Spring",
+        "x": -3500.5,
+        "y": 3577
+    },
+    {
+        "id": "Seed686",
+        "loc": "Lake Illumeni",
+        "x": -3457,
+        "y": -167.5
+    },
+    {
+        "id": "Seed687",
+        "loc": "Dalite Forest",
+        "x": -1973,
+        "y": -1093.5
+    },
+    {
+        "id": "Seed688",
+        "loc": "Tanagar Canyon",
+        "x": -3479.5,
+        "y": 71.5
+    },
+    {
+        "id": "Seed689",
+        "loc": "Tama Pond",
+        "x": -2834,
+        "y": 1593.5
+    },
+    {
+        "id": "Seed690",
+        "loc": "Tanagar Canyon",
+        "x": -3864,
+        "y": 149.5
+    },
+    {
+        "id": "Seed692",
+        "loc": "Dalite Forest",
+        "x": -2393.5,
+        "y": -1041
+    },
+    {
+        "id": "Seed693",
+        "loc": "Dalite Forest",
+        "x": -2456.5,
+        "y": -1161.5
+    },
+    {
+        "id": "Seed694",
+        "loc": "Mount Drena",
+        "x": -1367,
+        "y": 3647
+    },
+    {
+        "id": "Seed695",
+        "loc": "Whistling Hill",
+        "x": 224.5,
+        "y": -874.5
+    },
+    {
+        "id": "Seed696",
+        "loc": "East Post Ruins",
+        "x": 68.5,
+        "y": -1438.5
+    },
+    {
+        "id": "Seed697",
+        "loc": "Carok Bridge",
+        "x": -1129.5,
+        "y": 676.5
+    },
+    {
+        "id": "Seed698",
+        "loc": "Strock Lake",
+        "x": -3297.5,
+        "y": 1364
+    },
+    {
+        "id": "Seed699",
+        "loc": "Ordorac Quarry",
+        "x": 3878,
+        "y": 2369.5
+    },
+    {
+        "id": "Seed700",
+        "loc": "North Akkala Foothill",
+        "x": 4104,
+        "y": 2838
+    },
+    {
+        "id": "Seed701",
+        "loc": "Crenel Hills",
+        "x": 615,
+        "y": 744
+    },
+    {
+        "id": "Seed703",
+        "loc": "Gorko Lake",
+        "x": 2168,
+        "y": 2109.5
+    },
+    {
+        "id": "Seed704",
+        "loc": "Castle Town Prison",
+        "x": -941.5,
+        "y": 816
+    },
+    {
+        "id": "Seed705",
+        "loc": "Regencia River",
+        "x": -1370.5,
+        "y": 114.5
+    },
+    {
+        "id": "Seed706",
+        "loc": "Regencia River",
+        "x": -1516,
+        "y": -56.5
+    },
+    {
+        "id": "Seed707",
+        "loc": "North Hyrule Plain",
+        "x": -1143.5,
+        "y": 761.5
+    },
+    {
+        "id": "Seed708",
+        "loc": "Carok Bridge",
+        "x": -933.5,
+        "y": 640
+    },
+    {
+        "id": "Seed709",
+        "loc": "Carok Bridge",
+        "x": -1095.5,
+        "y": 495.5
+    },
+    {
+        "id": "Seed710",
+        "loc": "Passeri Greenbelt",
+        "x": -734.5,
+        "y": -330.5
+    },
+    {
+        "id": "Seed711",
+        "loc": "Passeri Greenbelt",
+        "x": -707.5,
+        "y": -105.5
+    },
+    {
+        "id": "Seed712",
+        "loc": "Passeri Greenbelt",
+        "x": -519,
+        "y": -94
+    },
+    {
+        "id": "Seed713",
+        "loc": "Windvane Meadow",
+        "x": -365,
+        "y": -398
+    },
+    {
+        "id": "Seed714",
+        "loc": "Hyrule Garrison Ruins",
+        "x": -510.5,
+        "y": -554
+    },
+    {
+        "id": "Seed715",
+        "loc": "Windvane Meadow",
+        "x": -121.5,
+        "y": -591.5
+    },
+    {
+        "id": "Seed716",
+        "loc": "Whistling Hill",
+        "x": -131,
+        "y": -947
+    },
+    {
+        "id": "Seed717",
+        "loc": "Whistling Hill",
+        "x": 40.5,
+        "y": -1033
+    },
+    {
+        "id": "Seed718",
+        "loc": "Castle Town Prison",
+        "x": -682,
+        "y": 860.5
+    },
+    {
+        "id": "Seed719",
+        "loc": "Goflam's Secret Hot Spring",
+        "x": -3614.5,
+        "y": 3493
+    },
+    {
+        "id": "Seed720",
+        "loc": "Barula Plain",
+        "x": 65,
+        "y": -3149
+    },
+    {
+        "id": "Seed721",
+        "loc": "Hebra Falls",
+        "x": -2900,
+        "y": 2503.5
+    },
+    {
+        "id": "Seed722",
+        "loc": "Tamio River",
+        "x": -2919,
+        "y": -479.5
+    },
+    {
+        "id": "Seed723",
+        "loc": "Tamio River",
+        "x": -2909.5,
+        "y": -796.5
+    },
+    {
+        "id": "Seed724",
+        "loc": "Regencia River",
+        "x": -1555.5,
+        "y": -815
+    },
+    {
+        "id": "Seed725",
+        "loc": "Satori Mountain",
+        "x": -1984.5,
+        "y": -364
+    },
+    {
+        "id": "Seed726",
+        "loc": "Tamio River",
+        "x": -2314,
+        "y": -24
+    },
+    {
+        "id": "Seed727",
+        "loc": "Rayne Highlands",
+        "x": -3805.5,
+        "y": 773
+    },
+    {
+        "id": "Seed728",
+        "loc": "Tabantha Bridge Stable",
+        "x": -2717.5,
+        "y": 435
+    },
+    {
+        "id": "Seed729",
+        "loc": "Rito Stable",
+        "x": -3276.5,
+        "y": 1865
+    },
+    {
+        "id": "Seed730",
+        "loc": "Hyrule Castle Moat",
+        "x": -754,
+        "y": 1083
+    },
+    {
+        "id": "Seed732",
+        "loc": "Boneyard Bridge",
+        "x": 287.5,
+        "y": 723
+    },
+    {
+        "id": "Seed733",
+        "loc": "S. Tabantha Snowfield",
+        "x": -1350.5,
+        "y": 2732
+    },
+    {
+        "id": "Seed734",
+        "loc": "Dragon Bone Mire",
+        "x": -4122.5,
+        "y": 1935
+    },
+    {
+        "id": "Seed735",
+        "loc": "Ranch Ruins",
+        "x": 146.5,
+        "y": -299
+    },
+    {
+        "id": "Seed736",
+        "loc": "Keya Pond",
+        "x": 3085,
+        "y": -2883.5
+    },
+    {
+        "id": "Seed737",
+        "loc": "Ukuku Plains",
+        "x": 3968,
+        "y": 856
+    },
+    {
+        "id": "Seed738",
+        "loc": "Ulria Grotto",
+        "x": 4239.5,
+        "y": 994.5
+    },
+    {
+        "id": "Seed739",
+        "loc": "Ulria Grotto",
+        "x": 4042.5,
+        "y": 661
+    },
+    {
+        "id": "Seed740",
+        "loc": "Ulria Grotto",
+        "x": 4146,
+        "y": 593.5
+    },
+    {
+        "id": "Seed741",
+        "loc": "Ulria Grotto",
+        "x": 4331.5,
+        "y": 694
+    },
+    {
+        "id": "Seed742",
+        "loc": "Skull Lake",
+        "x": 3078,
+        "y": 3683
+    },
+    {
+        "id": "Seed743",
+        "loc": "Tabantha Village Ruins",
+        "x": -2204.5,
+        "y": 1767
+    },
+    {
+        "id": "Seed747",
+        "loc": "Mount Rhoam",
+        "x": -2697.5,
+        "y": 766
+    },
+    {
+        "id": "Seed748",
+        "loc": "Mount Rhoam",
+        "x": -2669.5,
+        "y": 864
+    },
+    {
+        "id": "Seed750",
+        "loc": "Tanagar Canyon",
+        "x": -2083.5,
+        "y": 1564.5
+    },
+    {
+        "id": "Seed751",
+        "loc": "Tanagar Canyon",
+        "x": -2217.5,
+        "y": 1563
+    },
+    {
+        "id": "Seed752",
+        "loc": "Lindor's Brow",
+        "x": -2023,
+        "y": 1301
+    },
+    {
+        "id": "Seed753",
+        "loc": "Upland Lindor",
+        "x": -2386.5,
+        "y": 1148.5
+    },
+    {
+        "id": "Seed754",
+        "loc": "Lake Ferona",
+        "x": 2313.5,
+        "y": 1133
+    },
+    {
+        "id": "Seed755",
+        "loc": "Ludfo's Bog",
+        "x": -2059,
+        "y": 778
+    },
+    {
+        "id": "Seed758",
+        "loc": "Seres Scablands",
+        "x": -2439,
+        "y": 489
+    },
+    {
+        "id": "Seed759",
+        "loc": "Seres Scablands",
+        "x": -2369,
+        "y": 345.5
+    },
+    {
+        "id": "Seed760",
+        "loc": "Mount Drena",
+        "x": -1044.5,
+        "y": 2707.5
+    },
+    {
+        "id": "Seed761",
+        "loc": "Footrace Check-In",
+        "x": -2637,
+        "y": 1247.5
+    },
+    {
+        "id": "Seed763",
+        "loc": "West Hyrule Plains",
+        "x": -1648,
+        "y": 40
+    },
+    {
+        "id": "Seed764",
+        "loc": "West Hyrule Plains",
+        "x": -1583.5,
+        "y": 226.5
+    },
+    {
+        "id": "Seed766",
+        "loc": "Irch Plain",
+        "x": -1081.5,
+        "y": 1276.5
+    },
+    {
+        "id": "Seed767",
+        "loc": "Southern Mine",
+        "x": 1540,
+        "y": 2088.5
+    },
+    {
+        "id": "Seed769",
+        "loc": "Toruma Dunes",
+        "x": -4881,
+        "y": -2470
+    },
+    {
+        "id": "Seed770",
+        "loc": "North Lomei Labyrinth",
+        "x": -874,
+        "y": 3313.5
+    },
+    {
+        "id": "Seed771",
+        "loc": "Ordorac Quarry",
+        "x": 3732.5,
+        "y": 2423
+    },
+    {
+        "id": "Seed772",
+        "loc": "Salari Plain",
+        "x": -1802.5,
+        "y": 1840.5
+    },
+    {
+        "id": "Seed773",
+        "loc": "Thyphlo Ruins",
+        "x": 235,
+        "y": 2942
+    },
+    {
+        "id": "Seed774",
+        "loc": "Hebra West Summit",
+        "x": -4328.5,
+        "y": 2601.5
+    },
+    {
+        "id": "Seed775",
+        "loc": "Lake Kilsie",
+        "x": -4507,
+        "y": 2148
+    },
+    {
+        "id": "Seed776",
+        "loc": "Dragon Bone Mire",
+        "x": -4481.5,
+        "y": 1967.5
+    },
+    {
+        "id": "Seed779",
+        "loc": "Hyrule Castle Town Ruins",
+        "x": -254.5,
+        "y": 266
+    },
+    {
+        "id": "Seed781",
+        "loc": "Trilby Plain",
+        "x": 1404.5,
+        "y": 832.5
+    },
+    {
+        "id": "Seed782",
+        "loc": "Hebra Plunge",
+        "x": -2633.5,
+        "y": 2055
+    },
+    {
+        "id": "Seed783",
+        "loc": "West Sokkala Bridge",
+        "x": 3601,
+        "y": 1008.5
+    },
+    {
+        "id": "Seed784",
+        "loc": "Akkala Bridge Ruins",
+        "x": 3113,
+        "y": 1295
+    },
+    {
+        "id": "Seed785",
+        "loc": "Torin Wetland",
+        "x": 3709.5,
+        "y": 1684.5
+    },
+    {
+        "id": "Seed786",
+        "loc": "First Gatehouse",
+        "x": -324,
+        "y": 798.5
+    },
+    {
+        "id": "Seed787",
+        "loc": "Princess Zelda's Study",
+        "x": -439.5,
+        "y": 932.5
+    },
+    {
+        "id": "Seed788",
+        "loc": "Princess Zelda's Study",
+        "x": -369.5,
+        "y": 994.5
+    },
+    {
+        "id": "Seed789",
+        "loc": "Hyrule Castle (Breath of the Wild)",
+        "x": -254.5,
+        "y": 632
+    },
+    {
+        "id": "Seed791",
+        "loc": "Hyrule Cathedral",
+        "x": 88,
+        "y": 634.5
+    },
+    {
+        "id": "Seed792",
+        "loc": "Pikida Stonegrove",
+        "x": -2293,
+        "y": 3407
+    },
+    {
+        "id": "Seed793",
+        "loc": "Forgotten Temple",
+        "x": -1257.5,
+        "y": 2365
+    },
+    {
+        "id": "Seed794",
+        "loc": "Forgotten Temple",
+        "x": -1673.5,
+        "y": 2140
+    },
+    {
+        "id": "Seed795",
+        "loc": "Rowan Plain",
+        "x": -1310,
+        "y": 1940.5
+    },
+    {
+        "id": "Seed796",
+        "loc": "Hebra West Summit",
+        "x": -4418.5,
+        "y": 2862.5
+    },
+    {
+        "id": "Seed797",
+        "loc": "Southern Oasis",
+        "x": -3798.5,
+        "y": -3430
+    },
+    {
+        "id": "Seed798",
+        "loc": "Ulri Mountain",
+        "x": 3661.5,
+        "y": 2065.5
+    },
+    {
+        "id": "Seed799",
+        "loc": "Daval Peak",
+        "x": -1350.5,
+        "y": -3770
+    },
+    {
+        "id": "Seed800",
+        "loc": "Tempest Gulch",
+        "x": 3496,
+        "y": 3374
+    },
+    {
+        "id": "Seed801",
+        "loc": "Akkala Wilds",
+        "x": 3453,
+        "y": 3581.5
+    },
+    {
+        "id": "Seed802",
+        "loc": "Maw of Death Mountain",
+        "x": 2436,
+        "y": 1238
+    },
+    {
+        "id": "Seed803",
+        "loc": "Meadela's Mantle",
+        "x": -4113,
+        "y": -1378
+    },
+    {
+        "id": "Seed804",
+        "loc": "Irch Plain",
+        "x": -704,
+        "y": 1444.5
+    },
+    {
+        "id": "Seed806",
+        "loc": "Hebra Headspring",
+        "x": -2839.5,
+        "y": 2422
+    },
+    {
+        "id": "Seed807",
+        "loc": "Talonto Peak",
+        "x": -3280,
+        "y": 2616.5
+    },
+    {
+        "id": "Seed808",
+        "loc": "Akkala Citadel Ruins",
+        "x": 3237.5,
+        "y": 1526
+    },
+    {
+        "id": "Seed809",
+        "loc": "Akkala Citadel Ruins",
+        "x": 3299,
+        "y": 1586.5
+    },
+    {
+        "id": "Seed810",
+        "loc": "Akkala Citadel Ruins",
+        "x": 3297,
+        "y": 1417.5
+    },
+    {
+        "id": "Seed811",
+        "loc": "Akkala Span",
+        "x": 3009,
+        "y": 1199.5
+    },
+    {
+        "id": "Seed812",
+        "loc": "Gut Check Rock",
+        "x": 2550,
+        "y": 3595.5
+    },
+    {
+        "id": "Seed813",
+        "loc": "Death Caldera",
+        "x": 2471,
+        "y": 3178.5
+    },
+    {
+        "id": "Seed814",
+        "loc": "Shadow Pass",
+        "x": 3372.5,
+        "y": 2315
+    },
+    {
+        "id": "Seed815",
+        "loc": "East Deplian Badlands",
+        "x": 859.5,
+        "y": 3353
+    },
+    {
+        "id": "Seed816",
+        "loc": "Kanalet Ridge",
+        "x": 3245.5,
+        "y": 1999
+    },
+    {
+        "id": "Seed817",
+        "loc": "Ulri Mountain",
+        "x": 3480,
+        "y": 2077
+    },
+    {
+        "id": "Seed818",
+        "loc": "North Akkala Foothill",
+        "x": 4006.5,
+        "y": 2736.5
+    },
+    {
+        "id": "Seed820",
+        "loc": "Gortram Cliff",
+        "x": 1950,
+        "y": 1832.5
+    },
+    {
+        "id": "Seed822",
+        "loc": "Gero Pond",
+        "x": 2425.5,
+        "y": 1738
+    },
+    {
+        "id": "Seed823",
+        "loc": "Broca Island",
+        "x": 2705,
+        "y": 1747.5
+    },
+    {
+        "id": "Seed824",
+        "loc": "N. Tabantha Snowfield",
+        "x": -1528,
+        "y": 3479
+    },
+    {
+        "id": "Seed825",
+        "loc": "Rauru Settlement Ruins",
+        "x": 582,
+        "y": 1105
+    },
+    {
+        "id": "Seed826",
+        "loc": "Hyrule Forest Park",
+        "x": 179,
+        "y": 938.5
+    },
+    {
+        "id": "Seed827",
+        "loc": "Elma Knolls",
+        "x": -424.5,
+        "y": 1733.5
+    },
+    {
+        "id": "Seed828",
+        "loc": "Elma Knolls",
+        "x": -333.5,
+        "y": 1745
+    },
+    {
+        "id": "Seed829",
+        "loc": "Drenan Highlands",
+        "x": -41,
+        "y": 2987
+    },
+    {
+        "id": "Seed830",
+        "loc": "Hebra Plunge",
+        "x": -2994.5,
+        "y": 2168
+    },
+    {
+        "id": "Seed831",
+        "loc": "Kolami Bridge",
+        "x": -3125,
+        "y": 1368.5
+    },
+    {
+        "id": "Seed832",
+        "loc": "Gut Check Rock",
+        "x": 2664,
+        "y": 3472
+    },
+    {
+        "id": "Seed833",
+        "loc": "S. Tabantha Snowfield",
+        "x": -1764.5,
+        "y": 2350
+    },
+    {
+        "id": "Seed834",
+        "loc": "Goronbi River",
+        "x": 1684.5,
+        "y": 1720.5
+    },
+    {
+        "id": "Seed835",
+        "loc": "Lake Intenoch",
+        "x": 2478,
+        "y": 1392
+    },
+    {
+        "id": "Seed836",
+        "loc": "Cephla Lake",
+        "x": 2755,
+        "y": 1368.5
+    },
+    {
+        "id": "Seed839",
+        "loc": "Biron Snowshelf",
+        "x": -3841.5,
+        "y": 3346
+    },
+    {
+        "id": "Seed840",
+        "loc": "Goflam's Secret Hot Spring",
+        "x": -3410.5,
+        "y": 3508
+    },
+    {
+        "id": "Seed841",
+        "loc": "Biron Snowshelf",
+        "x": -3739,
+        "y": 2961.5
+    },
+    {
+        "id": "Seed842",
+        "loc": "Selmie's Spot",
+        "x": -2851.5,
+        "y": 3489.5
+    },
+    {
+        "id": "Seed843",
+        "loc": "Sacred Ground Ruins",
+        "x": -239,
+        "y": 112.5
+    },
+    {
+        "id": "Seed844",
+        "loc": "Moat Bridge",
+        "x": -607.5,
+        "y": 675
+    },
+    {
+        "id": "Seed845",
+        "loc": "Hebra East Summit",
+        "x": -2604.5,
+        "y": 3238
+    },
+    {
+        "id": "Seed846",
+        "loc": "Pikida Stonegrove",
+        "x": -2257,
+        "y": 3085
+    },
+    {
+        "id": "Seed847",
+        "loc": "Pikida Stonegrove",
+        "x": -2492.5,
+        "y": 3028
+    },
+    {
+        "id": "Seed848",
+        "loc": "Talonto Peak",
+        "x": -2987.5,
+        "y": 2693.5
+    },
+    {
+        "id": "Seed849",
+        "loc": "Hebra Falls",
+        "x": -2938.5,
+        "y": 2410.5
+    },
+    {
+        "id": "Seed850",
+        "loc": "Hebra Falls",
+        "x": -2735,
+        "y": 2584
+    },
+    {
+        "id": "Seed851",
+        "loc": "Hebra Falls",
+        "x": -2641.5,
+        "y": 2362.5
+    },
+    {
+        "id": "Seed852",
+        "loc": "Hebra Plunge",
+        "x": -2790.5,
+        "y": 1943
+    },
+    {
+        "id": "Seed853",
+        "loc": "Tama Pond",
+        "x": -2912,
+        "y": 1635.5
+    },
+    {
+        "id": "Seed855",
+        "loc": "Tabantha Village Ruins",
+        "x": -2385.5,
+        "y": 2128.5
+    },
+    {
+        "id": "Seed856",
+        "loc": "Kopeeki Drifts",
+        "x": -2295.5,
+        "y": 2287
+    },
+    {
+        "id": "Seed857",
+        "loc": "S. Tabantha Snowfield",
+        "x": -2022,
+        "y": 2464
+    },
+    {
+        "id": "Seed858",
+        "loc": "Pondo's Lodge",
+        "x": -2019.5,
+        "y": 1931.5
+    },
+    {
+        "id": "Seed859",
+        "loc": "S. Tabantha Snowfield",
+        "x": -1791,
+        "y": 2746
+    },
+    {
+        "id": "Seed860",
+        "loc": "Regencia River",
+        "x": -1820,
+        "y": -1533
+    },
+    {
+        "id": "Seed861",
+        "loc": "Rutimala Hill",
+        "x": -4528,
+        "y": -1423.5
+    },
+    {
+        "id": "Seed862",
+        "loc": "Foothill Stable",
+        "x": 2652.5,
+        "y": 973.5
+    },
+    {
+        "id": "Seed863",
+        "loc": "Darb Pond",
+        "x": 2355.5,
+        "y": 2064.5
+    },
+    {
+        "id": "Seed864",
+        "loc": "Broca Island",
+        "x": 2664,
+        "y": 2064.5
+    },
+    {
+        "id": "Seed865",
+        "loc": "Medingo Pool",
+        "x": 2270.5,
+        "y": 1823
+    },
+    {
+        "id": "Seed866",
+        "loc": "Lake Ferona",
+        "x": 2179.5,
+        "y": 1281
+    },
+    {
+        "id": "Seed867",
+        "loc": "Medingo Pool",
+        "x": 2265.5,
+        "y": 1562
+    },
+    {
+        "id": "Seed868",
+        "loc": "Faron Woods (Breath of the Wild)",
+        "x": 407.5,
+        "y": -3051
+    },
+    {
+        "id": "Seed869",
+        "loc": "Lake Darman",
+        "x": 2060.5,
+        "y": 2756.5
+    },
+    {
+        "id": "Seed870",
+        "loc": "Lake Darman",
+        "x": 2203,
+        "y": 3001
+    },
+    {
+        "id": "Seed871",
+        "loc": "Goron City (Breath of the Wild)",
+        "x": 1655,
+        "y": 2563
+    },
+    {
+        "id": "Seed872",
+        "loc": "Stolock Bridge",
+        "x": 1593.5,
+        "y": 2477
+    },
+    {
+        "id": "Seed873",
+        "loc": "Goro Cove",
+        "x": 1865,
+        "y": 2463
+    },
+    {
+        "id": "Seed874",
+        "loc": "Hyrule Forest Park",
+        "x": 324.5,
+        "y": 959.5
+    },
+    {
+        "id": "Seed875",
+        "loc": "Rutimala Hill",
+        "x": -4552.5,
+        "y": -1352.5
+    },
+    {
+        "id": "Seed876",
+        "loc": "Barula Plain",
+        "x": 150,
+        "y": -2982.5
+    },
+    {
+        "id": "Seed877",
+        "loc": "Hyrule Castle (Breath of the Wild)",
+        "x": -272,
+        "y": 607.5
+    },
+    {
+        "id": "Seed879",
+        "loc": "Observation Room",
+        "x": -256.5,
+        "y": 739.5
+    },
+    {
+        "id": "Seed880",
+        "loc": "Minshi Woods",
+        "x": 1008.5,
+        "y": 1563
+    },
+    {
+        "id": "Seed881",
+        "loc": "Military Training Camp",
+        "x": 869,
+        "y": 1361.5
+    },
+    {
+        "id": "Seed882",
+        "loc": "Mabe Village Ruins",
+        "x": 23,
+        "y": -148.5
+    },
+    {
+        "id": "Seed883",
+        "loc": "Salari Hill",
+        "x": -1229.5,
+        "y": 1576
+    },
+    {
+        "id": "Seed884",
+        "loc": "Salari Hill",
+        "x": -1438,
+        "y": 1663.5
+    },
+    {
+        "id": "Seed885",
+        "loc": "Aldor Foothills",
+        "x": -820.5,
+        "y": 1927
+    },
+    {
+        "id": "Seed886",
+        "loc": "Rowan Plain",
+        "x": -1023.5,
+        "y": 2078.5
+    },
+    {
+        "id": "Seed887",
+        "loc": "Docks",
+        "x": -269.5,
+        "y": 1139
+    },
+    {
+        "id": "Seed888",
+        "loc": "East Passage",
+        "x": -68,
+        "y": 978
+    },
+    {
+        "id": "Seed889",
+        "loc": "East Passage",
+        "x": -99.5,
+        "y": 977
+    },
+    {
+        "id": "Seed890",
+        "loc": "Guards' Chamber",
+        "x": -270.5,
+        "y": 874.5
+    },
+    {
+        "id": "Seed891",
+        "loc": "First Gatehouse",
+        "x": -350,
+        "y": 829
+    },
+    {
+        "id": "Seed892",
+        "loc": "Cliffs of Ruvara",
+        "x": -3676,
+        "y": -700
+    },
+    {
+        "id": "Seed893",
+        "loc": "North Hyrule Plain",
+        "x": -1015,
+        "y": 1064.5
+    },
+    {
+        "id": "Seed894",
+        "loc": "Hyrule Castle Moat",
+        "x": -132,
+        "y": 1379
+    },
+    {
+        "id": "Seed895",
+        "loc": "Hyrule Castle Moat",
+        "x": -671.5,
+        "y": 934
+    },
+    {
+        "id": "Seed896",
+        "loc": "Second Gatehouse",
+        "x": -163.5,
+        "y": 784.5
+    },
+    {
+        "id": "Seed897",
+        "loc": "Rebonae Bridge",
+        "x": 797.5,
+        "y": -24
+    },
+    {
+        "id": "Seed898",
+        "loc": "Applean Forest",
+        "x": 624,
+        "y": 191.5
+    },
+    {
+        "id": "Seed899",
+        "loc": "Orsedd Bridge",
+        "x": 503,
+        "y": 494.5
+    },
+    {
+        "id": "Seed900",
+        "loc": "Lake Mekar",
+        "x": 683.5,
+        "y": 2756.5
+    }
+]

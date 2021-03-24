@@ -69,9 +69,7 @@ int SavefileIO::MountSavefile(bool openProfilePicker)
             return 1;
         }
     }
-
-    std::cout << AccountUid1 << "; " << AccountUid2 << "\n";
-
+    
     // Required for getting users
     rc = accountInitialize(AccountServiceType_Administrator);
     if (R_FAILED(rc)) {
