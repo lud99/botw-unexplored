@@ -1,1 +1,0 @@
-start "" yuzu.exe ./botw-unexplored.nro

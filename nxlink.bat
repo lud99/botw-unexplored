@@ -1,1 +1,0 @@
-C:\devkitPro\tools\bin\nxlink.exe -s botw-unexplored.nro -a 192.168.0.19
