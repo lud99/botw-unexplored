@@ -225,7 +225,7 @@ void Font::BeginBatch()
     m_CharsToRender.clear();
 }
 
-glm::vec2 Font::AddTextToBatch(const std::string& text, glm::vec2 position, float scale, glm::vec3 color, int align)
+glm::vec2 Font::AddTextToBatch(const std::string& text, glm::vec2 position, float scale, glm::vec3 color, int align, float maxWidth)
 {
     glm::vec2 itPosition(position);
     glm::vec2 startPosition(position);
@@ -238,7 +238,22 @@ glm::vec2 Font::AddTextToBatch(const std::string& text, glm::vec2 position, floa
         Character ch = m_Characters[text[i]];
 
         // Calculate the position of each character
-        charPositions.push_back(glm::vec2(itPosition.x + ch.Bearing.x * scale, itPosition.y - (ch.Size.y - ch.Bearing.y) * scale));
+        glm::vec2 position(itPosition.x + ch.Bearing.x * scale, itPosition.y - (ch.Size.y - ch.Bearing.y) * scale);
+
+        // Do word wrap
+        if (maxWidth > 0.0f)
+        {
+            if (position.x + (ch.Size.x * scale) > startPosition.x + maxWidth)
+            {
+                itPosition.x = startPosition.x;
+                itPosition.y -= 50.0f * scale;
+
+                if (text[i] != ' ')
+                    position = glm::vec2(itPosition.x + ch.Bearing.x * scale, itPosition.y - (ch.Size.y - ch.Bearing.y) * scale);
+            }
+        }
+
+        charPositions.push_back(position);
 
         // The text height should be equal to the highest character;
         float h = ch.Size.y * scale;
@@ -248,7 +263,7 @@ glm::vec2 Font::AddTextToBatch(const std::string& text, glm::vec2 position, floa
         // now advance cursors for next glyph (note that advance is number of 1/64 pixels)
         itPosition.x += (ch.Advance >> 6) * scale;
     }
-    textSize.x = itPosition.x - startPosition.x;
+    textSize = glm::abs(itPosition - startPosition);
 
     // Add the characters to the map
     for (unsigned int i = 0; i < text.length(); i++)
@@ -283,7 +298,6 @@ void Font::RenderBatch()
 
     m_Shader.SetUniform("u_ProjectionMatrix", *m_ProjectionMatrix);
     m_Shader.SetUniform("u_ViewMatrix", *m_ViewMatrix);
-    m_Shader.SetUniform("u_Color", glm::vec3(1.0f, 1.0f, 1.0f)); // Hard coded value, should probably fix
 
     for (auto &entry : m_CharsToRender)
     {
@@ -323,6 +337,7 @@ void Font::RenderBatch()
         // Set to standard values. Will create weird rendering otherwise
         m_Shader.SetUniform("u_ModelMatrix", glm::mat4(1.0f));
         m_Shader.SetUniform("u_Size", glm::vec2(1.0f, 1.0f));
+        m_Shader.SetUniform("textColor", texts[0].color);
 
         m_CharMesh.Update();
         m_CharMesh.Render();

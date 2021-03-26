@@ -50,3 +50,5 @@ MapLocation::~MapLocation()
 {
     
 }
+
+bool MapLocation::m_ShowAnyway = false;

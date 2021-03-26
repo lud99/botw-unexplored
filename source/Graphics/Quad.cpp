@@ -106,6 +106,9 @@ TexturedQuad::TexturedQuad()
 
 void TexturedQuad::Create(const std::string& texturePath)
 {
+    if (m_Texture)
+        delete m_Texture;
+        
     m_Texture = new Texture2D(texturePath);
 
     glm::vec3 positions[4];

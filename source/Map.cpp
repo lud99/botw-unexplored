@@ -9,6 +9,7 @@
 #include "Legend.h"
 #include "Dialog.h"
 #include "MapObject.hpp"
+#include "KorokDialog.h"
 
 #include "LoadGamesave.h"
 
@@ -85,6 +86,8 @@ void Map::Init()
     m_Font.m_ViewMatrix = &m_ViewMatrix;
 
     m_LineRenderer = new LineRenderer();
+
+    m_KorokDialog = new KorokDialog();
 
     // Create UI
     m_Legend = new Legend();
@@ -266,7 +269,10 @@ void Map::Update()
     // Toggle legend
     if (buttonsPressed & HidNpadButton_X)
     {
-        if (!m_NoSavefileDialog->m_IsOpen)
+        // Close the korok dialog first, then if it's not open close the legend
+        if (m_KorokDialog->m_IsOpen)
+            m_KorokDialog->SetOpen(false);
+        else if (!m_NoSavefileDialog->m_IsOpen)
             m_IsLegendOpen = !m_IsLegendOpen;
     }
 
@@ -307,7 +313,7 @@ void Map::Update()
     HidTouchScreenState state={0};
     if (hidGetTouchScreenStates(&state, 1)) {
         // Convert to more suitable coords
-        glm::vec2 touchPosition = glm::vec2(state.touches[0].x - m_CameraWidth / 2, state.touches[0].y - m_CameraHeight / 2); 
+        glm::vec2 touchPosition = glm::vec2(state.touches[0].x - m_CameraWidth / 2, -(state.touches[0].y - m_CameraHeight / 2)); 
 
         // A new touch
         if (state.count != m_PrevTouchCount)
@@ -322,18 +328,32 @@ void Map::Update()
             {
                 // Check if the finger was pressed
                 if (state.count == 1)
-                {
-                    m_IsDragging = true;
-                    m_PrevTouchPosition = touchPosition; // The origin of the drag
-
+                {   
+                    // Check if clicked korok
+                    bool clicked = false;
                     for (int i = 0; i < Data::KoroksCount; i++)
                     {
-                        if (m_Koroks[i].IsClicked(touchPosition * glm::vec2(1.0f, -1.0f)))
+                        if ((!m_Koroks[i].m_Found || m_ShowAllObjects) && m_Koroks[i].IsClicked(touchPosition))
                         {
-                            std::cout << Data::KorokInfos.at(m_Koroks[i].m_ObjectData->zeldaDungeonId).text << "\n";
+                            // Set the korok dialog
+                            m_KorokDialog->SetSeed(m_Koroks[i].m_ObjectData->zeldaDungeonId);
+                            m_KorokDialog->SetOpen(true);
+
+                            clicked = true;
+
                             break;
                         }
                     }
+
+                    // Hide the korok info if no korok was clicked on
+                    if (!clicked)
+                    {
+                        //m_KorokDialog->SetOpen(false);
+                    }
+
+                    // Only drag if not clicking on korok
+                    m_IsDragging = true;
+                    m_PrevTouchPosition = touchPosition; // The origin of the drag
                 }
             }
                 
@@ -350,7 +370,7 @@ void Map::Update()
 
             // Move the camera by the delta. Flip the direction of the y-coordinate and 
             // divide by the zoom to move the same amount irregardless of the zoom
-            m_CameraPosition += (delta * glm::vec2(1, -1) * dragAmont) / m_Zoom;
+            m_CameraPosition += (delta * dragAmont) / m_Zoom;
 
             // Set the touch pos to the most recent one, so we only check for the delta between each frame and not from when the drag started
             m_PrevTouchPosition = touchPosition;
@@ -389,6 +409,8 @@ void Map::Update()
             m_Moldugas[i].Update(i == 0);
         for (int i = 0; i < Data::LocationsCount; i++)
             m_Locations[i].Update();
+
+        MapLocation::m_ShowAnyway = m_ShowAllObjects;
     }
 
     m_PrevCameraPosition = m_CameraPosition;
@@ -418,7 +440,7 @@ void Map::Render()
                     continue;
 
                 // Don't render if found
-                if (m_Koroks[k].m_Found)
+                if (m_Koroks[k].m_Found && !m_ShowAllObjects)
                     continue;
 
                 Data::KorokPath* path = m_Koroks[k].m_ObjectData->path;
@@ -502,6 +524,8 @@ void Map::Render()
     }
 
     m_Font.m_ViewMatrix = &m_ViewMatrix;
+
+    m_KorokDialog->Render(m_ProjectionMatrix, m_ViewMatrix);
 }
 
 bool Map::IsInView(glm::vec2 position, float margin = 100.0f)
@@ -538,6 +562,7 @@ void Map::Destory()
     delete m_NoSavefileDialog;
     delete m_GameRunningDialog;
     delete m_MasterModeDialog;
+    delete m_KorokDialog;
 
     m_Shader.Delete();
 }
@@ -577,6 +602,7 @@ MapObject<Data::Molduga>* Map::m_Moldugas;
 MapLocation* Map::m_Locations;
 
 Legend* Map::m_Legend;
+KorokDialog* Map::m_KorokDialog;
 Dialog* Map::m_NoSavefileDialog;
 Dialog* Map::m_GameRunningDialog;
 Dialog* Map::m_MasterModeDialog;

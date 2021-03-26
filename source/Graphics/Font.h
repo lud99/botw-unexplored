@@ -53,7 +53,7 @@ public:
 
     void BeginBatch();
 
-    glm::vec2 AddTextToBatch(const std::string& text, glm::vec2 position, float scale = 1.0f, glm::vec3 color = glm::vec3(1.0f), int align = ALIGN_LEFT);
+    glm::vec2 AddTextToBatch(const std::string& text, glm::vec2 position, float scale = 1.0f, glm::vec3 color = glm::vec3(1.0f), int align = ALIGN_LEFT, float maxWidth = -1.0f);
 
     void RenderBatch();
 
