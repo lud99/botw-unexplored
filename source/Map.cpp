@@ -276,10 +276,10 @@ void Map::Update()
     }
 
     // Toggle showing everything
-    if (buttonsDown & HidNpadButton_B)
-        m_ShowAllObjects = true;
-    if (buttonsUp & HidNpadButton_B)
-        m_ShowAllObjects = false;
+    // if (buttonsDown & HidNpadButton_B)
+    //     m_ShowAllObjects = true;
+    // if (buttonsUp & HidNpadButton_B)
+    //     m_ShowAllObjects = false;
 
     // Toggle master mode
     if (buttonsPressed & HidNpadButton_Y)
@@ -332,7 +332,7 @@ void Map::Update()
                     bool clicked = false;
                     for (int i = 0; i < Data::KoroksCount; i++)
                     {
-                        if ((!m_Koroks[i].m_Found || m_ShowAllObjects) && m_Koroks[i].IsClicked(touchPosition))
+                        if ((!m_Koroks[i].m_Found || !m_Legend->m_Show[IconButton::ShowCompleted]) && m_Koroks[i].IsClicked(touchPosition))
                         {
                             // Set the korok dialog
                             m_KorokDialog->SetSeed(m_Koroks[i].m_ObjectData->zeldaDungeonId);
@@ -409,7 +409,7 @@ void Map::Update()
         for (int i = 0; i < Data::LocationsCount; i++)
             m_Locations[i].Update();
 
-        MapLocation::m_ShowAnyway = m_ShowAllObjects;
+        MapLocation::m_ShowAnyway = m_Legend->m_Show[IconButton::ShowCompleted];
     }
 
     m_PrevCameraPosition = m_CameraPosition;
@@ -439,7 +439,7 @@ void Map::Render()
                     continue;
 
                 // Don't render if found
-                if (m_Koroks[k].m_Found && !m_ShowAllObjects)
+                if (m_Koroks[k].m_Found && !m_Legend->m_Show[IconButton::ShowCompleted])
                     continue;
 
                 Data::KorokPath* path = m_Koroks[k].m_ObjectData->path;
@@ -585,7 +585,6 @@ glm::vec2 Map::m_StartDragPos;
 bool Map::m_IsDragging = false;
 bool Map::m_ShouldExit = false;
 bool Map::m_LoadMasterMode = false;
-bool Map::m_ShowAllObjects = false;
 
 PadState* Map::m_Pad;
 MapObject<Data::Korok>* Map::m_Koroks;

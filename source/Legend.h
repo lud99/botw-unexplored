@@ -14,7 +14,8 @@ public:
         Taluses = 3,
         Moldugas = 4,
         Locations = 5,
-        Count = 6
+        ShowCompleted = 6,
+        Count = 7
     };
 
 public:

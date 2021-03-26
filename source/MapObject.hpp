@@ -6,6 +6,7 @@
 #include "Graphics/BasicVertices.h"
 
 #include "Map.h"
+#include "Legend.h"
 
 #include <glm/vec2.hpp>
 #include <iostream>
@@ -137,7 +138,7 @@ void MapObject<T>::Update(bool clear)
 
     if (clear) m_Mesh.Clear();
 
-    if (m_Found && !Map::m_ShowAllObjects) 
+    if (m_Found && !Map::m_Legend->m_Show[IconButton::ShowCompleted]) 
         return;
     
     // Culling 

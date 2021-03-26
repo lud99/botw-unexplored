@@ -49,7 +49,7 @@ Legend::Legend()
     m_Show[0] = true;
     m_Buttons[1]->Click(this, true);
     m_Show[1] = true;
-
+    
     // Set first highlighted button
     UpdateSelectedButton();
 }
@@ -217,6 +217,8 @@ IconButton::IconButton(ButtonTypes type, glm::vec2 position, float width, float 
         //iconPath = "romfs:/molduga.png";
 
         break;
+    case ShowCompleted:
+        m_Text = "Show Completed";
     
     default:
         break;
