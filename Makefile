@@ -46,7 +46,7 @@ BUILD		:=	build
 SOURCES		:=	source source/Graphics
 DATA		:=	data
 INCLUDES	:=	include
-ROMFS		:=	romfs
+ROMFS		:=	romfs-dev
 
 #---------------------------------------------------------------------------------
 # options for code generation
