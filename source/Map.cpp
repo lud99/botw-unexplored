@@ -11,15 +11,13 @@
 #include "MapObject.hpp"
 #include "KorokDialog.h"
 
-#include "LoadGamesave.h"
-
 #include "SavefileIO.h" 
 
 void Map::Init()
 {
     Data::LoadPaths();
 
-    m_Texture.Load("romfs:/BotW-Map-lowres.png");
+    m_Texture.Load("romfs:/map-lowres.png");
 
     std::string vertexShaderSource = R"text(
         #version 330 core
@@ -259,7 +257,7 @@ void Map::Update()
         {
             m_LoadMasterMode = false;
 
-            LoadGamesave(false, true);
+            SavefileIO::LoadGamesave(false, true);
             UpdateMapObjects();
         }
     }
@@ -287,7 +285,7 @@ void Map::Update()
         {
             m_LoadMasterMode = !m_LoadMasterMode;
 
-            LoadGamesave(m_LoadMasterMode);
+            SavefileIO::LoadGamesave(m_LoadMasterMode);
             UpdateMapObjects();
         }
     }

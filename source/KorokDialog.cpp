@@ -46,12 +46,12 @@ void KorokDialog::Render(glm::mat4 projMat, glm::mat4 viewMat)
     if (m_Image)
         textY = m_Image->m_Position.y - (m_Image->m_Texture->m_Height * m_Image->m_Scale / 2.0f) - 50.0f;
     else
-        textY = Map::m_ScreenTop - 100.0f;
+        textY = Map::m_ScreenTop - 110.0f;
 
     glm::vec2 startPos(Map::m_ScreenLeft + marginLeft, textY);
 
     Map::m_Font.AddTextToBatch(m_Text, startPos, 0.55f, glm::vec3(1.0f), ALIGN_LEFT, Width - marginLeft * 2);
-    Map::m_Font.AddTextToBatch("X to close", glm::vec2(Map::m_ScreenLeft + Width - 20.0f, Map::m_ScreenTop - 35.0f), 0.45f, glm::vec3(1.0f), ALIGN_RIGHT);
+    Map::m_Font.AddTextToBatch("X to close", glm::vec2(Map::m_ScreenLeft + Width - 20.0f, Map::m_ScreenTop - 35.0f), 0.5f, glm::vec3(1.0f), ALIGN_RIGHT);
 
     Map::m_Font.RenderBatch();
 
@@ -94,7 +94,7 @@ void KorokDialog::SetSeed(int seed)
     float w = m_Image->m_Texture->m_Width * m_Image->m_Scale;
     float h = m_Image->m_Texture->m_Height * m_Image->m_Scale;
 
-    m_Image->m_Position = glm::vec2(Map::m_ScreenLeft + marginLeft + w / 2.0f, Map::m_ScreenTop - 50.0f - h / 2.0f);
+    m_Image->m_Position = glm::vec2(Map::m_ScreenLeft + marginLeft + w / 2.0f, Map::m_ScreenTop - 60.0f - h / 2.0f);
 }
 
 void KorokDialog::SetPosition(glm::vec2 position)

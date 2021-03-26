@@ -24,6 +24,8 @@ namespace SavefileIO
     extern std::vector<Data::Molduga*> defeatedMoldugas;
     extern std::vector<Data::Molduga*> undefeatedMoldugas;
 
+    bool LoadGamesave(bool loadMasterMode = false, bool chooseProfile = false);
+
     uint32_t ReadU32(unsigned char* buffer, int offset);
 
     int MountSavefile(bool openProfilePicker = false);

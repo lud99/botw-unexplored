@@ -36,7 +36,7 @@ Legend::Legend()
         float posLeft = left + buttonPadding;
         float buttonWidth = m_Width - (buttonPadding * 2);
 
-        IconButton* button = new IconButton((IconButton::ButtonTypes)i, glm::vec2(posLeft, topY), buttonWidth, buttonHeight, 1.25f);
+        IconButton* button = new IconButton((IconButton::ButtonTypes)i, glm::vec2(posLeft, topY), buttonWidth, buttonHeight, 1.25f * 0.5f);
         button->m_Button.m_Color = IconButton::DefaultColor;
 
         m_Buttons.push_back(button);

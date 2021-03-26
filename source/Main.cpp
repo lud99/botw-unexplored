@@ -17,7 +17,7 @@
 #include "Map.h"
 #include "Accounts.h"
 #include "Dialog.h"
-#include "LoadGamesave.h"
+#include "Legend.h"
 
 bool openGLInitialized = false;
 bool nxLinkInitialized = false;
@@ -162,7 +162,7 @@ int main()
         if (hasDoneFirstDraw && !hasLoadedSave)
         {
             hasLoadedSave = true;
-            LoadGamesave();
+            SavefileIO::LoadGamesave();
 
             Map::UpdateMapObjects();
         }
