@@ -8,6 +8,7 @@
 #include "SavefileIO.h"
 #include "Map.h"
 #include "Dialog.h"
+#include "Legend.h"
 
 static bool LoadGamesave(bool loadMasterMode = false, bool chooseProfile = false)
 {   
@@ -48,8 +49,8 @@ static bool LoadGamesave(bool loadMasterMode = false, bool chooseProfile = false
             return false;
         }
 
-        if (dialogWasOpen)
-            Map::m_IsLegendOpen = true;
+        // if (dialogWasOpen)
+        //     Map::m_Legend->m_IsOpen = true;
 
         // No need to copy savefiles if they have already been copied (this flag is never set the first time)
         if (!chooseProfile)
@@ -76,8 +77,8 @@ static bool LoadGamesave(bool loadMasterMode = false, bool chooseProfile = false
             return false;
         }
 
-        if (dialogWasOpen)
-            Map::m_IsLegendOpen = true;
+        // if (dialogWasOpen)
+        //     Map::m_Legend->m_IsOpen = true;
     } else if (mountStatus == -2) { // User has no save data
         printf("The selected user has no save data\n");
 

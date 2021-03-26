@@ -78,6 +78,7 @@ public:
 
     bool m_ShowAll = true;
     bool m_ShowNone = false;
+    bool m_IsOpen = true;
 
     bool m_Show[IconButton::ButtonTypes::Count];
 };

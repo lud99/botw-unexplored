@@ -62,8 +62,6 @@ namespace Map
     extern glm::vec2 m_PrevTouchPosition;
     extern glm::vec2 m_StartDragPos;
     extern bool m_IsDragging;
-    extern bool m_IsLegendOpen;
-    extern bool m_IsInitialized;
     extern bool m_ShouldExit;
     extern bool m_LoadMasterMode;
     extern bool m_ShowAllObjects;

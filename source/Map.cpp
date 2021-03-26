@@ -125,8 +125,6 @@ void Map::Init()
     m_Locations = new MapLocation[Data::LocationsCount];
 
     UpdateMapObjects();
-
-    m_IsInitialized = true;
 }
 
 void Map::UpdateMapObjects()
@@ -273,7 +271,7 @@ void Map::Update()
         if (m_KorokDialog->m_IsOpen)
             m_KorokDialog->SetOpen(false);
         else if (!m_NoSavefileDialog->m_IsOpen)
-            m_IsLegendOpen = !m_IsLegendOpen;
+            m_Legend->m_IsOpen = !m_Legend->m_IsOpen;
     }
 
     // Toggle showing everything
@@ -321,7 +319,7 @@ void Map::Update()
             m_PrevTouchCount = state.count;
 
             // Dont drag if finger is on the legend
-            if (!(m_IsLegendOpen && m_Legend->IsPositionOnLegend(touchPosition)) && 
+            if (!(m_Legend->m_IsOpen && m_Legend->IsPositionOnLegend(touchPosition)) && 
                 !(m_NoSavefileDialog->m_IsOpen && m_NoSavefileDialog->IsPositionOn(touchPosition)) &&
                 !(m_GameRunningDialog->m_IsOpen && m_GameRunningDialog->IsPositionOn(touchPosition)) &&
                 !(m_MasterModeDialog->m_IsOpen && m_MasterModeDialog->IsPositionOn(touchPosition)))
@@ -339,9 +337,9 @@ void Map::Update()
                             m_KorokDialog->SetSeed(m_Koroks[i].m_ObjectData->zeldaDungeonId);
                             m_KorokDialog->SetOpen(true);
 
-                            clicked = true;
+                            m_Legend->m_IsOpen = false;
 
-                            break;
+                            clicked = true;
                         }
                     }
 
@@ -349,11 +347,11 @@ void Map::Update()
                     if (!clicked)
                     {
                         //m_KorokDialog->SetOpen(false);
-                    }
 
-                    // Only drag if not clicking on korok
-                    m_IsDragging = true;
-                    m_PrevTouchPosition = touchPosition; // The origin of the drag
+                        // Only drag if not clicking on korok
+                        m_IsDragging = true;
+                        m_PrevTouchPosition = touchPosition; // The origin of the drag
+                    }
                 }
             }
                 
@@ -381,7 +379,7 @@ void Map::Update()
     m_ViewMatrix = glm::scale(m_ViewMatrix, glm::vec3(m_Zoom, m_Zoom, 0.0f));
     m_ViewMatrix = glm::translate(m_ViewMatrix, glm::vec3(-m_CameraPosition, 1.0));
 
-    if (m_IsLegendOpen) 
+    if (m_Legend->m_IsOpen) 
         m_Legend->Update();
 
     if (m_NoSavefileDialog->m_IsOpen) 
@@ -488,7 +486,7 @@ void Map::Render()
     if (m_LoadMasterMode)
         m_MasterModeIcon.Render();
 
-    if (m_IsLegendOpen) 
+    if (m_Legend->m_IsOpen) 
         m_Legend->Render();
 
     if (m_NoSavefileDialog->m_IsOpen) 
@@ -501,7 +499,7 @@ void Map::Render()
     glm::mat4 emptyViewMatrix(1.0);
     m_Font.m_ViewMatrix = &emptyViewMatrix; // Don't draw the text relative to the camera 
 
-    if (!m_IsLegendOpen && SavefileIO::LoadedSavefile)
+    if (!m_Legend->m_IsOpen && !m_KorokDialog->m_IsOpen && SavefileIO::LoadedSavefile)
         m_Font.RenderText("Press X to open legend", glm::vec2(m_ScreenLeft + 20, m_ScreenTop - 30), 0.5f, glm::vec3(1.0f));  
 
     if (SavefileIO::LoadedSavefile)
@@ -549,8 +547,6 @@ bool Map::IsInView(glm::vec2 position, float margin = 100.0f)
 
 void Map::Destory()
 {
-    if (!m_IsInitialized) return;
-    
     delete[] m_Koroks;
     delete[] m_Shrines;
     delete[] m_Hinoxes;
@@ -586,8 +582,6 @@ int Map::m_PrevTouchCount = 0;
 glm::vec2 Map::m_PrevTouchPosition;
 glm::vec2 Map::m_StartDragPos;
 bool Map::m_IsDragging = false;
-bool Map::m_IsLegendOpen = true;
-bool Map::m_IsInitialized = false;
 bool Map::m_ShouldExit = false;
 bool Map::m_LoadMasterMode = false;
 bool Map::m_ShowAllObjects = false;

@@ -248,8 +248,7 @@ glm::vec2 Font::AddTextToBatch(const std::string& text, glm::vec2 position, floa
                 itPosition.x = startPosition.x;
                 itPosition.y -= 50.0f * scale;
 
-                if (text[i] != ' ')
-                    position = glm::vec2(itPosition.x + ch.Bearing.x * scale, itPosition.y - (ch.Size.y - ch.Bearing.y) * scale);
+                position = glm::vec2(itPosition.x + ch.Bearing.x * scale, itPosition.y - (ch.Size.y - ch.Bearing.y) * scale);
             }
         }
 
@@ -284,7 +283,6 @@ glm::vec2 Font::AddTextToBatch(const std::string& text, glm::vec2 position, floa
 
     return textSize;
 }
-
 void Font::RenderBatch()
 {
     glm::vec2 textureCoords[4] = {

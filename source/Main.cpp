@@ -45,6 +45,7 @@ void cleanUp()
         file << Map::m_CameraPosition.x << "\n";
         file << Map::m_CameraPosition.y << "\n";
         file << Map::m_Zoom << "\n";
+        file << (int)Map::m_Legend->m_IsOpen << "\n";
         printf("Saved settings\n");
     }
     else
@@ -113,6 +114,9 @@ int main()
 
         std::getline(settingsFile, line);
         Map::m_Zoom = std::stof(line);
+
+        std::getline(settingsFile, line);
+        Map::m_Legend->m_IsOpen = (bool)std::stoi(line);
 
         if (Map::m_CameraPosition.x > 4500.0f)
             Map::m_CameraPosition.x = 4250.0f;

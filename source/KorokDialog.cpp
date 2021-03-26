@@ -2,6 +2,7 @@
 
 #include "Data.h"
 #include "Map.h"
+#include "SavefileIO.h"
 
 KorokDialog::KorokDialog()
 {
@@ -11,16 +12,7 @@ KorokDialog::KorokDialog()
         glm::vec2(Map::m_ScreenLeft + Width, Map::m_ScreenTop),
         glm::vec2(Map::m_ScreenLeft, Map::m_ScreenTop)
     );
-    m_Background.m_Color = glm::vec4(1.0f);
-
-    m_Image = new TexturedQuad();
-    m_Image->Create("sdmc:/switch/botw-unexplored/images/Korok001.png");
-
-    float marginLeft = 40.0f;
-    float w = m_Image->m_Texture->m_Width;
-    float h = m_Image->m_Texture->m_Height;
-
-    m_Image->m_Position = glm::vec2(Map::m_ScreenLeft + marginLeft + w / 2.0f, Map::m_ScreenTop - 75.0f - h / 2.0f);
+    m_Background.m_Color = glm::vec4(0.0f, 0.0f, 0.0f, 0.5f);
 }
 
 void KorokDialog::Render(glm::mat4 projMat, glm::mat4 viewMat)
@@ -40,18 +32,26 @@ void KorokDialog::Render(glm::mat4 projMat, glm::mat4 viewMat)
     m_Background.Render();
 
     // Image
-    m_Image->m_ProjectionMatrix = &projMat;
-    m_Image->Render();
+    if (m_Image)
+    {
+        m_Image->m_ProjectionMatrix = &projMat;
+        m_Image->Render();
+    }
 
     // Render text
     Map::m_Font.BeginBatch();
 
     // Place the text just below the image
-    float textY = m_Image->m_Position.y - (m_Image->m_Texture->m_Height * m_Image->m_Scale / 2.0f) - 50.0f;
+    float textY = 0.0f; 
+    if (m_Image)
+        textY = m_Image->m_Position.y - (m_Image->m_Texture->m_Height * m_Image->m_Scale / 2.0f) - 50.0f;
+    else
+        textY = Map::m_ScreenTop - 100.0f;
+
     glm::vec2 startPos(Map::m_ScreenLeft + marginLeft, textY);
 
-    Map::m_Font.AddTextToBatch(m_Text, startPos, 0.55f, glm::vec3(0.0f), ALIGN_LEFT, Width - marginLeft * 2);
-    Map::m_Font.AddTextToBatch("X to close", glm::vec2(Map::m_ScreenLeft + Width - marginLeft, Map::m_ScreenTop - 35.0f), 0.45f, glm::vec3(0.0f), ALIGN_RIGHT);
+    Map::m_Font.AddTextToBatch(m_Text, startPos, 0.55f, glm::vec3(1.0f), ALIGN_LEFT, Width - marginLeft * 2);
+    Map::m_Font.AddTextToBatch("X to close", glm::vec2(Map::m_ScreenLeft + Width - 20.0f, Map::m_ScreenTop - 35.0f), 0.45f, glm::vec3(1.0f), ALIGN_RIGHT);
 
     Map::m_Font.RenderBatch();
 
@@ -74,7 +74,17 @@ void KorokDialog::SetSeed(int seed)
     if (seedStr.length() == 2)
         seedStr = "0" + seedStr;
 
-    delete m_Image;
+    // Create a new image, so delete the old one first
+    if (m_Image)
+        delete m_Image;
+
+    m_Image = nullptr;
+
+    // Don't show images if they don't exist
+    if (!SavefileIO::DirectoryExists("sdmc:/switch/botw-unexplored/images"))
+        return;
+    if (!SavefileIO::FileExists("sdmc:/switch/botw-unexplored/images/Korok" + seedStr + ".png"))
+        return;
 
     m_Image = new TexturedQuad();
     m_Image->Create("sdmc:/switch/botw-unexplored/images/Korok" + seedStr + ".png");

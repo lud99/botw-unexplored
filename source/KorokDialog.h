@@ -22,7 +22,7 @@ public:
     const int Height = 400.0f;
 
     Quad m_Background;
-    TexturedQuad* m_Image;
+    TexturedQuad* m_Image = nullptr;
     
     std::string m_Text;
 

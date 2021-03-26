@@ -118,7 +118,7 @@ void Dialog::Update()
                     else if (m_Type == DialogType::MasterModeChoose) 
                     {
                         m_IsOpen = false;
-                        Map::m_IsLegendOpen = true;
+                        Map::m_Legend->m_IsOpen = true;
                     }
                 } else if (m_ChooseProfileButton && m_ChooseProfileButton->IsPositionOn(touchPosition))
                 {
@@ -170,7 +170,7 @@ void Dialog::Update()
             else if (m_Type == DialogType::MasterModeChoose)
             {
                 m_IsOpen = false;
-                Map::m_IsLegendOpen = true;
+                Map::m_Legend->m_IsOpen = true;
             }
                 
         } 
@@ -215,7 +215,7 @@ void Dialog::SetOpen(bool open)
     if (open)
     {
         m_IsOpen = true;
-        Map::m_IsLegendOpen = false;
+        Map::m_Legend->m_IsOpen = false;
     } else {
         m_IsOpen = false;
     }

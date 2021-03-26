@@ -176,8 +176,9 @@ bool MapObject<T>::IsClicked(glm::vec2 position)
 {
     glm::vec2 worldPos = position / Map::m_Zoom + Map::m_CameraPosition;
 
-    float width = m_Texture->m_Width * m_Scale;
-    float height = m_Texture->m_Height * m_Scale; 
+    float largerHitbox = 1.25f;
+    float width = m_Texture->m_Width * m_Scale * largerHitbox;
+    float height = m_Texture->m_Height * m_Scale * largerHitbox; 
 
     if (worldPos.x > m_Position.x - width / 2 && worldPos.x < m_Position.x + width / 2)
     {
