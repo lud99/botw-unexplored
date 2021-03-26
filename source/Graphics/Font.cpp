@@ -6,6 +6,7 @@
 
 #include <glad/glad.h>
 
+#include "../Log.h"
 #include "BasicVertices.h"
 
 int Font::Load(const std::string& filepath)
@@ -13,14 +14,14 @@ int Font::Load(const std::string& filepath)
     FT_Library ft;
     if (FT_Init_FreeType(&ft))
     {
-        printf("Freetype: Could not init FreeType Library");
+        Log("Freetype: Could not init FreeType Library");
         return -1;
     }
 
     FT_Face face;
     if (FT_New_Face(ft, filepath.c_str(), 0, &face))
     {
-        printf("Freetype: Failed to load font");  
+        Log("Freetype: Failed to load font");  
         return -1;
     }
 
@@ -33,7 +34,7 @@ int Font::Load(const std::string& filepath)
         // load character glyph 
         if (FT_Load_Char(face, c, FT_LOAD_RENDER))
         {
-            printf("Freetype: Failed to load Glyph");
+            Log("Freetype: Failed to load Glyph");
             continue;
         }
         // generate texture
@@ -148,7 +149,7 @@ int Font::Load(const std::string& filepath)
 
     m_Initialized = true;
 
-    printf("Loaded font '%s'\n", filepath.c_str());
+    Log("Loaded font", filepath.c_str());
 
     return 1;
 }

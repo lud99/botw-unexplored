@@ -2,6 +2,7 @@
 
 #include <string.h>
 #include <stdio.h>
+#include "Log.h"
 
 AccountUid Accounts::RequestProfileSelection()
 {
@@ -22,6 +23,8 @@ AccountUid Accounts::RequestProfileSelection()
     //     printf("libappletLaunch() failed\n");
     // }
 
+    Log("Requesting profile picker...");
+
     // return out_id;
     struct UserReturnData{
         u64 result;
@@ -35,28 +38,40 @@ AccountUid Accounts::RequestProfileSelection()
     AppletStorage hast1;
     LibAppletArgs args;
 
+    Result res;
+
     u8 indata[0xA0] = { 0 };
     indata[0x96] = 1;
 
-    appletCreateLibraryApplet(&aph, AppletId_LibraryAppletPlayerSelect, LibAppletMode_AllForeground);
+    res = appletCreateLibraryApplet(&aph, AppletId_LibraryAppletPlayerSelect, LibAppletMode_AllForeground);
+    if (R_FAILED(res)) Log("appletCreateLibraryApplet() failed\n");
     libappletArgsCreate(&args, 0);
-    libappletArgsPush(&args, &aph);
+    res = libappletArgsPush(&args, &aph);
+    if (R_FAILED(res)) Log("libappletArgsPush() failed\n");
 
-    appletCreateStorage(&hast1, 0xA0);
+    res = appletCreateStorage(&hast1, 0xA0);
+    if (R_FAILED(res)) Log("appletCreateStorage() failed\n");
 
-    appletStorageWrite(&hast1, 0, indata, 0xA0);
-    appletHolderPushInData(&aph, &hast1);
-    appletHolderStart(&aph);
+    res = appletStorageWrite(&hast1, 0, indata, 0xA0);
+    if (R_FAILED(res)) Log("appletStorageWrite() failed\n");
+    res = appletHolderPushInData(&aph, &hast1);
+    if (R_FAILED(res)) Log("appletHolderPushInData() failed\n");
+    res = appletHolderStart(&aph);
+    if (R_FAILED(res)) Log("appletHolderStart() failed\n");
 
     while (appletHolderWaitInteractiveOut(&aph));
 
     appletHolderJoin(&aph);
-    appletHolderPopOutData(&aph, &ast);
-    appletStorageRead(&ast, 0, &outdata, 24);
+    res = appletHolderPopOutData(&aph, &ast);
+    if (R_FAILED(res)) Log("appletHolderPopOutData() failed\n");
+    res = appletStorageRead(&ast, 0, &outdata, 24);
+    if (R_FAILED(res)) Log("appletStorageRead() failed\n");
 
     appletHolderClose(&aph);
     appletStorageClose(&ast);
     appletStorageClose(&hast1);
+
+    Log("RequestProfileSelection() success?");
 
     return outdata.UID;
 }

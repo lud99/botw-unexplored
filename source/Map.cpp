@@ -10,6 +10,7 @@
 #include "Dialog.h"
 #include "MapObject.hpp"
 #include "KorokDialog.h"
+#include "Log.h"
 
 #include "SavefileIO.h" 
 
@@ -209,6 +210,8 @@ void Map::UpdateMapObjects()
             SavefileIO::visitedLocations.end(), 
             &Data::Locations[i]) != SavefileIO::visitedLocations.end();
     }
+
+    Log("Updated map objects");
 }
 
 void Map::Update()

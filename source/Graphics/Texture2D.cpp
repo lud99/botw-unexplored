@@ -3,7 +3,7 @@
 #include <glad/glad.h>
 #include <stb/stb_image.h>
 
-#include <iostream>
+#include "../Log.h"
 
 Texture2D::Texture2D()
 {
@@ -44,7 +44,10 @@ void Texture2D::Load(const std::string& filepath)
 	}
 	else
 	{
-		std::cout << "Failed to load texture " << filepath << std::endl;
+        if (filepath != "")
+		    Log("Failed to load texture", filepath);
+        else 
+            Log("Failed to load texture (empty path)");
 	}
 
 	stbi_image_free(data);

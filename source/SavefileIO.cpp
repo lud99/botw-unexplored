@@ -12,10 +12,12 @@
 #include "Accounts.h"
 #include "Map.h"
 #include "Dialog.h"
+#include "Log.h"
 
 bool SavefileIO::LoadGamesave(bool loadMasterMode, bool chooseProfile)
 {
-    printf("Loading gamesave...\n");
+    Log("Loading gamesave. Master mode: " + std::string(loadMasterMode ? "true" : "false") + 
+       ", Choose profile (instead of automatic): " + std::string(chooseProfile ? "true" : "false"));
 
     // Try to mount the save directory
     int mountStatus = MountSavefile(chooseProfile);
@@ -26,6 +28,8 @@ bool SavefileIO::LoadGamesave(bool loadMasterMode, bool chooseProfile)
     Map::m_MasterModeDialog->SetOpen(false);
     Map::m_NoSavefileDialog->SetOpen(false);
 
+    Log("Mount status:", mountStatus);
+
     if (mountStatus == 1) { // Good
         if (loadMasterMode)
         {
@@ -34,6 +38,8 @@ bool SavefileIO::LoadGamesave(bool loadMasterMode, bool chooseProfile)
             {
                 std::string path = "save:/" + std::to_string(MostRecentMasterModeFile) + "/game_data.sav";
                 success = ParseFile(path.c_str());
+                if (!success)
+                    Log("Mastermode savefile failed to parse");
             }
 
             if (success) MasterModeFileLoaded = true;
@@ -48,13 +54,12 @@ bool SavefileIO::LoadGamesave(bool loadMasterMode, bool chooseProfile)
         bool success = ParseFile(path.c_str());
         if (!success) 
         {
+            Log("Normal mode savefile failed to parse");
+
             UnmountSavefile();
             Map::m_NoSavefileDialog->SetOpen(true);
             return false;
         }
-
-        // if (dialogWasOpen)
-        //     Map::m_Legend->m_IsOpen = true;
 
         // No need to copy savefiles if they have already been copied (this flag is never set the first time)
         if (!chooseProfile)
@@ -64,11 +69,11 @@ bool SavefileIO::LoadGamesave(bool loadMasterMode, bool chooseProfile)
     } 
     // Failed to mount it. Can happen if no profile was choosen, or some other account thing went wrong 
     else if (mountStatus == 0) {  // No save for profile
-        printf("Canceled profile picker\n");
+        Log("Canceled profile picker");
 
         return false;
     } else if (mountStatus == -1) { // Game is running
-        printf("Game is running. Loading backup...\n");
+        Log("Game is running. Loading backup...");
 
         bool loadedBackupSuccess = LoadBackup(loadMasterMode);
 
@@ -84,7 +89,7 @@ bool SavefileIO::LoadGamesave(bool loadMasterMode, bool chooseProfile)
         // if (dialogWasOpen)
         //     Map::m_Legend->m_IsOpen = true;
     } else if (mountStatus == -2) { // User has no save data
-        printf("The selected user has no save data\n");
+        Log("The selected user has no save data");
 
         MasterModeFileLoaded = false;
         Map::m_NoSavefileDialog->SetOpen(true);
@@ -130,28 +135,34 @@ int SavefileIO::MountSavefile(bool openProfilePicker)
             Result rc = fsdevMountSaveData("save", botwId, uid);
             if (R_FAILED(rc))
             {
-                printf("Failed to mount save (cached user)\n");
+                Log("Failed to mount save (cached user)");
                 GameIsRunning = true;
 
                 return -1;
             }
 
-            printf("Using cached account\n");
+            Log("Using cached account");
 
             // Figure out which save file is the most recent one
             MostRecentNormalModeFile = GetMostRecentSavefile("save:/", false);
             MostRecentMasterModeFile = GetMostRecentSavefile("save:/", true);
 
-            if (MostRecentNormalModeFile == -1) return -2;
+            if (MostRecentNormalModeFile == -1) 
+            {
+                Log("No normal mode file exists (cached user)");
+                return -2;
+            }
 
             return 1;
+        } else {
+            Log("No cached profile available");
         }
     }
     
     // Required for getting users
     rc = accountInitialize(AccountServiceType_Administrator);
     if (R_FAILED(rc)) {
-        printf("accountInitialize() failed: 0x%x\n", rc);
+        Log("accountInitialize() failed");
     }
 
     // If the manual profile selection wasn't choosen 
@@ -161,31 +172,31 @@ int SavefileIO::MountSavefile(bool openProfilePicker)
         bool couldGetUserAutomatically = false;
 
         if (R_SUCCEEDED(rc)) {
-            printf("Using last user used to launch app\n");
+            Log("Using last user used to launch app");
 
             // Check if there is a user that last opened an app (ex. if you have restarted the console)
             couldGetUserAutomatically = accountUidIsValid(&uid);
             if (!couldGetUserAutomatically) 
             {
-                printf("No last user available. ");
+                Log("No last user available.");
                 
                 // Try to get the user that was used to launch the app when holding down R
                 rc = accountGetPreselectedUser(&uid);
                 if (R_FAILED(rc))
                 {
                     couldGetUserAutomatically = false;
-                    printf("No user used to launch the app\n");
+                    Log("No user used to launch the app");
                 } else if (R_SUCCEEDED(rc) && accountUidIsValid(&uid))
                 {
                     couldGetUserAutomatically = true;
-                    printf("Got user used to launch the app\n");
+                    Log("Got user used to launch the app");
                 }
             }
         }
 
         if (!couldGetUserAutomatically) 
         {
-            printf("Opening profile picker\n");
+            Log("Opening profile picker");
 
             uid = Accounts::RequestProfileSelection();
         }
@@ -196,13 +207,13 @@ int SavefileIO::MountSavefile(bool openProfilePicker)
     AccountUid1 = uid.uid[0];
     AccountUid2 = uid.uid[1];
 
-    std::cout << "Choosen user uid: " << uid.uid[0] << ", " << uid.uid[1] << "\n";
-
     // Check if the user canceled the dialog (if so, the uid is not valid)
     if (!accountUidIsValid(&uid))
     {
-        printf("The user canceled the profile picker\n");
+        Log("Invalid account uid. The user canceled the profile picker");
         return -2;
+    } else {
+        Log("Valid account uid from whatever profile selection method");
     }
 
     FsSaveDataInfoReader reader;
@@ -213,7 +224,7 @@ int SavefileIO::MountSavefile(bool openProfilePicker)
 
     Result res = fsOpenSaveDataInfoReader(&reader, FsSaveDataSpaceId_User);
     if (R_FAILED(res)) {
-        printf("fsOpenSaveDataInfoReader() failed\n");
+        Log("fsOpenSaveDataInfoReader() failed");
         return -2;
     }
 
@@ -228,7 +239,7 @@ int SavefileIO::MountSavefile(bool openProfilePicker)
             if (info.application_id == botwId && info.uid.uid[0] == uid.uid[0] && info.uid.uid[1] == uid.uid[1])
             {
                 hasBotwSavedata = true;
-                printf("User has botw savedata\n");
+                Log("User has botw savedata");
                 break;
             }
         }
@@ -238,6 +249,7 @@ int SavefileIO::MountSavefile(bool openProfilePicker)
 
     if (!hasBotwSavedata)
     {
+        Log("User has no botw save data");
         NoSavefileForUser = true;
         return -2;
     }
@@ -245,7 +257,7 @@ int SavefileIO::MountSavefile(bool openProfilePicker)
     rc = fsdevMountSaveDataReadOnly("save", botwId, uid);
     if (R_FAILED(rc))
     {
-        printf("Botw is running. Failed to mount save\n");
+        Log("Botw is running. Failed to mount save (or fsdevMountSaveDataReadOnly() failed, who knows)");
         GameIsRunning = true;
 
         return -1;
@@ -255,7 +267,11 @@ int SavefileIO::MountSavefile(bool openProfilePicker)
     MostRecentNormalModeFile = GetMostRecentSavefile("save:/", false);
     MostRecentMasterModeFile = GetMostRecentSavefile("save:/", true);
 
-    if (MostRecentNormalModeFile == -1) return -2;
+    if (MostRecentNormalModeFile == -1)
+    {
+        Log("No savefile exists, even though savedata exists");
+        return -2;
+    }
 
     return 1;
 }
@@ -264,7 +280,14 @@ bool SavefileIO::UnmountSavefile()
 {
     //When you are done with savedata, you can use the below.
     //Any devices still mounted at app exit are automatically unmounted.
-    return R_SUCCEEDED(fsdevUnmountDevice("save"));
+    bool fail = R_FAILED(fsdevUnmountDevice("save"));
+    if (fail)
+    {
+        Log("Failed to unmount save");
+        return true;
+    }
+
+    return true;
 }
 
 bool SavefileIO::LoadBackup(bool masterMode)
@@ -278,7 +301,7 @@ bool SavefileIO::LoadBackup(bool masterMode)
         return false;
     if (!DirectoryExists(savesFolder))
     {
-        printf("No backups exist for this user\n");
+        Log("No backups exist for this user");
         return false;
     }
 
@@ -386,6 +409,7 @@ int SavefileIO::GetMostRecentSavefile(const std::string& dir, bool masterMode)
 
 void SavefileIO::CopySavefiles()
 {
+    Log("Copying savefiles...");
     std::vector<std::string> savefileFolders;
 
     if (MostRecentNormalModeFile != -1)
@@ -414,7 +438,7 @@ void SavefileIO::CopySavefiles()
 
         CopyFile("save:/" + savefileFolders[i] + "/game_data.sav", target);
 
-        std::cout << "Copied savefile " << savefileFolders[i] << " to " << target << "\n";
+        Log("Copied savefile " + savefileFolders[i] + " to " + target);
     }
 
     SavefileIO::UnmountSavefile();
@@ -463,7 +487,7 @@ bool SavefileIO::DirectoryExists(const std::string &filepath)
         return false;
     else
     {
-        std::cout << "DirectoryExists() error " << filepath << "\n";
+        Log("DirectoryExists() error ", filepath);
         return false;
     }
 
@@ -475,12 +499,12 @@ bool SavefileIO::FileExists(const std::string& filepath)
     int res = access(filepath.c_str(), R_OK);
     if (res < 0)
     {
-        // if (errno == ENOENT)
-        //     printf("File '%s' doesn't exist\n", filepath.c_str());
-        // else if (errno == EACCES)
-        //     printf("File '%s' could not be read for some reason\n", filepath.c_str());
-        // else
-        //     printf("File access('%s') failed\n", filepath.c_str());
+        if (errno == ENOENT)
+            Log("File doesn't exist (doesn't have to be bad)", filepath.c_str());
+        else if (errno == EACCES)
+            Log("File could not be read for some reason (doesn't have to be bad)", filepath.c_str());
+        else
+            Log("File access failed (doesn't have to be bad)", filepath.c_str());
 
         return false;
     }
@@ -490,7 +514,7 @@ bool SavefileIO::FileExists(const std::string& filepath)
 
 bool SavefileIO::ParseFile(const char *filepath)
 {
-    printf("Opening savefile '%s'\n", filepath);
+    Log("Opening savefile", filepath);
 
     // Clear the current file data
     foundKoroks.clear();
@@ -607,13 +631,15 @@ bool SavefileIO::ParseFile(const char *filepath)
 
         // Check if has the dlc
         uint32_t BalladOfHeroes_Ready = 1186840637; // Set to true if the DLC is owned
-        if (hashValue == BalladOfHeroes_Ready)
+        if (hashValue == BalladOfHeroes_Ready) {
             HasDLC = ReadU32(buffer, offset + 4) == 1;
+            Log("User has DLC:", HasDLC ? "true" : "false");
+        }
     }
 
     delete buffer;
 
-    printf("Successfully parsed file '%s'\n", filepath);
+    Log("Successfully parsed file", filepath);
 
     LoadedSavefile = true;
 

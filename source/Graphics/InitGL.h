@@ -8,6 +8,8 @@
 #include <EGL/eglext.h> // EGL extensions
 #include <glad/glad.h>  // glad library (OpenGL loader)
 
+#include "../Log.h"
+
 //-----------------------------------------------------------------------------
 // EGL initialization
 //-----------------------------------------------------------------------------
@@ -22,7 +24,7 @@ static bool initEgl(NWindow* win)
     s_display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
     if (!s_display)
     {
-        printf("Could not connect to display! error: %d", eglGetError());
+        Log("Could not connect to display! error: ", eglGetError());
         goto _fail0;
     }
 
@@ -32,7 +34,7 @@ static bool initEgl(NWindow* win)
     // Select OpenGL (Core) as the desired graphics API
     if (eglBindAPI(EGL_OPENGL_API) == EGL_FALSE)
     {
-        printf("Could not set API! error: %d", eglGetError());
+        Log("Could not set API! error: ", eglGetError());
         goto _fail1;
     }
 
@@ -53,7 +55,7 @@ static bool initEgl(NWindow* win)
     eglChooseConfig(s_display, framebufferAttributeList, &config, 1, &numConfigs);
     if (numConfigs == 0)
     {
-        printf("No config found! error: %d", eglGetError());
+        Log("No config found! error: ", eglGetError());
         goto _fail1;
     }
 
@@ -61,7 +63,7 @@ static bool initEgl(NWindow* win)
     s_surface = eglCreateWindowSurface(s_display, config, win, nullptr);
     if (!s_surface)
     {
-        printf("Surface creation failed! error: %d", eglGetError());
+        Log("Surface creation failed! error: ", eglGetError());
         goto _fail1;
     }
 
@@ -76,7 +78,7 @@ static bool initEgl(NWindow* win)
     s_context = eglCreateContext(s_display, config, EGL_NO_CONTEXT, contextAttributeList);
     if (!s_context)
     {
-        printf("Context creation failed! error: %d", eglGetError());
+        Log("Context creation failed! error: ", eglGetError());
         goto _fail2;
     }
 

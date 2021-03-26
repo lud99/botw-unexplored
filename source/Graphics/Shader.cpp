@@ -7,6 +7,7 @@
 #include <fstream>
 #include <stdio.h>
 #include <sstream>
+#include "../Log.h"
 
 Shader::Shader()
 {
@@ -104,8 +105,6 @@ std::string ShaderLoader::ParseShader(const std::string& filepath)
 		shaderStringStream << line << "\n";
 	}
 
-    printf(shaderStringStream.str().c_str());
-
 	return shaderStringStream.str(); 
 }
 
@@ -123,8 +122,6 @@ Shader ShaderLoader::CreateShader(const std::string& vertexPath, const std::stri
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
 
-    //printf("Created shader program with the id %u\n", program);
-
 	return Shader(program);
 }
 
@@ -141,8 +138,6 @@ Shader ShaderLoader::CreateShaderFromSource(const std::string& vertexSource, con
 
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
-
-    //printf("Created shader program with the id %u\n", program);
 
 	return Shader(program);
 }
@@ -175,8 +170,8 @@ unsigned int ShaderLoader::CompileShader(unsigned int type, const std::string& s
 
 		glGetShaderInfoLog(id, length, &length, message); // Get the actual message
 
-		std::cout << "Failed to compile shader " << source << std::endl;
-		std::cout << message << std::endl;
+		Log("Failed to compile shader", source);
+		Log(message);
 
 		glDeleteShader(id);
 

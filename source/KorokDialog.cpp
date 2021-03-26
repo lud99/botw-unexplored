@@ -3,6 +3,7 @@
 #include "Data.h"
 #include "Map.h"
 #include "SavefileIO.h"
+#include "Log.h"
 
 KorokDialog::KorokDialog()
 {

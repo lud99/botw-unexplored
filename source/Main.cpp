@@ -18,6 +18,7 @@
 #include "Accounts.h"
 #include "Dialog.h"
 #include "Legend.h"
+#include "Log.h"
 
 bool openGLInitialized = false;
 bool nxLinkInitialized = false;
@@ -46,10 +47,10 @@ void cleanUp()
         file << Map::m_CameraPosition.y << "\n";
         file << Map::m_Zoom << "\n";
         file << (int)Map::m_Legend->m_IsOpen << "\n";
-        printf("Saved settings\n");
+        Log("Saved settings");
     }
     else
-        printf("Failed top open settings file (cleanUp())\n");
+        Log("Failed top open settings file (cleanUp())");
     file.close();
 
     Map::Destory();
@@ -67,7 +68,11 @@ void cleanUp()
 
 int main()
 {
-    appletLockExit(); // To be able to run memory cleanup when the app closes
+    LogInit();
+
+    // To be able to run memory cleanup when the app closes
+    if (R_FAILED(appletLockExit()))
+        Log("appletLockExit() failed");
 
     // Setup NXLink
     socketInitializeDefault();
@@ -75,7 +80,8 @@ int main()
     nxLinkInitialized = true;
 
     // Init romfs
-    romfsInit();
+    if (R_FAILED(romfsInit()))
+        Log("romfsInit() failed");
 
     // Configure our supported input layout: a single player with standard controller styles
     padConfigureInput(1, HidNpadStyleSet_NpadStandard);
@@ -84,7 +90,10 @@ int main()
     // Initialize EGL on the default window
     openGLInitialized = initEgl(nwindowGetDefault());
     if (!openGLInitialized)
+    {
+        Log("OpenGL Failed to initialize");
         return 0;
+    }
 
     // Load OpenGL routines using glad
     gladLoadGL();
@@ -129,7 +138,7 @@ int main()
     }
     else
     {
-        printf("Failed to open settings file\n");
+        Log("Failed to open settings file");
     }
 
     settingsFile.close();
@@ -162,7 +171,7 @@ int main()
         if (hasDoneFirstDraw && !hasLoadedSave)
         {
             hasLoadedSave = true;
-            SavefileIO::LoadGamesave();
+            Log("LoadGamesave() status:", SavefileIO::LoadGamesave() ? "true" : "false");
 
             Map::UpdateMapObjects();
         }
@@ -172,11 +181,13 @@ int main()
         GLenum err;
         while ((err = glGetError()) != GL_NO_ERROR)
         {
-            printf("OpenGL error: %u\n", err);
+            Log("OpenGL error", (int)err);
         }
 
         hasDoneFirstDraw = true;
     }
+
+    Log("Exiting...");
 
     cleanUp();
 

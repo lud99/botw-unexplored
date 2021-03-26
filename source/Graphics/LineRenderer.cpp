@@ -65,19 +65,6 @@ void LineRenderer::AddLine(glm::vec2 start, glm::vec2 end, float width, glm::vec
     glm::vec2 _topLeft = topLeft;
     glm::vec2 _topRight = topRight;
 
-    // if (start.x - end.x < 0)
-    // {
-    //     topLeft = _topRight;
-    //     topRight = _topLeft;
-    // }
-
-    // std::cout << start.x << "; " << start.y << "\n";
-    // std::cout << end.x << "; " << end.y << "\n";
-    // std::cout << topRight.x << ";" << topRight.y << "\n";
-    // std::cout << topLeft.x << ";" << topLeft.y << "\n\n";
-
-    //std::cout << glm::distance(topLeft, start) << "\n";
-
     glm::vec2 verticies[4] = { 
         start,
         end,
