@@ -82,14 +82,15 @@ void KorokDialog::SetSeed(int seed)
 
     // Don't show images if they don't exist
     // Check the romfs:/ (for release builds) and the sdmc:/ (for development builds)
-    if (!SavefileIO::DirectoryExists("romfs:/guide") && 
-        !SavefileIO::FileExists("romfs:/guide/" + seedStr + ".jpg") &&
-        !SavefileIO::DirectoryExists("sdmc:/switch/botw-unexplored/guide") &&
-        !SavefileIO::FileExists("sdmc:/switch/botw-unexplored/guide/Korok" + seedStr + ".png"))
-            return;
+    std::string path = "";
+    if (SavefileIO::DirectoryExists("romfs:/guide") && SavefileIO::FileExists("romfs:/guide/Korok" + seedStr + ".jpg"))
+        path = "romfs:/guide/Korok" + seedStr + ".jpg";
+    else if (SavefileIO::DirectoryExists("sdmc:/switch/botw-unexplored/guide") && 
+            SavefileIO::FileExists("sdmc:/switch/botw-unexplored/guide/Korok" + seedStr + ".jpg"))
+        path = "sdmc:/switch/botw-unexplored/guide/Korok" + seedStr + ".jpg";
 
     m_Image = new TexturedQuad(); 
-    m_Image->Create("sdmc:/switch/botw-unexplored/images/Korok" + seedStr + ".png");
+    m_Image->Create(path);
     m_Image->m_Scale = 1.25f;
 
     float marginLeft = 40.0f;
