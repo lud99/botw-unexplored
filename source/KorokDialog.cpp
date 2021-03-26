@@ -89,6 +89,10 @@ void KorokDialog::SetSeed(int seed)
             SavefileIO::FileExists("sdmc:/switch/botw-unexplored/guide/Korok" + seedStr + ".jpg"))
         path = "sdmc:/switch/botw-unexplored/guide/Korok" + seedStr + ".jpg";
 
+    // Neither exists
+    if (path == "")
+        return;
+
     m_Image = new TexturedQuad(); 
     m_Image->Create(path);
     m_Image->m_Scale = 1.25f;
