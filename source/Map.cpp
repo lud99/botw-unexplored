@@ -332,7 +332,7 @@ void Map::Update()
                     bool clicked = false;
                     for (int i = 0; i < Data::KoroksCount; i++)
                     {
-                        if ((!m_Koroks[i].m_Found || !m_Legend->m_Show[IconButton::ShowCompleted]) && m_Koroks[i].IsClicked(touchPosition))
+                        if ((!m_Koroks[i].m_Found || m_Legend->m_Show[IconButton::ShowCompleted]) && m_Koroks[i].IsClicked(touchPosition))
                         {
                             // Set the korok dialog
                             m_KorokDialog->SetSeed(m_Koroks[i].m_ObjectData->zeldaDungeonId);
@@ -349,9 +349,9 @@ void Map::Update()
                     {
                         //m_KorokDialog->SetOpen(false);
 
-                        // Only drag if not clicking on korok
-                        m_IsDragging = true;
-                        m_PrevTouchPosition = touchPosition; // The origin of the drag
+                    	// Only drag if not clicking on korok
+                    	m_IsDragging = true;
+                    	m_PrevTouchPosition = touchPosition; // The origin of the drag
                     }
                 }
             }

@@ -172,8 +172,6 @@ int SavefileIO::MountSavefile(bool openProfilePicker)
         bool couldGetUserAutomatically = false;
 
         if (R_SUCCEEDED(rc)) {
-            Log("Using last user used to launch app");
-
             // Check if there is a user that last opened an app (ex. if you have restarted the console)
             couldGetUserAutomatically = accountUidIsValid(&uid);
             if (!couldGetUserAutomatically) 
@@ -191,6 +189,8 @@ int SavefileIO::MountSavefile(bool openProfilePicker)
                     couldGetUserAutomatically = true;
                     Log("Got user used to launch the app");
                 }
+            } else {
+                Log("Using last user used to launch app");
             }
         }
 

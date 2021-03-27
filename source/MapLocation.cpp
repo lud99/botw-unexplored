@@ -27,6 +27,10 @@ void MapLocation::Init()
 void MapLocation::Update()
 {
     m_Scale = 0.25f / Map::m_Zoom;
+
+    float minScale = 0.3f;
+    if (m_Scale < minScale)
+        m_Scale = minScale;
 }
 
 void MapLocation::Render()
