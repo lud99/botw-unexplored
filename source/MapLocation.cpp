@@ -28,7 +28,7 @@ void MapLocation::Update()
 {
     m_Scale = 0.25f / Map::m_Zoom;
 
-    float minScale = 0.3f;
+    float minScale = 0.25f;
     if (m_Scale < minScale)
         m_Scale = minScale;
 }

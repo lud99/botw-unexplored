@@ -130,9 +130,9 @@ void MapObject<T>::AddToMesh()
 template <typename T>
 void MapObject<T>::Update(bool clear)
 {
-    m_Scale = (1.0f / Map::m_Zoom) * 0.5f;
+    m_Scale = (0.85f / Map::m_Zoom) * 0.5f;
 
-    float minScale = 0.3f;
+    float minScale = 0.25f;
     if (m_Scale < minScale)
         m_Scale = minScale;
 
