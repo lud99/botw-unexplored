@@ -132,7 +132,7 @@ void MapObject<T>::Update(bool clear)
 {
     m_Scale = (1.0f / Map::m_Zoom) * 0.5f;
 
-    float minScale = 0.5f;
+    float minScale = 0.3f;
     if (m_Scale < minScale)
         m_Scale = minScale;
 

@@ -222,7 +222,7 @@ void Map::Update()
     u64 buttonsDown = padGetButtons(m_Pad);
     u64 buttonsUp = padGetButtonsUp(m_Pad);
 
-    float zoomAmount = 0.01f * 1.5f;
+    float zoomAmount = 0.01f * 2.0f;
     float dragAmont = 0.85f;
     float analogStickMovementSpeed = 10.0f;
     float minZoom = 0.1f;
@@ -348,11 +348,11 @@ void Map::Update()
                     if (!clicked)
                     {
                         //m_KorokDialog->SetOpen(false);
-
-                    	// Only drag if not clicking on korok
-                    	m_IsDragging = true;
-                    	m_PrevTouchPosition = touchPosition; // The origin of the drag
                     }
+                    
+                    // Only drag if not clicking on korok
+                    m_IsDragging = true;
+                    m_PrevTouchPosition = touchPosition; // The origin of the drag
                 }
             }
                 
@@ -454,7 +454,9 @@ void Map::Render()
                     glm::vec2 end = path->points[p] * 0.5f;
                     end.y *= -1;
 
-                    m_LineRenderer->AddLine(start, end, 2.0f);
+                    float width = (1.0f / m_Zoom) * 2.0f;
+
+                    m_LineRenderer->AddLine(start, end, width);
                 }
             }
 
