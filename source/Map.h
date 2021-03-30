@@ -42,9 +42,8 @@ namespace Map
     const float m_ScreenTop = m_CameraHeight / 2.0f;
     const float m_ScreenBottom = -m_CameraHeight / 2.0f;
 
-    extern Mesh<TextureVertex> m_Mesh;
-    extern Texture2D m_Texture;
-    extern Shader m_Shader;
+    extern TexturedQuad m_MapBackground;
+
     extern Font m_Font;
     extern LineRenderer* m_LineRenderer;
 

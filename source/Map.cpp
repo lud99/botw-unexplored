@@ -5,6 +5,7 @@
 
 #include "Graphics/BasicVertices.h"
 #include "Graphics/LineRenderer.h"
+#include "Graphics/Quad.h"
 #include "MapLocation.h"
 #include "Legend.h"
 #include "Dialog.h"
@@ -18,66 +19,12 @@ void Map::Init()
 {
     Data::LoadPaths();
 
-    m_Texture.Load("romfs:/map-lowres.png");
-
-    std::string vertexShaderSource = R"text(
-        #version 330 core
-
-        layout (location = 0) in vec3 position;
-        layout (location = 1) in vec4 color;
-        layout (location = 2) in vec2 texCoord;
-
-        out vec2 passTextureCoord;
-
-        uniform mat4 u_ProjectionMatrix = mat4(1.0);
-        uniform mat4 u_ViewMatrix = mat4(1.0);
-
-        void main()
-        {
-            gl_Position = u_ProjectionMatrix * u_ViewMatrix * vec4(position, 1.0);
-
-            passTextureCoord = texCoord;
-        }
-    )text";
-
-    std::string fragmentShaderSource = R"text(
-        #version 330 core
-
-        layout (location = 0) out vec4 color;
-        in vec2 passTextureCoord;
-
-        uniform sampler2D tex;
-
-        void main()
-        {
-            color = texture(tex, passTextureCoord);
-
-            if (color.a == 0.0)
-                discard;
-        }
-    )text";
-
-    m_Shader = ShaderLoader::CreateShaderFromSource(vertexShaderSource, fragmentShaderSource);
-
-    m_Mesh.m_Texture = &m_Texture;
-
-    glm::vec3 vertexPositions[4];
-    BasicVertices::Quad::Construct(vertexPositions, m_Texture.m_Width * 2, m_Texture.m_Height * 2);
-
-    for (int i = 0; i < 4; i++)
-    {
-        TextureVertex vertex;
-        vertex.position = vertexPositions[i];
-        vertex.textureCoord = BasicVertices::Quad::TextureCoordinates[i];
-        m_Mesh.AddVertex(vertex);
-    }
-
-    for (int i = 0; i < 6; i++)
-        m_Mesh.AddIndex(BasicVertices::Quad::Indices[i]);
-
-    m_Mesh.Update();
-
     m_ProjectionMatrix = glm::ortho(-m_CameraWidth / 2, m_CameraWidth / 2, -m_CameraHeight / 2, m_CameraHeight / 2, -1.0f, 1.0f);
+
+    // Map image
+    m_MapBackground.Create("romfs:/map-lowres.png");
+    m_MapBackground.m_ProjectionMatrix = &m_ProjectionMatrix;
+    m_MapBackground.m_ViewMatrix = &m_ViewMatrix; 
 
     // Load font
     m_Font.Load("romfs:/arial.ttf");
@@ -426,16 +373,8 @@ void Map::Update()
 
 void Map::Render()
 {
-    m_Shader.Bind();
-
-    m_Shader.SetUniform("u_ProjectionMatrix", m_ProjectionMatrix);
-    m_Shader.SetUniform("u_ViewMatrix", m_ViewMatrix);
-    m_Shader.SetUniform("u_Zoom", m_Zoom);
-
-    m_Mesh.Render();
-
-    m_Shader.Unbind();
-
+    m_MapBackground.Render();
+    
     if (SavefileIO::LoadedSavefile)
     {
         if (m_Legend->m_Show[IconButton::ButtonTypes::Koroks]) 
@@ -571,13 +510,9 @@ void Map::Destory()
     delete m_GameRunningDialog;
     delete m_MasterModeDialog;
     delete m_KorokDialog;
-
-    m_Shader.Delete();
 }
 
-Mesh<TextureVertex> Map::m_Mesh;
-Texture2D Map::m_Texture;
-Shader Map::m_Shader;
+TexturedQuad Map::m_MapBackground;
 Font Map::m_Font;
 LineRenderer* Map::m_LineRenderer;
 TexturedQuad Map::m_MasterModeIcon;
