@@ -293,6 +293,15 @@ void Map::Update()
         }
     }
 
+    if (buttonsPressed & HidNpadButton_B)
+    {
+        if (m_KorokDialog->m_IsOpen) 
+        {
+            m_Koroks[m_KorokDialog->m_KorokIndex].m_Found = true;
+            m_KorokDialog->SetOpen(false);
+        }
+    }
+
     // Analog stick camera movement
     // Read the sticks' position
     HidAnalogStickState analog_stick_l = padGetStickPos(m_Pad, 0);
@@ -335,7 +344,7 @@ void Map::Update()
                         if ((!m_Koroks[i].m_Found || m_Legend->m_Show[IconButton::ShowCompleted]) && m_Koroks[i].IsClicked(touchPosition))
                         {
                             // Set the korok dialog
-                            m_KorokDialog->SetSeed(m_Koroks[i].m_ObjectData->zeldaDungeonId);
+                            m_KorokDialog->SetSeed(m_Koroks[i].m_ObjectData->zeldaDungeonId, i);
                             m_KorokDialog->SetOpen(true);
 
                             m_Legend->m_IsOpen = false;

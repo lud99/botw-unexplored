@@ -19,6 +19,7 @@
 #include "Dialog.h"
 #include "Legend.h"
 #include "Log.h"
+#include "MapObject.hpp"
 
 bool openGLInitialized = false;
 bool nxLinkInitialized = false;
@@ -52,6 +53,31 @@ void cleanUp()
     else
         Log("Failed top open settings file (cleanUp())");
     file.close();
+
+    // Save marked koroks
+    if (SavefileIO::GameIsRunning)
+    {
+        std::ofstream koroksFile("sdmc:/switch/botw-unexplored/koroks.txt");
+        if (koroksFile.is_open())
+        {
+            for (int i = 0; i < Data::KoroksCount; i++)
+                koroksFile << (int)Map::m_Koroks[i].m_Found << "\n";
+
+            Log("Saved manually marked koroks");
+        }
+        else
+            Log("Failed to open koroks file (cleanUp())");
+
+        koroksFile.close();
+    }
+    else
+    {
+        // Else delete the file so only the actually found koroks are displayed
+        if (remove("sdmc:/switch/botw-unexplored/koroks.txt") != 0)
+            Log("Couldn't delete koroks.txt. It probably doesn't exist");
+        else
+            Log("koroks.txt successfully deleted to avoid desync");
+    }
 
     Map::Destory();
 
@@ -174,6 +200,28 @@ int main()
             Log("LoadGamesave() status:", SavefileIO::LoadGamesave() ? "true" : "false");
 
             Map::UpdateMapObjects();
+
+            // Load manually checked koroks (but only if the game is running)
+            // Override the checking from the savefile
+            if (SavefileIO::GameIsRunning)
+            {
+                std::ifstream koroksFile("sdmc:/switch/botw-unexplored/koroks.txt");
+                if (koroksFile.is_open())
+                {
+                    for (int i = 0; i < Data::KoroksCount; i++)
+                    {
+                        std::string line;
+                        std::getline(koroksFile, line);
+                        Map::m_Koroks[i].m_Found = (bool)std::stoi(line);
+                    }
+
+                    Log("Loaded manually marked koroks");
+                }
+                else
+                    Log("Failed to open koroks file (init())");
+
+                koroksFile.close();
+            }
         }
 
         eglSwapBuffers(s_display, s_surface);

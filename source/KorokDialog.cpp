@@ -21,8 +21,6 @@ void KorokDialog::Render(glm::mat4 projMat, glm::mat4 viewMat)
     if (!m_IsOpen) 
         return; 
 
-    float marginLeft = 40.0f;
-
     // No view matrix
     glm::mat4 empty(1.0f);
     Map::m_Font.m_ViewMatrix = &empty;
@@ -49,10 +47,11 @@ void KorokDialog::Render(glm::mat4 projMat, glm::mat4 viewMat)
     else
         textY = Map::m_ScreenTop - 110.0f;
 
-    glm::vec2 startPos(Map::m_ScreenLeft + marginLeft, textY);
+    glm::vec2 startPos(Map::m_ScreenLeft + m_Margin, textY);
 
-    Map::m_Font.AddTextToBatch(m_Text, startPos, 0.55f, glm::vec3(1.0f), ALIGN_LEFT, Width - marginLeft * 2);
-    Map::m_Font.AddTextToBatch("X to close", glm::vec2(Map::m_ScreenLeft + Width - 20.0f, Map::m_ScreenTop - 35.0f), 0.5f, glm::vec3(1.0f), ALIGN_RIGHT);
+    Map::m_Font.AddTextToBatch(m_Text, startPos, 0.5f, glm::vec3(1.0f), ALIGN_LEFT, Width - m_Margin * 2);
+    Map::m_Font.AddTextToBatch("X to close", glm::vec2(Map::m_ScreenLeft + Width - 20.0f, Map::m_ScreenTop - 35.0f), 0.45f, glm::vec3(1.0f), ALIGN_RIGHT);
+        Map::m_Font.AddTextToBatch("B to mark as found", glm::vec2(Map::m_ScreenLeft + 10, Map::m_ScreenTop - 35.0f), 0.45f, glm::vec3(1.0f), ALIGN_LEFT);
 
     Map::m_Font.RenderBatch();
 
@@ -64,9 +63,10 @@ void KorokDialog::SetOpen(bool open)
     m_IsOpen = open;
 }
 
-void KorokDialog::SetSeed(int seed)
+void KorokDialog::SetSeed(int seed, int korokIndex)
 {
     m_Text = Data::KorokInfos.at(seed).text;
+    m_KorokIndex = korokIndex;
 
     // Set image
     std::string seedStr = std::to_string(seed);
@@ -98,11 +98,10 @@ void KorokDialog::SetSeed(int seed)
     m_Image->Create(path);
     m_Image->m_Scale = 1.25f;
 
-    float marginLeft = 40.0f;
     float w = m_Image->m_Texture->m_Width * m_Image->m_Scale;
     float h = m_Image->m_Texture->m_Height * m_Image->m_Scale;
 
-    m_Image->m_Position = glm::vec2(Map::m_ScreenLeft + marginLeft + w / 2.0f, Map::m_ScreenTop - 60.0f - h / 2.0f);
+    m_Image->m_Position = glm::vec2(Map::m_ScreenLeft + m_Margin + w / 2.0f, Map::m_ScreenTop - 60.0f - h / 2.0f);
 }
 
 void KorokDialog::SetPosition(glm::vec2 position)
