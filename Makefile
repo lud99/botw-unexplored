@@ -40,13 +40,14 @@ include $(DEVKITPRO)/libnx/switch_rules
 
 APP_TITLE	:=	BotW Unexplored
 APP_AUTHOR	:=	BigBear
+APP_VERSION :=  2.0.0
 
 TARGET		:=	$(notdir $(CURDIR))
 BUILD		:=	build
 SOURCES		:=	source source/Graphics
 DATA		:=	data
 INCLUDES	:=	include
-ROMFS		:=	romfs-dev
+ROMFS		:=	romfs
 
 #---------------------------------------------------------------------------------
 # options for code generation

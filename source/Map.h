@@ -34,7 +34,7 @@ namespace Map
 
     void Destory();
 
-    const float m_DefaultZoom = 0.125f;
+    const float m_DefaultZoom = 0.125f * 2;
     const float m_CameraWidth = 1280.0f;
     const float m_CameraHeight = 720.0f;
     const float m_ScreenLeft = -m_CameraWidth / 2.0f;
