@@ -15,6 +15,8 @@
 
 #include "SavefileIO.h" 
 
+constexpr float MapScale = 0.25f;
+
 void Map::Init()
 {
     Data::LoadPaths();
@@ -44,6 +46,8 @@ void Map::Init()
     m_MasterModeIcon.Create("romfs:/mastermodeicon.png");
     m_MasterModeIcon.m_Position = glm::vec2(m_ScreenLeft + 45.0f, m_ScreenBottom + 40.0f);
     m_MasterModeIcon.m_Scale = 0.1f;
+    m_MasterModeIcon.m_ProjectionMatrix = &m_ProjectionMatrix;
+    m_MasterModeIcon.m_ViewMatrix = nullptr;
 
     // Create koroks
     m_Koroks = new MapObject<Data::Korok>[Data::KoroksCount];
@@ -80,7 +84,7 @@ void Map::UpdateMapObjects()
 
     for (int i = 0; i < Data::KoroksCount; i++) // Korok
     {
-        m_Koroks[i].m_Position = glm::vec2(Data::Koroks[i].x, -Data::Koroks[i].y) * 0.5f;
+        m_Koroks[i].m_Position = glm::vec2(Data::Koroks[i].x, -Data::Koroks[i].y) * MapScale;
 
         m_Koroks[i].m_ObjectData = &Data::Koroks[i];
 
@@ -93,7 +97,7 @@ void Map::UpdateMapObjects()
 
     for (int i = 0; i < Data::ShrineCount; i++) // Shrine
     {
-        m_Shrines[i].m_Position = glm::vec2(Data::Shrines[i].x, -Data::Shrines[i].y) * 0.5f;
+        m_Shrines[i].m_Position = glm::vec2(Data::Shrines[i].x, -Data::Shrines[i].y) * MapScale;
 
         // Check if the korok has been found (if the found vector contains it)
         m_Shrines[i].m_Found = std::find(
@@ -104,7 +108,7 @@ void Map::UpdateMapObjects()
 
     for (int i = 0; i < Data::DLCShrineCount; i++) // DLC Shrine
     {
-        m_DLCShrines[i].m_Position = glm::vec2(Data::DLCShrines[i].x, -Data::DLCShrines[i].y) * 0.5f;
+        m_DLCShrines[i].m_Position = glm::vec2(Data::DLCShrines[i].x, -Data::DLCShrines[i].y) * MapScale;
 
         // Check if the korok has been found (if the found vector contains it)
         m_DLCShrines[i].m_Found = std::find(
@@ -115,7 +119,7 @@ void Map::UpdateMapObjects()
 
     for (int i = 0; i < Data::HinoxesCount; i++) // Hinox
     {
-        m_Hinoxes[i].m_Position = glm::vec2(Data::Hinoxes[i].x, -Data::Hinoxes[i].y) * 0.5f;
+        m_Hinoxes[i].m_Position = glm::vec2(Data::Hinoxes[i].x, -Data::Hinoxes[i].y) * MapScale;
 
         // Check if the korok has been found (if the found vector contains it)
         m_Hinoxes[i].m_Found = std::find(
@@ -126,7 +130,7 @@ void Map::UpdateMapObjects()
 
     for (int i = 0; i < Data::TalusesCount; i++) // Talus
     {
-        m_Taluses[i].m_Position = glm::vec2(Data::Taluses[i].x, -Data::Taluses[i].y) * 0.5f;
+        m_Taluses[i].m_Position = glm::vec2(Data::Taluses[i].x, -Data::Taluses[i].y) * MapScale;
 
         // Check if the korok has been found (if the found vector contains it)
         m_Taluses[i].m_Found = std::find(
@@ -137,7 +141,7 @@ void Map::UpdateMapObjects()
 
     for (int i = 0; i < Data::MoldugasCount; i++) // Molduga
     {
-        m_Moldugas[i].m_Position = glm::vec2(Data::Moldugas[i].x, -Data::Moldugas[i].y) * 0.5f;
+        m_Moldugas[i].m_Position = glm::vec2(Data::Moldugas[i].x, -Data::Moldugas[i].y) * MapScale;
 
         // Check if the korok has been found (if the found vector contains it)
         m_Moldugas[i].m_Found = std::find(
@@ -148,7 +152,7 @@ void Map::UpdateMapObjects()
 
     for (int i = 0; i < Data::LocationsCount; i++) // Locations
     {
-        m_Locations[i].m_Position = glm::vec2(Data::Locations[i].x, -Data::Locations[i].y) * 0.5f;
+        m_Locations[i].m_Position = glm::vec2(Data::Locations[i].x, -Data::Locations[i].y) * MapScale;
         m_Locations[i].m_LocationData = &Data::Locations[i];
 
         // Check if the korok has been found (if the found vector contains it)
@@ -169,7 +173,7 @@ void Map::Update()
     u64 buttonsDown = padGetButtons(m_Pad);
     u64 buttonsUp = padGetButtonsUp(m_Pad);
 
-    float zoomAmount = 0.01f * 2.0f;
+    float zoomAmount = 0.015f;
     float dragAmont = 0.85f;
     float analogStickMovementSpeed = 10.0f;
     float minZoom = 0.1f;
@@ -397,9 +401,9 @@ void Map::Render()
                 // 2 -> 3
                 for (unsigned int p = 1; p < path->points.size(); p++)
                 {
-                    glm::vec2 start = path->points[p - 1] * 0.5f;
+                    glm::vec2 start = path->points[p - 1] * MapScale;
                     start.y *= -1; // Flip the y coord
-                    glm::vec2 end = path->points[p] * 0.5f;
+                    glm::vec2 end = path->points[p] * MapScale;
                     end.y *= -1;
 
                     float width = (1.0f / m_Zoom) * 2.0f;

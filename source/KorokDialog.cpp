@@ -26,7 +26,7 @@ void KorokDialog::Render(glm::mat4 projMat, glm::mat4 viewMat)
     Map::m_Font.m_ViewMatrix = &empty;
 
     m_Background.m_ProjectionMatrix = &projMat;
-    m_Background.m_ViewMatrix = &empty;
+    m_Background.m_ViewMatrix = nullptr;
 
     m_Background.Render();
 
@@ -34,6 +34,7 @@ void KorokDialog::Render(glm::mat4 projMat, glm::mat4 viewMat)
     if (m_Image)
     {
         m_Image->m_ProjectionMatrix = &projMat;
+        m_Image->m_ViewMatrix = nullptr;
         m_Image->Render();
     }
 

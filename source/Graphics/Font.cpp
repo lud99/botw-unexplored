@@ -9,6 +9,26 @@
 #include "../Log.h"
 #include "BasicVertices.h"
 
+size_t split(const std::string &txt, std::vector<std::string> &strs, char ch)
+{
+    size_t pos = txt.find( ch );
+    size_t initialPos = 0;
+    strs.clear();
+
+    // Decompose statement
+    while( pos != std::string::npos ) {
+        strs.push_back( txt.substr( initialPos, pos - initialPos ) );
+        initialPos = pos + 1;
+
+        pos = txt.find( ch, initialPos );
+    }
+
+    // Add the last one
+    strs.push_back( txt.substr( initialPos, std::min( pos, txt.size() ) - initialPos + 1 ) );
+
+    return strs.size();
+}
+
 int Font::Load(const std::string& filepath)
 {
     FT_Library ft;
@@ -62,7 +82,7 @@ int Font::Load(const std::string& filepath)
             texture, 
             glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
             glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
-            face->glyph->advance.x
+            (unsigned int)face->glyph->advance.x
         };
         m_Characters.insert(std::pair<char, Character>(c, character));
     }
@@ -232,36 +252,61 @@ glm::vec2 Font::AddTextToBatch(const std::string& text, glm::vec2 position, floa
     glm::vec2 startPosition(position);
     glm::vec2 textSize;
 
-    // Calculate text positions first
+    // Split the string into words
+    std::vector<std::string> words;
+    split(text, words, ' ');
+
     std::vector<glm::vec2> charPositions;
-    for (unsigned int i = 0; i < text.length(); i++)
+    for (unsigned int w = 0; w < words.size(); w++)
     {
-        Character ch = m_Characters[text[i]];
+        std::string& word = words[w];
 
-        // Calculate the position of each character
-        glm::vec2 position(itPosition.x + ch.Bearing.x * scale, itPosition.y - (ch.Size.y - ch.Bearing.y) * scale);
+        glm::vec2 itPositionWord = itPosition;
 
-        // Do word wrap
-        if (maxWidth > 0.0f)
+        // Calculate the position of the last character in the word to be able to do word wrap
+        for (unsigned int c = 0; c < word.length() + 1; c++)
         {
-            if (position.x + (ch.Size.x * scale) > startPosition.x + maxWidth)
-            {
-                itPosition.x = startPosition.x;
-                itPosition.y -= 50.0f * scale;
-
-                position = glm::vec2(itPosition.x + ch.Bearing.x * scale, itPosition.y - (ch.Size.y - ch.Bearing.y) * scale);
-            }
+            // Because the spaces have been removed, we need to iterate an extra time to add it
+            Character ch = m_Characters[word[c]];
+            if (c == word.length())
+                ch = m_Characters[' '];
+        
+            itPositionWord.x += (ch.Advance >> 6) * scale;
         }
 
-        charPositions.push_back(position);
+        float wordRightX = itPositionWord.x + m_Characters[word.back()].Bearing.x * scale;
 
-        // The text height should be equal to the highest character;
-        float h = ch.Size.y * scale;
-        if (h > textSize.y)
-            textSize.y = h;
+        for (unsigned int c = 0; c < word.length() + 1; c++)
+        {
+            // Because the spaces have been removed, we need to iterate an extra time to add it
+            Character ch = m_Characters[word[c]];
+            if (c == word.length())
+                ch = m_Characters[' '];
 
-        // now advance cursors for next glyph (note that advance is number of 1/64 pixels)
-        itPosition.x += (ch.Advance >> 6) * scale;
+            // Do word wrap
+            if (maxWidth > 0.0f)
+            {
+                // If over the width and a word wrap hasn't happened to this line yet
+                if (wordRightX > startPosition.x + maxWidth && itPositionWord.y == itPosition.y)
+                {
+                    itPosition.x = startPosition.x;
+                    itPosition.y -= 50.0f * scale; 
+                }
+            }
+
+            // Calculate the position of each character
+            glm::vec2 position(itPosition.x + ch.Bearing.x * scale, itPosition.y - (ch.Size.y - ch.Bearing.y) * scale);
+
+            charPositions.push_back(position);
+
+            // The text height should be equal to the highest character;
+            float h = ch.Size.y * scale;
+            if (h > textSize.y)
+                textSize.y = h;
+
+            // now advance cursors for next glyph (note that advance is number of 1/64 pixels)
+            itPosition.x += (ch.Advance >> 6) * scale;
+        }
     }
     textSize = glm::abs(itPosition - startPosition);
 

@@ -206,7 +206,7 @@ IconButton::IconButton(ButtonTypes type, glm::vec2 position, float width, float 
         m_Text = "Taluses";
         iconPath = "romfs:/talus.png";
 
-        break;
+        break; 
     case Moldugas:
         m_Text = "Moldugas";
         iconPath = "romfs:/molduga.png";
@@ -214,7 +214,7 @@ IconButton::IconButton(ButtonTypes type, glm::vec2 position, float width, float 
         break;
     case Locations:
         m_Text = "Locations";
-        //iconPath = "romfs:/molduga.png";
+        iconPath = "romfs:/village.png";
 
         break;
     case ShowCompleted:

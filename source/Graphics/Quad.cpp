@@ -75,8 +75,16 @@ void Quad::Render()
 {
     m_Shader.Bind();
 
-    if (m_ProjectionMatrix != nullptr) m_Shader.SetUniform("u_ProjectionMatrix", *m_ProjectionMatrix);
-    if (m_ViewMatrix != nullptr) m_Shader.SetUniform("u_ViewMatrix", *m_ViewMatrix);
+    glm::mat4 emptyMat(1.0f);
+
+    if (m_ProjectionMatrix != nullptr) 
+        m_Shader.SetUniform("u_ProjectionMatrix", *m_ProjectionMatrix);
+    else 
+        m_Shader.SetUniform("u_ProjectionMatrix", emptyMat);
+    if (m_ViewMatrix != nullptr) 
+        m_Shader.SetUniform("u_ViewMatrix", *m_ViewMatrix);
+    else
+        m_Shader.SetUniform("u_ViewMatrix", emptyMat);
 
     glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0), glm::vec3(m_Position, 0.0f));
 
@@ -189,8 +197,16 @@ void TexturedQuad::Render()
 {
     m_Shader.Bind();
 
-    if (m_ProjectionMatrix != nullptr) m_Shader.SetUniform("u_ProjectionMatrix", *m_ProjectionMatrix);
-    if (m_ViewMatrix != nullptr) m_Shader.SetUniform("u_ViewMatrix", *m_ViewMatrix);
+    glm::mat4 emptyMat(1.0f);
+
+    if (m_ProjectionMatrix != nullptr) 
+        m_Shader.SetUniform("u_ProjectionMatrix", *m_ProjectionMatrix);
+    else 
+        m_Shader.SetUniform("u_ProjectionMatrix", emptyMat);
+    if (m_ViewMatrix != nullptr) 
+        m_Shader.SetUniform("u_ViewMatrix", *m_ViewMatrix);
+    else
+        m_Shader.SetUniform("u_ViewMatrix", emptyMat);
 
     glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0), glm::vec3(m_Position, 0.0f));
 
