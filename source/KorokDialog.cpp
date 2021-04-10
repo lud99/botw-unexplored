@@ -21,25 +21,18 @@ void KorokDialog::Render(glm::mat4 projMat, glm::mat4 viewMat)
     if (!m_IsOpen) 
         return; 
 
-    // No view matrix
-    glm::mat4 empty(1.0f);
-    Map::m_Font.m_ViewMatrix = &empty;
-
     m_Background.m_ProjectionMatrix = &projMat;
     m_Background.m_ViewMatrix = nullptr;
 
     m_Background.Render();
 
     // Image
-    if (m_Image)
+    if (m_Image && m_Image->m_Texture != nullptr)
     {
         m_Image->m_ProjectionMatrix = &projMat;
         m_Image->m_ViewMatrix = nullptr;
         m_Image->Render();
     }
-
-    // Render text
-    Map::m_Font.BeginBatch();
 
     // Place the text just below the image
     float textY = 0.0f; 
@@ -48,15 +41,12 @@ void KorokDialog::Render(glm::mat4 projMat, glm::mat4 viewMat)
     else
         textY = Map::m_ScreenTop - 110.0f;
 
+    // Render text
     glm::vec2 startPos(Map::m_ScreenLeft + m_Margin, textY);
 
     Map::m_Font.AddTextToBatch(m_Text, startPos, 0.5f, glm::vec3(1.0f), ALIGN_LEFT, Width - m_Margin * 2);
     Map::m_Font.AddTextToBatch("X to close", glm::vec2(Map::m_ScreenLeft + Width - 20.0f, Map::m_ScreenTop - 35.0f), 0.45f, glm::vec3(1.0f), ALIGN_RIGHT);
-        Map::m_Font.AddTextToBatch("B to mark as found", glm::vec2(Map::m_ScreenLeft + 10, Map::m_ScreenTop - 35.0f), 0.45f, glm::vec3(1.0f), ALIGN_LEFT);
-
-    Map::m_Font.RenderBatch();
-
-    Map::m_Font.m_ViewMatrix = &Map::m_ViewMatrix;
+    Map::m_Font.AddTextToBatch("B to mark as found", glm::vec2(Map::m_ScreenLeft + 15, Map::m_ScreenTop - 35.0f), 0.45f, glm::vec3(1.0f), ALIGN_LEFT);
 }
 
 void KorokDialog::SetOpen(bool open)
@@ -87,8 +77,7 @@ void KorokDialog::SetSeed(int seed, int korokIndex)
     std::string path = "";
     if (SavefileIO::DirectoryExists("romfs:/guide") && SavefileIO::FileExists("romfs:/guide/Korok" + seedStr + ".jpg"))
         path = "romfs:/guide/Korok" + seedStr + ".jpg";
-    else if (SavefileIO::DirectoryExists("sdmc:/switch/botw-unexplored/guide") && 
-            SavefileIO::FileExists("sdmc:/switch/botw-unexplored/guide/Korok" + seedStr + ".jpg"))
+    else if (SavefileIO::DirectoryExists("sdmc:/switch/botw-unexplored/guide") && SavefileIO::FileExists("sdmc:/switch/botw-unexplored/guide/Korok" + seedStr + ".jpg"))
         path = "sdmc:/switch/botw-unexplored/guide/Korok" + seedStr + ".jpg";
 
     // Neither exists

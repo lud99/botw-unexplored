@@ -221,7 +221,9 @@ void TexturedQuad::Render()
 TexturedQuad::~TexturedQuad()
 {
     m_Shader.Delete();
-    delete m_Texture;
+    
+    if (m_Texture)
+        delete m_Texture;
 }
 
 Shader TexturedQuad::m_Shader;

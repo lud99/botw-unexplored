@@ -171,7 +171,6 @@ void Map::Update()
 
     u64 buttonsPressed = padGetButtonsDown(m_Pad);
     u64 buttonsDown = padGetButtons(m_Pad);
-    u64 buttonsUp = padGetButtonsUp(m_Pad);
 
     float zoomAmount = 0.015f;
     float dragAmont = 0.85f;
@@ -378,6 +377,8 @@ void Map::Update()
 void Map::Render()
 {
     m_MapBackground.Render();
+
+    Map::m_Font.BeginBatch();
     
     if (SavefileIO::LoadedSavefile)
     {
@@ -407,6 +408,8 @@ void Map::Render()
                     end.y *= -1;
 
                     float width = (1.0f / m_Zoom) * 2.0f;
+                    if (m_Zoom >= 3.0f)
+                        width = 0.75f;
 
                     m_LineRenderer->AddLine(start, end, width);
                 }
@@ -428,19 +431,18 @@ void Map::Render()
            MapObject<Data::Molduga>::Render();
         if (m_Legend->m_Show[IconButton::ButtonTypes::Locations])
         {
-            Map::m_Font.BeginBatch();
-
             for (int i = 0; i < Data::LocationsCount; i++)
                 m_Locations[i].Render();
-
-            Map::m_Font.RenderBatch();
         }
     }
+
+    m_Font.RenderBatch();
 
     // Draw behind legend
     if (m_LoadMasterMode)
         m_MasterModeIcon.Render();
 
+    m_Font.BeginBatch();
     if (m_Legend->m_IsOpen) 
         m_Legend->Render();
 
@@ -451,34 +453,36 @@ void Map::Render()
     if (m_MasterModeDialog->m_IsOpen)
         m_MasterModeDialog->Render();
 
-    glm::mat4 emptyViewMatrix(1.0);
-    m_Font.m_ViewMatrix = &emptyViewMatrix; // Don't draw the text relative to the camera 
-
     if (!m_Legend->m_IsOpen && !m_KorokDialog->m_IsOpen && SavefileIO::LoadedSavefile)
-        m_Font.RenderText("Press X to open legend", glm::vec2(m_ScreenLeft + 20, m_ScreenTop - 30), 0.5f, glm::vec3(1.0f));  
+        m_Font.AddTextToBatch("Press X to open legend", glm::vec2(m_ScreenLeft + 20, m_ScreenTop - 30), 0.5f);  
 
     if (SavefileIO::LoadedSavefile)
     {
         if (SavefileIO::GameIsRunning)
         {
-            m_Font.RenderText("BotW is running.", glm::vec2(m_ScreenRight - 20, m_ScreenTop - 30), 0.5f, glm::vec3(1.0f), ALIGN_RIGHT);
-            m_Font.RenderText("Loaded older save", glm::vec2(m_ScreenRight - 20, m_ScreenTop - 60), 0.5f, glm::vec3(1.0f), ALIGN_RIGHT);
+            m_Font.AddTextToBatch("BotW is running.", glm::vec2(m_ScreenRight - 20, m_ScreenTop - 30), 0.5f, glm::vec3(1.0f), ALIGN_RIGHT);
+            m_Font.AddTextToBatch("Loaded older save", glm::vec2(m_ScreenRight - 20, m_ScreenTop - 60), 0.5f, glm::vec3(1.0f), ALIGN_RIGHT);
         }
 
         float bottomTextX = m_ScreenRight - 30;
 
         if (SavefileIO::MasterModeFileExists && !m_LoadMasterMode)
-            m_Font.RenderText("Press Y to load master mode", glm::vec2(bottomTextX, m_ScreenBottom + 55), 0.5f, glm::vec3(1.0f), ALIGN_RIGHT);  
+            m_Font.AddTextToBatch("Press Y to load master mode", glm::vec2(bottomTextX, m_ScreenBottom + 55), 0.5f, glm::vec3(1.0f), ALIGN_RIGHT);  
         else if (m_LoadMasterMode)
-            m_Font.RenderText("Press Y to load normal mode", glm::vec2(bottomTextX, m_ScreenBottom + 55), 0.5f, glm::vec3(1.0f), ALIGN_RIGHT);  
+            m_Font.AddTextToBatch("Press Y to load normal mode", glm::vec2(bottomTextX, m_ScreenBottom + 55), 0.5f, glm::vec3(1.0f), ALIGN_RIGHT);  
     
-        m_Font.RenderText("L and R or R stick to zoom, (-) to change user, (+) to exit", 
+        m_Font.AddTextToBatch("L and R to zoom, (-) to change user, (+) to exit", 
             glm::vec2(bottomTextX, m_ScreenBottom + 20), 0.5f, glm::vec3(1.0f), ALIGN_RIGHT);  
     }
 
-    m_Font.m_ViewMatrix = &m_ViewMatrix;
-
     m_KorokDialog->Render(m_ProjectionMatrix, m_ViewMatrix);
+
+    glm::mat4 emptyViewMatrix(1.0);
+    m_Font.m_ViewMatrix = &emptyViewMatrix; // Don't draw the text relative to the camera 
+
+    m_Font.RenderBatch();
+
+    m_Font.m_ViewMatrix = &m_ViewMatrix;
 }
 
 bool Map::IsInView(glm::vec2 position, float margin = 100.0f)
