@@ -1,3 +1,5 @@
+# Tears of the Kingdom Unexplored is in development and will release soon!
+
 # BotW Unexplored
 Easily view what hasn't been discovered in your Breath of the Wild savefile, on your Nintendo Switch.
 
