@@ -1,4 +1,4 @@
-# Tears of the Kingdom Unexplored is in development and will release soon!
+# [Tears of the Kingdom Unexplored is now released](https://github.com/lud99/totk-unexplored)
 
 # BotW Unexplored
 Easily view what hasn't been discovered in your Breath of the Wild savefile, on your Nintendo Switch.
